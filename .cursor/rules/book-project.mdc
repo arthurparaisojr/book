@@ -9,6 +9,8 @@ alwaysApply: true
 
 - Use a stack oficial do projeto: `.NET 8`, `Angular`, `React`, `CSS` e `SQL Server`.
 - Use `JWT Bearer` como autenticacao padrao da API.
+- Use sempre o `Docker Desktop` do Windows 11 com integracao WSL.
+- Nao documente nem proponha `Docker Engine` instalado dentro do WSL para esta solucao.
 - Siga as etapas `1.A` a `6.C` descritas no `README.md` e em `docs/backlog/README.md`.
 - Toda alteracao deve atualizar a documentacao correspondente.
 - Use commits no formato `tipo(etapa): descricao curta`.

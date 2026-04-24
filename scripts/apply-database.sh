@@ -8,7 +8,7 @@ run_sql() {
   local file="$1"
   echo "Executando ${file}"
   docker exec -i "${container_name}" /opt/mssql-tools18/bin/sqlcmd \
-    -S localhost -U sa -P "${password}" -C \
+    -S localhost -U sa -P "${password}" -C -b \
     -i "/workspace/${file}"
 }
 

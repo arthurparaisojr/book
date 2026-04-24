@@ -13,7 +13,30 @@ Instale:
 - `Angular CLI`
 - `SQL Server Management Studio` ou `Azure Data Studio`
 
-## 2. Clonar e configurar o repositorio
+## 2. Observacao para Windows + WSL
+
+Este projeto assume o seguinte modelo:
+
+- `Docker Desktop` instalado no Windows;
+- WSL com integracao ativa no `Docker Desktop`;
+- comandos executados dentro do Ubuntu/WSL;
+- navegador aberto no Windows para acessar `Angular`, `React` e `Swagger`.
+
+Nao e necessario instalar navegador no WSL.
+
+## 3. Regra obrigatoria de Docker
+
+Padrao oficial desta solucao:
+
+- usar sempre o `Docker Desktop` do `Windows 11`;
+- usar a integracao WSL do `Docker Desktop`;
+- nao instalar `Docker Engine`, `containerd` ou `docker compose plugin` dentro do WSL
+  para este projeto.
+
+Se existir instalacao local de Docker dentro do Ubuntu, ela deve ser removida para
+evitar conflito com o Docker do Windows.
+
+## 4. Clonar e configurar o repositorio
 
 ```bash
 git clone <url-do-repositorio> book
@@ -22,13 +45,16 @@ git config commit.template .gitmessage
 cp docker/.env.example docker/.env
 ```
 
-## 3. Subir infraestrutura local
+## 5. Subir infraestrutura local
 
 ```bash
 docker compose -f docker/docker-compose.infrastructure.yml up -d
 ```
 
-## 4. Banco escolhido
+Se a integracao WSL estiver correta, esse comando funcionara no Ubuntu usando o
+Docker do Windows.
+
+## 6. Banco escolhido
 
 Banco oficial do projeto:
 
@@ -41,7 +67,7 @@ Motivos:
 - facilidade de execucao com `Docker`;
 - gratuidade em desenvolvimento e testes.
 
-## 5. Criar a solucao backend
+## 7. Criar a solucao backend
 
 ```bash
 dotnet new sln -n Book
@@ -62,19 +88,19 @@ dotnet add src/backend/Book.Infrastructure/Book.Infrastructure.csproj reference 
 dotnet add tests/backend/Book.Api.Tests/Book.Api.Tests.csproj reference src/backend/Book.Api/Book.Api.csproj
 ```
 
-## 6. Criar o frontend Angular
+## 8. Criar o frontend Angular
 
 ```bash
 npx @angular/cli@latest new src/frontend-angular/book-admin --routing --style css
 ```
 
-## 7. Criar o frontend React
+## 9. Criar o frontend React
 
 ```bash
 npm create vite@latest src/frontend-react/book-insights -- --template react-ts
 ```
 
-## 8. Ajustar idioma e formatos
+## 10. Ajustar idioma e formatos
 
 - backend com cultura `pt-BR`;
 - Angular com locale `pt-BR`;
@@ -82,7 +108,7 @@ npm create vite@latest src/frontend-react/book-insights -- --template react-ts
 - datas e mensagens padronizadas em portugues;
 - mascara monetaria obrigatoria para `Valor`.
 
-## 9. Configurar autenticacao
+## 11. Configurar autenticacao
 
 Padrao oficial:
 
@@ -97,7 +123,7 @@ Pacotes recomendados:
 - `Microsoft.AspNetCore.Authentication.JwtBearer`
 - `Microsoft.AspNetCore.Authorization`
 
-## 10. Criar banco e scripts
+## 12. Criar banco e scripts
 
 Executar os scripts versionados nesta ordem:
 
@@ -115,7 +141,7 @@ docker exec -it book-sqlserver /opt/mssql-tools18/bin/sqlcmd \
   -i /workspace/database/schema/001_create_base_tables.sql
 ```
 
-## 11. Configurar a API
+## 13. Configurar a API
 
 Pacotes recomendados:
 
@@ -137,7 +163,7 @@ Implementacoes obrigatorias:
 - logs estruturados;
 - health checks.
 
-## 12. Estrutura Docker completa
+## 14. Estrutura Docker completa
 
 Arquivos previstos:
 
@@ -147,7 +173,6 @@ Arquivos previstos:
 
 Servicos previstos na stack completa:
 
-- `sqlserver`
 - `sqlserver`
 - `api`
 - `frontend-angular`
@@ -159,23 +184,52 @@ Quando os projetos reais estiverem criados, a stack completa podera ser ligada c
 docker compose -f docker/docker-compose.fullstack.template.yml up --build
 ```
 
-## 13. Construir relatorio
+Portas esperadas para acesso pelo navegador do Windows:
+
+- API / Swagger: `http://localhost:8080`
+- Angular: `http://localhost:4200`
+- React: `http://localhost:4173`
+
+## 14. Construir relatorio
 
 - criar `view` com dados de livro, autor e assunto;
 - agrupar por autor;
 - expor endpoint ou exportacao para o frontend;
 - guardar modelos gerados em `artifacts/reports/`.
 
-## 14. Testar
+## 15. Testar
 
 - `xUnit` para backend;
 - `Jest` para Angular;
 - `Vitest` para React;
 - `Playwright` para fluxo de ponta a ponta.
 
-## 15. Preparar apresentacao
+## 16. Preparar apresentacao
 
 - atualizar documentos;
 - exportar Swagger/OpenAPI;
 - separar evidencias do banco;
 - anexar prints, relatorios e diagrama em `artifacts/`.
+
+## 17. Limpeza opcional do WSL
+
+Se em algum momento voce tiver instalado Docker dentro do Ubuntu/WSL, remova com:
+
+```bash
+sudo apt remove -y docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt autoremove -y
+sudo rm -rf /var/lib/docker /var/lib/containerd
+hash -r
+```
+
+Depois valide que o WSL esta usando o Docker Desktop do Windows:
+
+```bash
+docker version
+docker context ls
+docker compose version
+```
+
+O esperado e que o comando `docker` continue funcionando no WSL por causa da
+integracao com o `Docker Desktop`, nao por causa de uma engine instalada dentro do
+Ubuntu.

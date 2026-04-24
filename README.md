@@ -180,6 +180,19 @@ Instale:
 - `Angular CLI`
 - `SQL Server Management Studio` ou `Azure Data Studio`
 
+Observacao para ambiente `Windows + WSL`:
+
+- o `Docker Desktop` fica instalado no Windows;
+- o WSL apenas consome o Docker com integracao habilitada;
+- nao e necessario instalar navegador dentro do WSL;
+- Angular, React e Swagger podem ser acessados pelo navegador do Windows via
+  `http://localhost`.
+
+Diretriz obrigatoria:
+
+- este projeto deve usar sempre o `Docker Desktop` do `Windows 11`;
+- nao deve haver instalacao de `Docker Engine` dentro do WSL para esta solucao.
+
 ### 9.2 Inicialização do repositório
 
 ```bash
@@ -194,6 +207,9 @@ cp docker/.env.example docker/.env
 ```bash
 docker compose -f docker/docker-compose.infrastructure.yml up -d
 ```
+
+Esse comando e executado no WSL, mas usa o `Docker Desktop` do Windows quando a
+integracao WSL estiver habilitada.
 
 Banco oficial do projeto:
 

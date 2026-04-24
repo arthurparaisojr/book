@@ -18,25 +18,28 @@ repositorio.
    - `React` como frontend complementar;
    - `CSS` como base de estilo;
    - `SQL Server` como banco padrao em Docker.
-6. Tratar excecoes de forma especifica:
+6. O Docker do projeto deve ser sempre o `Docker Desktop` do `Windows 11` com
+   integracao WSL.
+7. Nao instalar nem documentar `Docker Engine` local dentro do WSL para esta solucao.
+8. Tratar excecoes de forma especifica:
    - nunca responder erro tecnico cru ao usuario;
    - preferir `ProblemDetails` na API;
    - registrar logs estruturados;
    - mapear erros de banco por tipo.
-7. O campo `Valor` de `Livro` e obrigatorio:
+9. O campo `Valor` de `Livro` e obrigatorio:
    - persistir como `DECIMAL(10,2)`;
    - exibir com mascara monetaria em `pt-BR`;
    - validar valor minimo igual ou maior que zero.
-8. Scripts de banco devem permanecer versionados em `database/`:
+10. Scripts de banco devem permanecer versionados em `database/`:
    - `schema/`
    - `views/`
    - `procedures/`
    - `triggers/`
    - `seeds/`
-9. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
-10. O modelo de dados em imagem deve ficar em
+11. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
+12. O modelo de dados em imagem deve ficar em
     `docs/assets/images/modelo-dados-book.png`.
-11. A estrutura Docker deve prever:
+13. A estrutura Docker deve prever:
     - compose de infraestrutura;
     - compose de stack completa;
     - documentacao para subir tudo do zero.
