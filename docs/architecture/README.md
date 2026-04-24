@@ -12,7 +12,8 @@ negocio, infraestrutura, experiencia do usuario e artefatos de implantacao.
 - Banco: `SQL Server 2022 Developer`
 - Frontend principal: `Angular`
 - Frontend complementar: `React`
-- Estilo: `CSS` com variaveis, responsividade e convencoes visuais
+- Estilo: `CSS` com variaveis, responsividade, biblioteca de temas e convencoes
+  visuais em azuis
 - Containers: `Docker`
 
 ## Camadas
@@ -24,6 +25,7 @@ negocio, infraestrutura, experiencia do usuario e artefatos de implantacao.
 - `Frontend Angular`: CRUD principal, formularios, listagens e navegacao.
 - `Frontend React`: modulo complementar para relatorios, dashboard ou componentes
   especializados.
+- `Shared UI`: temas CSS, design tokens e biblioteca de icones SVG.
 - `Database`: schema, views, procedures, triggers, indices e seeds.
 
 ## Distribuicao recomendada
@@ -40,6 +42,11 @@ src/frontend-angular/
 
 src/frontend-react/
 `-- book-insights
+
+src/shared/
+|-- icons/
+|   `-- svg/
+`-- themes/
 ```
 
 ## Diretrizes arquiteturais
@@ -51,3 +58,6 @@ src/frontend-react/
 - O banco deve continuar como fonte oficial de relatorio e integridade relacional.
 - Excecoes devem ser centralizadas em middleware, nao espalhadas pelos controllers.
 - O idioma padrao sera `pt-BR` em telas, mensagens e mascaras.
+- O frontend deve manter uma experiencia amigavel e visual consistente.
+- O tema padrao do projeto deve usar azuis como base visual.
+- Os icones SVG devem ser compartilhados a partir de `src/shared/icons/svg/`.

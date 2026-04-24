@@ -13,6 +13,10 @@ Esta area sera usada pelo frontend principal do sistema.
 ## Diretrizes
 
 - idioma `pt-BR`;
-- CSS limpo e responsivo;
+- CSS limpo, responsivo e amigavel;
+- uso do tema padrao azul compartilhado em `src/shared/themes/`;
+- uso de tokens semanticos em vez de cores hardcoded;
+- foco visivel, estados suaves e formularios claros;
+- uso da biblioteca de icones SVG em `src/shared/icons/svg/`;
 - componentes reutilizaveis;
 - tratamento visual de erros de validacao.

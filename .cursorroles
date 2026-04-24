@@ -17,6 +17,8 @@ repositorio.
    - `Angular` como frontend principal;
    - `React` como frontend complementar;
    - `CSS` como base de estilo;
+   - biblioteca de temas em `src/shared/themes/`;
+   - biblioteca de icones SVG em `src/shared/icons/svg/`;
    - `SQL Server` como banco padrao em Docker.
 6. O Docker do projeto deve ser sempre o `Docker Desktop` do `Windows 11` com
    integracao WSL.
@@ -30,16 +32,26 @@ repositorio.
    - persistir como `DECIMAL(10,2)`;
    - exibir com mascara monetaria em `pt-BR`;
    - validar valor minimo igual ou maior que zero.
-10. Scripts de banco devem permanecer versionados em `database/`:
+10. O frontend deve ser amigavel e usar tema padrao em azuis.
+11. Os temas CSS devem ser estruturados com:
+    - paleta base;
+    - tokens semanticos;
+    - componentes-base reutilizaveis.
+12. Evitar cores hardcoded em telas quando existir token compartilhado.
+13. Se novos icones SVG forem necessarios, informar sempre:
+    - nome do arquivo;
+    - local oficial de gravacao;
+    - finalidade do icone.
+14. Scripts de banco devem permanecer versionados em `database/`:
    - `schema/`
    - `views/`
    - `procedures/`
    - `triggers/`
    - `seeds/`
-11. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
-12. O modelo de dados em imagem deve ficar em
+15. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
+16. O modelo de dados em imagem deve ficar em
     `docs/assets/images/modelo-dados-book.png`.
-13. A estrutura Docker deve prever:
+17. A estrutura Docker deve prever:
     - compose de infraestrutura;
     - compose de stack completa;
     - documentacao para subir tudo do zero.

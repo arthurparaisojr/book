@@ -38,7 +38,8 @@ As tecnologias definidas para o projeto são:
 - Frontend principal: `Angular` para o CRUD administrativo;
 - Frontend complementar: `React` para módulo de apoio analítico, relatórios ou vitrine
   técnica de componentes;
-- Estilo: `CSS` com variáveis, responsividade e padronização visual;
+- Estilo: `CSS` com variáveis, responsividade, biblioteca de temas e padrão visual em
+  azuis amigáveis;
 - Banco de dados: `SQL Server 2022 Developer`, com execução local via `Docker`;
 - Persistência: `EF Core` para fluxo transacional e `Dapper` para consultas de leitura
   e relatório quando fizer sentido;
@@ -56,6 +57,7 @@ O projeto deverá ser organizado nas seguintes camadas:
 - Aplicação: casos de uso, orquestração, DTOs e regras de entrada;
 - Domínio: entidades, regras de negócio, contratos e validações centrais;
 - Infraestrutura: acesso a dados, logging, integração e persistência;
+- Compartilhado: biblioteca de temas CSS, design tokens e biblioteca de ícones SVG;
 - Banco de dados: tabelas, views, procedures, triggers, índices e seeds;
 - Artefatos: diagramas, exports da API, relatórios e evidências de apresentação.
 
@@ -94,6 +96,8 @@ Detalhes adicionais estão em [`docs/architecture/README.md`](docs/architecture/
 |   |-- frontend-angular/
 |   |-- frontend-react/
 |   `-- shared/
+|       |-- icons/
+|       `-- themes/
 `-- tests/
     |-- backend/
     |-- frontend-angular/
@@ -109,6 +113,24 @@ A imagem anexada do modelo de dados deve ser salva em:
 
 Esse deve ser o caminho oficial para referência nos documentos. Se for necessário
 gerar versões para apresentação, PDF ou export, use `artifacts/diagrams/`.
+
+## 6.1 Onde colocar ícones SVG
+
+Toda biblioteca de ícones do projeto deve ser centralizada em:
+
+`src/shared/icons/svg/`
+
+Regra de trabalho:
+
+- se um novo ícone SVG for necessário, o nome do arquivo deve ser definido antes;
+- o local oficial para gravação deve sempre ser informado junto com o nome;
+- o padrão de nomenclatura deve refletir a finalidade do ícone.
+
+Exemplos:
+
+- `book-menu-livros.svg`
+- `book-action-salvar.svg`
+- `book-report-autor.svg`
 
 ## 7. Etapas oficiais do projeto
 
@@ -332,6 +354,9 @@ orientações estão em `database/views`, `docs/database` e `artifacts/reports`.
 - Toda exceção deve ser tratada de forma específica, com log e retorno coerente.
 - A API deve ser bem escrita, documentada e previsível.
 - O backlog deve refletir camadas e etapas do projeto.
+- O frontend deve ser amigável, claro e usar tema padrão em azuis.
+- A biblioteca de temas CSS deve ficar em `src/shared/themes/`.
+- A biblioteca de ícones SVG deve ficar em `src/shared/icons/svg/`.
 - Views, procedures, triggers e scripts de implantação devem ficar versionados.
 - Toda alteração relevante exige atualização de documentação e commit padronizado.
 - O idioma padrão da solução deve ser `pt-BR`, salvo necessidade técnica justificada.
