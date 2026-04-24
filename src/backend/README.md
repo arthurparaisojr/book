@@ -25,6 +25,11 @@ Solucao `.NET 8` do projeto `Book`.
 Endpoints atuais da API:
 
 - `GET /api/v1/health`
+- `GET /api/v1/autores`
+- `GET /api/v1/autores/{codAu}`
+- `POST /api/v1/autores`
+- `PUT /api/v1/autores/{codAu}`
+- `DELETE /api/v1/autores/{codAu}`
 - `GET /api/v1/livros`
 - `GET /api/v1/livros/{codl}`
 - `POST /api/v1/livros`
@@ -120,6 +125,10 @@ curl http://localhost:5268/api/v1/livros
 Resultados esperados desta etapa:
 
 - `GET /api/v1/health` retorna `200 OK`;
+- `GET /api/v1/autores` retorna os autores seedados;
+- `POST /api/v1/autores` cria um autor e retorna `201 Created`;
+- `PUT /api/v1/autores/{codAu}` atualiza e retorna `200 OK`;
+- `DELETE /api/v1/autores/{codAu}` retorna `204 No Content`;
 - `GET /api/v1/livros` retorna os livros seedados;
 - `POST /api/v1/livros` cria um livro e retorna `201 Created`;
 - `PUT /api/v1/livros/{codl}` atualiza e retorna `200 OK`;

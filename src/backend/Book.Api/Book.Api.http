@@ -1,5 +1,6 @@
 @Book.Api_HostAddress = http://localhost:5268
 @LivroId = 1
+@AutorId = 1
 
 ### Health
 GET {{Book.Api_HostAddress}}/api/v1/health
@@ -66,6 +67,57 @@ Accept: application/json
   "edicao": 0,
   "anoPublicacao": "20",
   "valor": -1
+}
+
+###
+
+### Listar autores
+GET {{Book.Api_HostAddress}}/api/v1/autores
+Accept: application/json
+
+###
+
+### Obter autor por id
+GET {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Accept: application/json
+
+###
+
+### Criar autor
+POST {{Book.Api_HostAddress}}/api/v1/autores
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Vaughn Vernon"
+}
+
+###
+
+### Atualizar autor
+PUT {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Vaughn Vernon Jr."
+}
+
+###
+
+### Excluir autor
+DELETE {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Accept: application/json
+
+###
+
+### Validar erro de autor
+POST {{Book.Api_HostAddress}}/api/v1/autores
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": ""
 }
 
 ###
