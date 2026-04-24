@@ -1,0 +1,20 @@
+---
+description: Diretrizes permanentes do projeto Book
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Regras permanentes
+
+- Use a stack oficial do projeto: `.NET 8`, `Angular`, `React`, `CSS` e `SQL Server`.
+- Use `JWT Bearer` como autenticacao padrao da API.
+- Siga as etapas `1.A` a `6.C` descritas no `README.md` e em `docs/backlog/README.md`.
+- Toda alteracao deve atualizar a documentacao correspondente.
+- Use commits no formato `tipo(etapa): descricao curta`.
+- Mantenha `ProblemDetails`, logs estruturados e tratamento especifico de excecoes.
+- O campo `Valor` deve ser monetario, com persistencia `DECIMAL(10,2)` e mascara `pt-BR`.
+- O modelo de dados oficial deve ser armazenado em
+  `docs/assets/images/modelo-dados-book.png`.
+- Mantenha documentados o compose de infraestrutura e a estrutura Docker completa.
+- Nao mova scripts de banco para fora de `database/`.

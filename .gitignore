@@ -1,0 +1,40 @@
+# Build .NET
+bin/
+obj/
+
+# Testes e cobertura
+TestResults/
+coverage/
+coverage-report/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.angular/
+.cache/
+vite.svg
+
+# Logs
+*.log
+logs/
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Docker
+sqlserver-data/

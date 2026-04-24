@@ -1,0 +1,42 @@
+# Diretrizes do Projeto Book para Assistentes e Automacoes
+
+Estas regras sao obrigatorias para qualquer automacao ou assistente que editar este
+repositorio.
+
+1. Ler o `README.md` principal e os documentos de `docs/` antes de alterar escopo,
+   arquitetura, backlog ou estrutura.
+2. Usar sempre as etapas oficiais `1.A` a `6.C` para planejar, documentar e registrar
+   commits.
+3. Toda alteracao deve atualizar a documentacao impactada e registrar commit com o
+   formato `tipo(etapa): descricao curta`.
+4. Nao remover diretrizes existentes sem justificar tecnicamente no commit e no
+   documento afetado.
+5. Manter a stack oficial:
+   - `.NET 8` no backend;
+   - `JWT Bearer` como autenticacao oficial da API;
+   - `Angular` como frontend principal;
+   - `React` como frontend complementar;
+   - `CSS` como base de estilo;
+   - `SQL Server` como banco padrao em Docker.
+6. Tratar excecoes de forma especifica:
+   - nunca responder erro tecnico cru ao usuario;
+   - preferir `ProblemDetails` na API;
+   - registrar logs estruturados;
+   - mapear erros de banco por tipo.
+7. O campo `Valor` de `Livro` e obrigatorio:
+   - persistir como `DECIMAL(10,2)`;
+   - exibir com mascara monetaria em `pt-BR`;
+   - validar valor minimo igual ou maior que zero.
+8. Scripts de banco devem permanecer versionados em `database/`:
+   - `schema/`
+   - `views/`
+   - `procedures/`
+   - `triggers/`
+   - `seeds/`
+9. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
+10. O modelo de dados em imagem deve ficar em
+    `docs/assets/images/modelo-dados-book.png`.
+11. A estrutura Docker deve prever:
+    - compose de infraestrutura;
+    - compose de stack completa;
+    - documentacao para subir tudo do zero.

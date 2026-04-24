@@ -1,0 +1,55 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: book-sqlserver
+    env_file:
+      - .env
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: "${BOOK_SQL_SA_PASSWORD}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api.template
+    container_name: book-api
+    env_file:
+      - .env
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=BookDb;User Id=sa;Password=${BOOK_SQL_SA_PASSWORD};TrustServerCertificate=True;"
+      Jwt__Issuer: "book-api"
+      Jwt__Audience: "book-web"
+      Jwt__Secret: "${BOOK_JWT_SECRET}"
+
+  frontend-angular:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.angular.template
+    container_name: book-frontend-angular
+    depends_on:
+      - api
+    ports:
+      - "4200:80"
+
+  frontend-react:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.react.template
+    container_name: book-frontend-react
+    depends_on:
+      - api
+    ports:
+      - "4173:80"
+
+volumes:
+  sqlserver-data:
