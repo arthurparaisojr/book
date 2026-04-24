@@ -1,6 +1,6 @@
-@Book.Api_HostAddress = http://localhost:5268
+@Book.Api_HostAddress = https://localhost:7082
 
-GET {{Book.Api_HostAddress}}/weatherforecast/
+GET {{Book.Api_HostAddress}}/api/v1/health
 Accept: application/json
 
 ###
