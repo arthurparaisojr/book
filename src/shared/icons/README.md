@@ -17,3 +17,4 @@ Biblioteca oficial de icones do projeto `Book`.
 - `book-menu-livros.svg`
 - `book-action-salvar.svg`
 - `book-report-autor.svg`
+- `book-app-favicon.svg`

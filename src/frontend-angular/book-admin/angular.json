@@ -28,6 +28,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "../../shared/icons",
+                "output": "."
+              },
+              {
+                "glob": "book-app-favicon.svg",
+                "input": "../../shared/icons/svg",
+                "output": "icons"
               }
             ],
             "styles": [
@@ -86,6 +96,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "../../shared/icons",
+                "output": "."
+              },
+              {
+                "glob": "book-app-favicon.svg",
+                "input": "../../shared/icons/svg",
+                "output": "icons"
               }
             ],
             "styles": [
