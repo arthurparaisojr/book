@@ -31,7 +31,8 @@
 
 .admin-nav-link {
   display: grid;
-  gap: 4px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
   padding: 14px 16px;
   border-radius: var(--book-radius-md);
   text-decoration: none;
@@ -40,8 +41,32 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-.admin-nav-link span {
+.admin-nav-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-nav-copy span {
   font-size: 0.92rem;
+}
+
+.admin-nav-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.admin-nav-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .admin-nav-link:hover,

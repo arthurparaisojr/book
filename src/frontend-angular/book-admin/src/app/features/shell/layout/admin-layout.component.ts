@@ -8,6 +8,8 @@ interface NavigationItem {
   label: string;
   route: string;
   description: string;
+  iconPath?: string;
+  shortLabel: string;
 }
 
 @Component({
@@ -26,22 +28,28 @@ export class AdminLayoutComponent implements OnInit {
     {
       label: 'Dashboard',
       route: '/dashboard',
-      description: 'Visao geral do ambiente'
+      description: 'Visao geral do ambiente',
+      iconPath: 'icons/book-nav-dashboard.svg',
+      shortLabel: 'DB'
     },
     {
       label: 'Livros',
       route: '/livros',
-      description: 'Cadastro principal'
+      description: 'Cadastro principal',
+      iconPath: 'icons/book-nav-livros.svg',
+      shortLabel: 'LV'
     },
     {
       label: 'Autores',
       route: '/autores',
-      description: 'Controle de autores'
+      description: 'Controle de autores',
+      shortLabel: 'AU'
     },
     {
       label: 'Assuntos',
       route: '/assuntos',
-      description: 'Classificacao tematica'
+      description: 'Classificacao tematica',
+      shortLabel: 'AS'
     }
   ];
 

@@ -1,3 +1,5 @@
+<a class="book-skip-link" href="#book-admin-content">Pular para o conteudo principal</a>
+
 <div class="admin-shell">
   <aside class="admin-sidebar">
     <div class="admin-brand">
@@ -6,19 +8,29 @@
       <p>Painel administrativo com tema azul, login JWT e consumo da API real.</p>
     </div>
 
-    <nav class="admin-nav">
+    <nav class="admin-nav" aria-label="Navegacao principal do painel">
       @for (item of navigationItems; track item.route) {
         <a
           class="admin-nav-link"
           [routerLink]="item.route"
           routerLinkActive="admin-nav-link-active">
-          <strong>{{ item.label }}</strong>
-          <span>{{ item.description }}</span>
+          <span class="admin-nav-icon" aria-hidden="true">
+            @if (item.iconPath) {
+              <img [src]="item.iconPath" alt="" />
+            } @else {
+              <span>{{ item.shortLabel }}</span>
+            }
+          </span>
+
+          <span class="admin-nav-copy">
+            <strong>{{ item.label }}</strong>
+            <span>{{ item.description }}</span>
+          </span>
         </a>
       }
     </nav>
 
-    <div class="admin-sidebar-footer book-card">
+    <div class="admin-sidebar-footer book-card" aria-live="polite">
       <span class="book-badge-info" [ngClass]="apiStatusClass">{{ apiStatus }}</span>
       <p>Backend local em `http://localhost:5268`.</p>
       <button class="book-button-secondary" type="button" (click)="refreshHealthStatus()">
@@ -42,7 +54,7 @@
       </div>
     </header>
 
-    <main class="admin-content">
+    <main id="book-admin-content" class="admin-content" tabindex="-1">
       <router-outlet />
     </main>
   </div>

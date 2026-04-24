@@ -4,6 +4,11 @@
   padding: clamp(20px, 3vw, 40px);
 }
 
+.insights-main {
+  display: grid;
+  gap: var(--book-space-xl);
+}
+
 .insights-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.8fr);
@@ -220,6 +225,12 @@
   min-width: min(100%, 260px);
 }
 
+.insights-search-group {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+
 .insights-book-list {
   display: grid;
   gap: var(--book-space-sm);
@@ -280,5 +291,14 @@
 
   .insights-book-meta {
     justify-content: flex-start;
+  }
+
+  .insights-search-group {
+    justify-items: stretch;
+    width: 100%;
+  }
+
+  .insights-search {
+    min-width: 100%;
   }
 }

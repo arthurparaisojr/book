@@ -4,11 +4,22 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Livro, LivroPayload } from '../../../core/models/catalog.models';
 import { LivrosApiService } from '../../../core/services/livros-api.service';
 import { getApiErrorMessage } from '../../../core/utils/api-error.utils';
+import {
+  brlCurrencyInputValidator,
+  formatBrlInputValue,
+  parseBrlInputValue
+} from '../../../core/utils/currency.utils';
+import {
+  ValidationMessageMap,
+  getControlErrorMessage,
+  shouldShowControlError
+} from '../../../core/utils/form-error.utils';
+import { CurrencyMaskDirective } from '../../../shared/directives/currency-mask.directive';
 
 @Component({
   selector: 'app-livros-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CurrencyMaskDirective],
   templateUrl: './livros-page.component.html',
   styleUrl: './livros-page.component.css'
 })
@@ -26,8 +37,11 @@ export class LivrosPageComponent implements OnInit {
     titulo: ['', [Validators.required, Validators.maxLength(40)]],
     editora: ['', [Validators.required, Validators.maxLength(40)]],
     edicao: [1, [Validators.required, Validators.min(1)]],
-    anoPublicacao: [new Date().getFullYear().toString(), [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-    valor: [0, [Validators.required, Validators.min(0)]]
+    anoPublicacao: [
+      new Date().getFullYear().toString(),
+      [Validators.required, Validators.pattern(/^\d{4}$/)]
+    ],
+    valor: ['', [Validators.required, brlCurrencyInputValidator()]]
   });
 
   livros: Livro[] = [];
@@ -36,6 +50,30 @@ export class LivrosPageComponent implements OnInit {
   saving = false;
   errorMessage = '';
   successMessage = '';
+  readonly editIconPath = 'icons/book-action-editar.svg';
+  readonly deleteIconPath = 'icons/book-action-excluir.svg';
+  private readonly validationMessages: Record<string, ValidationMessageMap> = {
+    titulo: {
+      required: 'Informe o titulo do livro.',
+      maxlength: 'Use ate 40 caracteres no titulo.'
+    },
+    editora: {
+      required: 'Informe a editora do livro.',
+      maxlength: 'Use ate 40 caracteres no nome da editora.'
+    },
+    edicao: {
+      required: 'Informe a edicao.',
+      min: 'A edicao deve ser maior ou igual a 1.'
+    },
+    anoPublicacao: {
+      required: 'Informe o ano de publicacao.',
+      pattern: 'Informe o ano com 4 digitos, por exemplo 2026.'
+    },
+    valor: {
+      required: 'Informe o valor do livro.',
+      currencyFormat: 'Digite o valor no padrao monetario brasileiro, por exemplo 129,90.'
+    }
+  };
 
   ngOnInit(): void {
     this.loadLivros();
@@ -74,7 +112,7 @@ export class LivrosPageComponent implements OnInit {
       editora: '',
       edicao: 1,
       anoPublicacao: new Date().getFullYear().toString(),
-      valor: 0
+      valor: ''
     });
   }
 
@@ -86,7 +124,7 @@ export class LivrosPageComponent implements OnInit {
       editora: livro.editora,
       edicao: livro.edicao,
       anoPublicacao: livro.anoPublicacao,
-      valor: livro.valor
+      valor: formatBrlInputValue(livro.valor)
     });
   }
 
@@ -157,6 +195,21 @@ export class LivrosPageComponent implements OnInit {
     }).format(value);
   }
 
+  showFieldError(
+    controlName: 'titulo' | 'editora' | 'edicao' | 'anoPublicacao' | 'valor'
+  ): boolean {
+    return shouldShowControlError(this.livroForm.controls[controlName]);
+  }
+
+  getFieldErrorMessage(
+    controlName: 'titulo' | 'editora' | 'edicao' | 'anoPublicacao' | 'valor'
+  ): string {
+    return getControlErrorMessage(
+      this.livroForm.controls[controlName],
+      this.validationMessages[controlName]
+    );
+  }
+
   private buildPayload(): LivroPayload {
     const value = this.livroForm.getRawValue();
 
@@ -165,7 +218,7 @@ export class LivrosPageComponent implements OnInit {
       editora: value.editora.trim(),
       edicao: Number(value.edicao),
       anoPublicacao: value.anoPublicacao.trim(),
-      valor: Number(value.valor)
+      valor: parseBrlInputValue(value.valor) ?? 0
     };
   }
 }

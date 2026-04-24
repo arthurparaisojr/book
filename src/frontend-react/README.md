@@ -21,7 +21,7 @@ O React complementa a solucao e nao substitui o frontend principal em Angular.
 - reutilizar icones SVG de `src/shared/icons/svg/`;
 - manter linguagem visual amigavel e consistente com o Angular.
 
-## Status atual da etapa 4.B
+## Status atual da etapa 4.C
 
 O app `book-insights` agora possui:
 
@@ -31,6 +31,8 @@ O app `book-insights` agora possui:
 - leitura de editoras e distribuicao por ano;
 - busca local sobre o catalogo carregado;
 - uso do tema azul compartilhado;
+- skip link e anuncios de carregamento;
+- favicon compartilhado do projeto;
 - reaproveitamento de SVGs da biblioteca do projeto.
 
 ## Como executar
@@ -56,3 +58,10 @@ npm run dev
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
+
+## Validacao recomendada da 4.C
+
+1. abrir `http://localhost:5173`;
+2. navegar por teclado e usar o skip link;
+3. testar a busca local do catalogo;
+4. confirmar o favicon e a consistencia visual com o Angular.

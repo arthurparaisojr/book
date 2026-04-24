@@ -27,7 +27,8 @@ subetapas por letra.
 - `4.A` Implementar o frontend Angular para CRUD, navegacao e formularios.
 - `4.B` Implementar o frontend React para relatorios, dashboard ou modulo
   complementar.
-- `4.C` Aplicar CSS, acessibilidade, responsividade, idioma e mascara monetaria.
+- `4.C` Aplicar CSS, acessibilidade, responsividade, idioma e mascara monetaria,
+  incluindo skip links, mensagens amigaveis e tema azul compartilhado.
 
 ## 5. Qualidade e relatorios
 

@@ -4,6 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Autor, AutorPayload } from '../../../core/models/catalog.models';
 import { AutoresApiService } from '../../../core/services/autores-api.service';
 import { getApiErrorMessage } from '../../../core/utils/api-error.utils';
+import {
+  ValidationMessageMap,
+  getControlErrorMessage,
+  shouldShowControlError
+} from '../../../core/utils/form-error.utils';
 
 @Component({
   selector: 'app-autores-page',
@@ -30,6 +35,14 @@ export class AutoresPageComponent implements OnInit {
   saving = false;
   errorMessage = '';
   successMessage = '';
+  readonly editIconPath = 'icons/book-action-editar.svg';
+  readonly deleteIconPath = 'icons/book-action-excluir.svg';
+  private readonly validationMessages: Record<string, ValidationMessageMap> = {
+    nome: {
+      required: 'Informe o nome do autor.',
+      maxlength: 'Use ate 40 caracteres para o nome do autor.'
+    }
+  };
 
   ngOnInit(): void {
     this.loadAutores();
@@ -119,5 +132,16 @@ export class AutoresPageComponent implements OnInit {
         this.errorMessage = getApiErrorMessage(error);
       }
     });
+  }
+
+  showFieldError(controlName: 'nome'): boolean {
+    return shouldShowControlError(this.autorForm.controls[controlName]);
+  }
+
+  getFieldErrorMessage(controlName: 'nome'): string {
+    return getControlErrorMessage(
+      this.autorForm.controls[controlName],
+      this.validationMessages[controlName]
+    );
   }
 }

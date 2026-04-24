@@ -96,6 +96,37 @@ textarea {
   outline: none;
 }
 
+.book-sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.book-skip-link {
+  position: absolute;
+  left: var(--book-space-md);
+  top: var(--book-space-md);
+  transform: translateY(-180%);
+  transition: transform 0.2s ease;
+  z-index: 1000;
+  padding: 10px 14px;
+  border-radius: var(--book-radius-sm);
+  background: var(--book-color-primary-900);
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: var(--book-shadow-md);
+}
+
+.book-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 .book-card {
   background: var(--book-ui-bg-panel);
   border: 1px solid var(--book-ui-border-default);
@@ -145,8 +176,40 @@ textarea {
   padding: 10px 12px;
 }
 
+.book-input[aria-invalid="true"] {
+  border-color: color-mix(in srgb, var(--book-color-danger) 52%, white);
+  background: color-mix(in srgb, var(--book-ui-danger-bg) 48%, white);
+}
+
 .book-input::placeholder {
   color: var(--book-ui-text-muted);
+}
+
+.book-form-hint,
+.book-form-error {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.book-form-hint {
+  color: var(--book-ui-text-muted);
+}
+
+.book-form-error {
+  color: var(--book-color-danger);
+  font-weight: 600;
+}
+
+.book-button-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-button-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 .book-table {

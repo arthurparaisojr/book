@@ -21,7 +21,7 @@ Esta area sera usada pelo frontend principal do sistema.
 - componentes reutilizaveis;
 - tratamento visual de erros de validacao.
 
-## Status atual da etapa 4.A
+## Status atual da etapa 4.C
 
 O app `book-admin` agora possui:
 
@@ -30,7 +30,10 @@ O app `book-admin` agora possui:
 - dashboard inicial;
 - telas para `Livro`, `Autor` e `Assunto`;
 - consumo da API `.NET 8` em `http://localhost:5268/api/v1`;
-- tema azul compartilhado importado de `src/shared/themes/book-default-blue.css`.
+- tema azul compartilhado importado de `src/shared/themes/book-default-blue.css`;
+- mascara monetaria em `pt-BR` no cadastro de `Livro`;
+- validacoes com mensagens claras e estados acessiveis;
+- uso dos SVGs compartilhados nas acoes de interface.
 
 ## Como executar
 
@@ -60,6 +63,14 @@ npm start
 
 - `book-admin` / `Book@123`
 - `book-reader` / `Book@123`
+
+## Validacao recomendada da 4.C
+
+1. abrir `http://localhost:4200`;
+2. usar o link "Pular para o conteudo principal" com o teclado;
+3. testar o login com erro de campo vazio;
+4. criar ou editar um livro e confirmar a mascara de `Valor` em `pt-BR`;
+5. validar as mensagens de erro dos formularios de `Autor` e `Assunto`.
 
 ## Observacao importante
 

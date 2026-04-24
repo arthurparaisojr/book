@@ -4,6 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Assunto, AssuntoPayload } from '../../../core/models/catalog.models';
 import { AssuntosApiService } from '../../../core/services/assuntos-api.service';
 import { getApiErrorMessage } from '../../../core/utils/api-error.utils';
+import {
+  ValidationMessageMap,
+  getControlErrorMessage,
+  shouldShowControlError
+} from '../../../core/utils/form-error.utils';
 
 @Component({
   selector: 'app-assuntos-page',
@@ -30,6 +35,14 @@ export class AssuntosPageComponent implements OnInit {
   saving = false;
   errorMessage = '';
   successMessage = '';
+  readonly editIconPath = 'icons/book-action-editar.svg';
+  readonly deleteIconPath = 'icons/book-action-excluir.svg';
+  private readonly validationMessages: Record<string, ValidationMessageMap> = {
+    descricao: {
+      required: 'Informe a descricao do assunto.',
+      maxlength: 'Use ate 20 caracteres para a descricao.'
+    }
+  };
 
   ngOnInit(): void {
     this.loadAssuntos();
@@ -121,5 +134,16 @@ export class AssuntosPageComponent implements OnInit {
         this.errorMessage = getApiErrorMessage(error);
       }
     });
+  }
+
+  showFieldError(controlName: 'descricao'): boolean {
+    return shouldShowControlError(this.assuntoForm.controls[controlName]);
+  }
+
+  getFieldErrorMessage(controlName: 'descricao'): string {
+    return getControlErrorMessage(
+      this.assuntoForm.controls[controlName],
+      this.validationMessages[controlName]
+    );
   }
 }

@@ -287,6 +287,12 @@ npm create vite@latest src/frontend-react/book-insights -- --template react-ts
 - valor persistido em banco como `DECIMAL(10,2)`;
 - input monetário com máscara no front.
 
+Implementacao atual da etapa `4.C`:
+
+- Angular com mascara monetaria em `pt-BR`, mensagens de validacao e acessibilidade basica;
+- React com skip link, busca com ajuda textual e favicon compartilhado;
+- tema azul compartilhado aplicado nos dois frontends.
+
 ### 9.8 Criar banco e objetos
 
 Executar, nesta ordem:

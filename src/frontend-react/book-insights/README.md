@@ -16,6 +16,8 @@ Modulo complementar em React do projeto `Book`.
 - leitura de livros, autores e assuntos;
 - busca local sobre o catalogo carregado;
 - uso do tema azul compartilhado;
+- skip link, busca com ajuda textual e anuncios de carregamento;
+- favicon compartilhado do projeto;
 - reaproveitamento de SVGs da biblioteca do projeto.
 
 ## Como executar
@@ -45,3 +47,11 @@ npm run dev
 ## Observacao
 
 Este modulo e majoritariamente de leitura. A operacao administrativa principal continua no Angular em `http://localhost:4200`.
+
+## Validacao recomendada
+
+1. abrir `http://localhost:5173`;
+2. usar `Tab` e confirmar o link "Pular para o conteudo principal";
+3. validar os cards, o painel de saude e os graficos;
+4. usar a busca local e confirmar o filtro sobre os livros mais recentes;
+5. verificar se o favicon do navegador ja aparece com o icone do projeto.

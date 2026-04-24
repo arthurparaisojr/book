@@ -46,7 +46,7 @@
     </footer>
   </div>
 
-  <form class="login-panel book-card" [formGroup]="loginForm" (ngSubmit)="submit()">
+  <form class="login-panel book-card" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
     <div>
       <h2 class="book-section-title">Entrar</h2>
       <p class="book-page-subtitle">
@@ -57,17 +57,43 @@
     <div class="book-form-grid">
       <div class="book-form-field book-form-field-full">
         <label for="username">Usuario</label>
-        <input id="username" class="book-input" type="text" formControlName="username" />
+        <input
+          id="username"
+          class="book-input"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          [attr.aria-invalid]="showFieldError('username')"
+          [attr.aria-describedby]="showFieldError('username') ? 'username-error' : null" />
+
+        @if (showFieldError('username')) {
+          <p id="username-error" class="book-form-error" role="alert">
+            {{ getFieldErrorMessage('username') }}
+          </p>
+        }
       </div>
 
       <div class="book-form-field book-form-field-full">
         <label for="password">Senha</label>
-        <input id="password" class="book-input" type="password" formControlName="password" />
+        <input
+          id="password"
+          class="book-input"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          [attr.aria-invalid]="showFieldError('password')"
+          [attr.aria-describedby]="showFieldError('password') ? 'password-error' : null" />
+
+        @if (showFieldError('password')) {
+          <p id="password-error" class="book-form-error" role="alert">
+            {{ getFieldErrorMessage('password') }}
+          </p>
+        }
       </div>
     </div>
 
     @if (errorMessage) {
-      <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+      <div class="book-feedback book-feedback-error" role="alert">{{ errorMessage }}</div>
     }
 
     <div class="login-inline-note">

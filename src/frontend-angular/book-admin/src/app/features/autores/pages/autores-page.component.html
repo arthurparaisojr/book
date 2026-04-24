@@ -18,16 +18,16 @@
   </header>
 
   @if (errorMessage) {
-    <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+    <div class="book-feedback book-feedback-error" role="alert">{{ errorMessage }}</div>
   }
 
   @if (successMessage) {
-    <div class="book-feedback book-feedback-success">{{ successMessage }}</div>
+    <div class="book-feedback book-feedback-success" aria-live="polite">{{ successMessage }}</div>
   }
 
   <section class="book-grid book-grid-two">
     <div class="book-page">
-      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadAutores()">
+      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadAutores()" novalidate>
         <h2 class="book-section-title">Filtro por nome</h2>
         <div class="book-form-field">
           <label for="autor-nome-filtro">Nome</label>
@@ -44,7 +44,7 @@
         <h2 class="book-section-title">Lista de autores</h2>
 
         @if (loading) {
-          <div class="book-loading">Buscando autores...</div>
+          <div class="book-loading" aria-live="polite">Buscando autores...</div>
         } @else if (!autores.length) {
           <div class="book-empty-state">Nenhum autor encontrado.</div>
         } @else {
@@ -62,10 +62,12 @@
                     <td>{{ autor.nome }}</td>
                     <td>
                       <div class="book-inline-actions">
-                        <button class="book-button-secondary" type="button" (click)="startEdit(autor)">
+                        <button class="book-button-secondary book-button-with-icon" type="button" (click)="startEdit(autor)">
+                          <img class="book-button-icon" [src]="editIconPath" alt="" aria-hidden="true" />
                           Editar
                         </button>
-                        <button class="book-button-danger" type="button" (click)="remove(autor)">
+                        <button class="book-button-danger book-button-with-icon" type="button" (click)="remove(autor)">
+                          <img class="book-button-icon" [src]="deleteIconPath" alt="" aria-hidden="true" />
                           Excluir
                         </button>
                       </div>
@@ -79,14 +81,26 @@
       </div>
     </div>
 
-    <form class="book-card" [formGroup]="autorForm" (ngSubmit)="submit()">
+    <form class="book-card" [formGroup]="autorForm" (ngSubmit)="submit()" novalidate>
       <h2 class="book-section-title">
         {{ editingAutorId ? 'Editar autor' : 'Novo autor' }}
       </h2>
 
       <div class="book-form-field">
         <label for="autor-nome">Nome</label>
-        <input id="autor-nome" class="book-input" type="text" formControlName="nome" />
+        <input
+          id="autor-nome"
+          class="book-input"
+          type="text"
+          formControlName="nome"
+          [attr.aria-invalid]="showFieldError('nome')"
+          [attr.aria-describedby]="showFieldError('nome') ? 'autor-nome-error' : null" />
+
+        @if (showFieldError('nome')) {
+          <p id="autor-nome-error" class="book-form-error" role="alert">
+            {{ getFieldErrorMessage('nome') }}
+          </p>
+        }
       </div>
 
       <div class="book-form-actions">

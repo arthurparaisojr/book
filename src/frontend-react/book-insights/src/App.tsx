@@ -175,10 +175,26 @@ function App() {
     (currentMax, [, value]) => Math.max(currentMax, value),
     1,
   )
+  const statusAnnouncement = isLoading
+    ? 'Carregando dados do modulo React.'
+    : errorMessage
+      ? `Falha ao carregar insights: ${errorMessage}`
+      : snapshot
+        ? 'Painel de insights atualizado com sucesso.'
+        : ''
 
   return (
-    <div className="insights-shell">
-      <header className="insights-hero book-card">
+    <>
+      <a className="book-skip-link" href="#book-insights-content">
+        Pular para o conteudo principal
+      </a>
+
+      <div className="book-sr-only" aria-live="polite">
+        {statusAnnouncement}
+      </div>
+
+      <div className="insights-shell">
+        <header className="insights-hero book-card">
         <div className="insights-hero-copy">
           <span className="book-badge-info">Book Insights</span>
           <h1>Modulo React para leitura analitica e apresentacao executiva</h1>
@@ -211,248 +227,261 @@ function App() {
             <p>Dados carregados a partir dos endpoints do backend `.NET 8`.</p>
           </article>
         </div>
-      </header>
+        </header>
 
-      {errorMessage ? (
-        <div className="book-feedback book-feedback-error">
-          {errorMessage}
-          <div className="insights-feedback-actions">
-            <button className="book-button-secondary" type="button" onClick={() => void loadSnapshot()}>
-              Tentar novamente
-            </button>
-          </div>
-        </div>
-      ) : null}
-
-      {isLoading ? (
-        <div className="book-card insights-loading">
-          <span className="book-loading">Carregando modulo de insights...</span>
-        </div>
-      ) : null}
-
-      {!isLoading && snapshot ? (
-        <>
-          <section className="insights-kpis">
-            <article className="book-card insights-kpi-card">
-              <span className="insights-kpi-label">Livros ativos</span>
-              <strong>{livros.length}</strong>
-              <p>Catalogo principal pronto para o CRUD do painel Angular.</p>
-            </article>
-
-            <article className="book-card insights-kpi-card">
-              <span className="insights-kpi-label">Autores cadastrados</span>
-              <strong>{autores.length}</strong>
-              <p>Base de autoria disponivel para relatorios e filtros futuros.</p>
-            </article>
-
-            <article className="book-card insights-kpi-card">
-              <span className="insights-kpi-label">Assuntos mapeados</span>
-              <strong>{assuntos.length}</strong>
-              <p>Taxonomia inicial para classificacao e leitura analitica.</p>
-            </article>
-
-            <article className="book-card insights-kpi-card">
-              <span className="insights-kpi-label">Valor medio</span>
-              <strong>{currencyFormatter.format(averageBookValue)}</strong>
-              <p>Referencia rapida do patamar financeiro atual do catalogo.</p>
-            </article>
-          </section>
-
-          <section className="insights-grid">
-            <article className="book-card insights-panel">
-              <div className="insights-panel-heading">
-                <div>
-                  <h2 className="book-section-title">Saude da API</h2>
-                  <p className="book-page-subtitle">
-                    Resumo do endpoint principal e das verificacoes de readiness.
-                  </p>
-                </div>
-                <span className={`book-badge-info ${getStatusTone(health?.status ?? 'unhealthy')}`}>
-                  {health?.status ?? 'indisponivel'}
-                </span>
+        <main id="book-insights-content" className="insights-main" aria-busy={isLoading}>
+          {errorMessage ? (
+            <div className="book-feedback book-feedback-error" role="alert">
+              {errorMessage}
+              <div className="insights-feedback-actions">
+                <button className="book-button-secondary" type="button" onClick={() => void loadSnapshot()}>
+                  Tentar novamente
+                </button>
               </div>
+            </div>
+          ) : null}
 
-              <div className="insights-health-grid">
-                {health?.checks.map((check) => (
-                  <div key={check.name} className="insights-health-item">
+          {isLoading ? (
+            <div className="book-card insights-loading" aria-live="polite">
+              <span className="book-loading">Carregando modulo de insights...</span>
+            </div>
+          ) : null}
+
+          {!isLoading && snapshot ? (
+            <>
+              <section className="insights-kpis">
+                <article className="book-card insights-kpi-card">
+                  <span className="insights-kpi-label">Livros ativos</span>
+                  <strong>{livros.length}</strong>
+                  <p>Catalogo principal pronto para o CRUD do painel Angular.</p>
+                </article>
+
+                <article className="book-card insights-kpi-card">
+                  <span className="insights-kpi-label">Autores cadastrados</span>
+                  <strong>{autores.length}</strong>
+                  <p>Base de autoria disponivel para relatorios e filtros futuros.</p>
+                </article>
+
+                <article className="book-card insights-kpi-card">
+                  <span className="insights-kpi-label">Assuntos mapeados</span>
+                  <strong>{assuntos.length}</strong>
+                  <p>Taxonomia inicial para classificacao e leitura analitica.</p>
+                </article>
+
+                <article className="book-card insights-kpi-card">
+                  <span className="insights-kpi-label">Valor medio</span>
+                  <strong>{currencyFormatter.format(averageBookValue)}</strong>
+                  <p>Referencia rapida do patamar financeiro atual do catalogo.</p>
+                </article>
+              </section>
+
+              <section className="insights-grid">
+                <article className="book-card insights-panel">
+                  <div className="insights-panel-heading">
                     <div>
-                      <strong>{check.name}</strong>
-                      <p>{check.description}</p>
+                      <h2 className="book-section-title">Saude da API</h2>
+                      <p className="book-page-subtitle">
+                        Resumo do endpoint principal e das verificacoes de readiness.
+                      </p>
                     </div>
-                    <span className={`book-badge-info ${getStatusTone(check.status)}`}>
-                      {check.status}
+                    <span className={`book-badge-info ${getStatusTone(health?.status ?? 'unhealthy')}`}>
+                      {health?.status ?? 'indisponivel'}
                     </span>
                   </div>
-                ))}
-              </div>
 
-              <p className="insights-trace">
-                Atualizado em {formatDate(snapshot.health.utcNow)}. Trace atual: {snapshot.health.traceId}
-              </p>
-            </article>
-
-            <article className="book-card insights-panel">
-              <div className="insights-panel-heading">
-                <div>
-                  <h2 className="book-section-title">Perfis e operacao</h2>
-                  <p className="book-page-subtitle">
-                    Papel do React em relacao ao backend e ao painel Angular.
-                  </p>
-                </div>
-                <img src={editarIcon} alt="" className="insights-heading-icon" />
-              </div>
-
-              <div className="insights-role-grid">
-                <div className="insights-role-card">
-                  <strong>book-admin</strong>
-                  <p>Pode autenticar no Angular e executar operacoes de escrita no catalogo.</p>
-                </div>
-                <div className="insights-role-card">
-                  <strong>book-reader</strong>
-                  <p>Pode navegar e validar leitura, recebendo `403` nas rotas protegidas.</p>
-                </div>
-                <div className="insights-role-card">
-                  <strong>React insights</strong>
-                  <p>Modulo em leitura, orientado a resumo visual, consulta e demonstracao.</p>
-                </div>
-              </div>
-
-              <div className="insights-inline-note">
-                <span className="book-badge-info">JWT no backend</span>
-                <span className="book-badge-info">CORS local ativo</span>
-                <span className="book-badge-info">Tema azul compartilhado</span>
-              </div>
-            </article>
-
-            <article className="book-card insights-panel">
-              <div className="insights-panel-heading">
-                <div>
-                  <h2 className="book-section-title">Editoras em destaque</h2>
-                  <p className="book-page-subtitle">
-                    Distribuicao simples baseada no acervo atual da API.
-                  </p>
-                </div>
-                <img src={livrosIcon} alt="" className="insights-heading-icon" />
-              </div>
-
-              <div className="insights-bars">
-                {topPublishers.map(([publisher, count]) => (
-                  <div key={publisher} className="insights-bar-row">
-                    <div className="insights-bar-meta">
-                      <strong>{publisher}</strong>
-                      <span>{count} livro(s)</span>
-                    </div>
-                    <div className="insights-bar-track">
-                      <div
-                        className="insights-bar-fill"
-                        style={{ width: `${(count / highestPublisherCount) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            <article className="book-card insights-panel">
-              <div className="insights-panel-heading">
-                <div>
-                  <h2 className="book-section-title">Linha do tempo</h2>
-                  <p className="book-page-subtitle">
-                    Leitura cronologica simples com base no ano de publicacao.
-                  </p>
-                </div>
-                <img src={excluirIcon} alt="" className="insights-heading-icon" />
-              </div>
-
-              <div className="insights-bars insights-bars-years">
-                {booksByYear.map(([year, count]) => (
-                  <div key={year} className="insights-bar-row">
-                    <div className="insights-bar-meta">
-                      <strong>{year}</strong>
-                      <span>{count} item(ns)</span>
-                    </div>
-                    <div className="insights-bar-track">
-                      <div
-                        className="insights-bar-fill insights-bar-fill-alt"
-                        style={{ width: `${(count / highestYearCount) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </section>
-
-          <section className="insights-grid">
-            <article className="book-card insights-panel insights-panel-wide">
-              <div className="insights-panel-heading">
-                <div>
-                  <h2 className="book-section-title">Catalogo exploravel</h2>
-                  <p className="book-page-subtitle">
-                    Busca local sobre os livros carregados para demonstracao e apoio de leitura.
-                  </p>
-                </div>
-                <input
-                  className="book-input insights-search"
-                  type="search"
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  placeholder="Buscar por titulo, editora ou ano"
-                />
-              </div>
-
-              <div className="insights-book-list">
-                {filteredBooks.length ? (
-                  filteredBooks.map((livro) => (
-                    <article key={livro.codl} className="insights-book-card">
-                      <div>
-                        <strong>{livro.titulo}</strong>
-                        <p>{livro.editora}</p>
+                  <div className="insights-health-grid">
+                    {health?.checks.map((check) => (
+                      <div key={check.name} className="insights-health-item">
+                        <div>
+                          <strong>{check.name}</strong>
+                          <p>{check.description}</p>
+                        </div>
+                        <span className={`book-badge-info ${getStatusTone(check.status)}`}>
+                          {check.status}
+                        </span>
                       </div>
-                      <div className="insights-book-meta">
-                        <span className="book-badge-info">{livro.anoPublicacao}</span>
-                        <span className="book-badge-info">{currencyFormatter.format(livro.valor)}</span>
-                      </div>
-                    </article>
-                  ))
-                ) : (
-                  <div className="book-empty-state">
-                    Nenhum livro encontrado para o termo informado.
+                    ))}
                   </div>
-                )}
-              </div>
-            </article>
 
-            <article className="book-card insights-panel">
-              <h2 className="book-section-title">Autores em destaque</h2>
-              <div className="insights-chip-grid">
-                {autores.map((autor) => (
-                  <span key={autor.codAu} className="book-badge-info">
-                    {autor.nome}
-                  </span>
-                ))}
-              </div>
-            </article>
+                  <p className="insights-trace">
+                    Atualizado em {formatDate(snapshot.health.utcNow)}. Trace atual: {snapshot.health.traceId}
+                  </p>
+                </article>
 
-            <article className="book-card insights-panel">
-              <h2 className="book-section-title">Assuntos ativos</h2>
-              <div className="insights-chip-grid">
-                {assuntos.map((assunto) => (
-                  <span key={assunto.codAs} className="book-badge-info">
-                    {assunto.descricao}
-                  </span>
-                ))}
-              </div>
-            </article>
-          </section>
+                <article className="book-card insights-panel">
+                  <div className="insights-panel-heading">
+                    <div>
+                      <h2 className="book-section-title">Perfis e operacao</h2>
+                      <p className="book-page-subtitle">
+                        Papel do React em relacao ao backend e ao painel Angular.
+                      </p>
+                    </div>
+                    <img src={editarIcon} alt="" className="insights-heading-icon" />
+                  </div>
 
-          <footer className="insights-footer">
-            <span>Book Insights em React</span>
-            <span>Total estimado do catalogo: {currencyFormatter.format(totalCatalogValue)}</span>
-          </footer>
-        </>
-      ) : null}
-    </div>
+                  <div className="insights-role-grid">
+                    <div className="insights-role-card">
+                      <strong>book-admin</strong>
+                      <p>Pode autenticar no Angular e executar operacoes de escrita no catalogo.</p>
+                    </div>
+                    <div className="insights-role-card">
+                      <strong>book-reader</strong>
+                      <p>Pode navegar e validar leitura, recebendo `403` nas rotas protegidas.</p>
+                    </div>
+                    <div className="insights-role-card">
+                      <strong>React insights</strong>
+                      <p>Modulo em leitura, orientado a resumo visual, consulta e demonstracao.</p>
+                    </div>
+                  </div>
+
+                  <div className="insights-inline-note">
+                    <span className="book-badge-info">JWT no backend</span>
+                    <span className="book-badge-info">CORS local ativo</span>
+                    <span className="book-badge-info">Tema azul compartilhado</span>
+                  </div>
+                </article>
+
+                <article className="book-card insights-panel">
+                  <div className="insights-panel-heading">
+                    <div>
+                      <h2 className="book-section-title">Editoras em destaque</h2>
+                      <p className="book-page-subtitle">
+                        Distribuicao simples baseada no acervo atual da API.
+                      </p>
+                    </div>
+                    <img src={livrosIcon} alt="" className="insights-heading-icon" />
+                  </div>
+
+                  <div className="insights-bars">
+                    {topPublishers.map(([publisher, count]) => (
+                      <div key={publisher} className="insights-bar-row">
+                        <div className="insights-bar-meta">
+                          <strong>{publisher}</strong>
+                          <span>{count} livro(s)</span>
+                        </div>
+                        <div className="insights-bar-track">
+                          <div
+                            className="insights-bar-fill"
+                            style={{ width: `${(count / highestPublisherCount) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+
+                <article className="book-card insights-panel">
+                  <div className="insights-panel-heading">
+                    <div>
+                      <h2 className="book-section-title">Linha do tempo</h2>
+                      <p className="book-page-subtitle">
+                        Leitura cronologica simples com base no ano de publicacao.
+                      </p>
+                    </div>
+                    <img src={excluirIcon} alt="" className="insights-heading-icon" />
+                  </div>
+
+                  <div className="insights-bars insights-bars-years">
+                    {booksByYear.map(([year, count]) => (
+                      <div key={year} className="insights-bar-row">
+                        <div className="insights-bar-meta">
+                          <strong>{year}</strong>
+                          <span>{count} item(ns)</span>
+                        </div>
+                        <div className="insights-bar-track">
+                          <div
+                            className="insights-bar-fill insights-bar-fill-alt"
+                            style={{ width: `${(count / highestYearCount) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              </section>
+
+              <section className="insights-grid">
+                <article className="book-card insights-panel insights-panel-wide">
+                  <div className="insights-panel-heading">
+                    <div>
+                      <h2 className="book-section-title">Catalogo exploravel</h2>
+                      <p className="book-page-subtitle">
+                        Busca local sobre os livros carregados para demonstracao e apoio de leitura.
+                      </p>
+                    </div>
+                    <div className="insights-search-group">
+                      <label className="book-sr-only" htmlFor="insights-search">
+                        Buscar livros no catalogo
+                      </label>
+                      <input
+                        id="insights-search"
+                        className="book-input insights-search"
+                        type="search"
+                        value={searchTerm}
+                        onChange={(event) => setSearchTerm(event.target.value)}
+                        placeholder="Buscar por titulo, editora ou ano"
+                        aria-describedby="insights-search-hint"
+                      />
+                      <p id="insights-search-hint" className="book-form-hint">
+                        A busca local considera os livros mais recentes carregados neste dashboard.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="insights-book-list">
+                    {filteredBooks.length ? (
+                      filteredBooks.map((livro) => (
+                        <article key={livro.codl} className="insights-book-card">
+                          <div>
+                            <strong>{livro.titulo}</strong>
+                            <p>{livro.editora}</p>
+                          </div>
+                          <div className="insights-book-meta">
+                            <span className="book-badge-info">{livro.anoPublicacao}</span>
+                            <span className="book-badge-info">{currencyFormatter.format(livro.valor)}</span>
+                          </div>
+                        </article>
+                      ))
+                    ) : (
+                      <div className="book-empty-state">
+                        Nenhum livro encontrado para o termo informado.
+                      </div>
+                    )}
+                  </div>
+                </article>
+
+                <article className="book-card insights-panel">
+                  <h2 className="book-section-title">Autores em destaque</h2>
+                  <div className="insights-chip-grid">
+                    {autores.map((autor) => (
+                      <span key={autor.codAu} className="book-badge-info">
+                        {autor.nome}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+
+                <article className="book-card insights-panel">
+                  <h2 className="book-section-title">Assuntos ativos</h2>
+                  <div className="insights-chip-grid">
+                    {assuntos.map((assunto) => (
+                      <span key={assunto.codAs} className="book-badge-info">
+                        {assunto.descricao}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </section>
+
+              <footer className="insights-footer">
+                <span>Book Insights em React</span>
+                <span>Total estimado do catalogo: {currencyFormatter.format(totalCatalogValue)}</span>
+              </footer>
+            </>
+          ) : null}
+        </main>
+      </div>
+    </>
   )
 }
 

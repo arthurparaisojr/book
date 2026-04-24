@@ -4,6 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { getApiErrorMessage } from '../../../core/utils/api-error.utils';
+import {
+  ValidationMessageMap,
+  getControlErrorMessage,
+  shouldShowControlError
+} from '../../../core/utils/form-error.utils';
 
 @Component({
   selector: 'app-login-page',
@@ -25,6 +30,14 @@ export class LoginPageComponent {
   isSubmitting = false;
   errorMessage = '';
   readonly currentYear = new Date().getFullYear();
+  private readonly validationMessages: Record<string, ValidationMessageMap> = {
+    username: {
+      required: 'Informe o usuario para continuar.'
+    },
+    password: {
+      required: 'Informe a senha para autenticar.'
+    }
+  };
 
   useCredentialPreset(username: string, password: string): void {
     this.loginForm.setValue({ username, password });
@@ -50,5 +63,16 @@ export class LoginPageComponent {
         this.errorMessage = getApiErrorMessage(error);
       }
     });
+  }
+
+  showFieldError(controlName: 'username' | 'password'): boolean {
+    return shouldShowControlError(this.loginForm.controls[controlName]);
+  }
+
+  getFieldErrorMessage(controlName: 'username' | 'password'): string {
+    return getControlErrorMessage(
+      this.loginForm.controls[controlName],
+      this.validationMessages[controlName]
+    );
   }
 }

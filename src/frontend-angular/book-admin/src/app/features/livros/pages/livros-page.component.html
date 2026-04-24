@@ -18,16 +18,16 @@
   </header>
 
   @if (errorMessage) {
-    <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+    <div class="book-feedback book-feedback-error" role="alert">{{ errorMessage }}</div>
   }
 
   @if (successMessage) {
-    <div class="book-feedback book-feedback-success">{{ successMessage }}</div>
+    <div class="book-feedback book-feedback-success" aria-live="polite">{{ successMessage }}</div>
   }
 
   <section class="book-grid book-grid-two">
     <div class="book-page">
-      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadLivros()">
+      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadLivros()" novalidate>
         <h2 class="book-section-title">Filtros</h2>
         <div class="book-form-grid">
           <div class="book-form-field">
@@ -56,7 +56,7 @@
         <h2 class="book-section-title">Lista de livros</h2>
 
         @if (loading) {
-          <div class="book-loading">Buscando livros...</div>
+          <div class="book-loading" aria-live="polite">Buscando livros...</div>
         } @else if (!livros.length) {
           <div class="book-empty-state">Nenhum livro encontrado para os filtros informados.</div>
         } @else {
@@ -80,10 +80,12 @@
                     <td>{{ formatCurrency(livro.valor) }}</td>
                     <td>
                       <div class="book-inline-actions">
-                        <button class="book-button-secondary" type="button" (click)="startEdit(livro)">
+                        <button class="book-button-secondary book-button-with-icon" type="button" (click)="startEdit(livro)">
+                          <img class="book-button-icon" [src]="editIconPath" alt="" aria-hidden="true" />
                           Editar
                         </button>
-                        <button class="book-button-danger" type="button" (click)="remove(livro)">
+                        <button class="book-button-danger book-button-with-icon" type="button" (click)="remove(livro)">
+                          <img class="book-button-icon" [src]="deleteIconPath" alt="" aria-hidden="true" />
                           Excluir
                         </button>
                       </div>
@@ -97,7 +99,7 @@
       </div>
     </div>
 
-    <form class="book-card" [formGroup]="livroForm" (ngSubmit)="submit()">
+    <form class="book-card" [formGroup]="livroForm" (ngSubmit)="submit()" novalidate>
       <h2 class="book-section-title">
         {{ editingLivroId ? 'Editar livro' : 'Novo livro' }}
       </h2>
@@ -105,27 +107,96 @@
       <div class="book-form-grid">
         <div class="book-form-field book-form-field-full">
           <label for="livro-titulo">Titulo</label>
-          <input id="livro-titulo" class="book-input" type="text" formControlName="titulo" />
+          <input
+            id="livro-titulo"
+            class="book-input"
+            type="text"
+            formControlName="titulo"
+            [attr.aria-invalid]="showFieldError('titulo')"
+            [attr.aria-describedby]="showFieldError('titulo') ? 'livro-titulo-error' : null" />
+
+          @if (showFieldError('titulo')) {
+            <p id="livro-titulo-error" class="book-form-error" role="alert">
+              {{ getFieldErrorMessage('titulo') }}
+            </p>
+          }
         </div>
 
         <div class="book-form-field book-form-field-full">
           <label for="livro-editora">Editora</label>
-          <input id="livro-editora" class="book-input" type="text" formControlName="editora" />
+          <input
+            id="livro-editora"
+            class="book-input"
+            type="text"
+            formControlName="editora"
+            [attr.aria-invalid]="showFieldError('editora')"
+            [attr.aria-describedby]="showFieldError('editora') ? 'livro-editora-error' : null" />
+
+          @if (showFieldError('editora')) {
+            <p id="livro-editora-error" class="book-form-error" role="alert">
+              {{ getFieldErrorMessage('editora') }}
+            </p>
+          }
         </div>
 
         <div class="book-form-field">
           <label for="livro-edicao">Edicao</label>
-          <input id="livro-edicao" class="book-input" type="number" formControlName="edicao" />
+          <input
+            id="livro-edicao"
+            class="book-input"
+            type="number"
+            min="1"
+            formControlName="edicao"
+            [attr.aria-invalid]="showFieldError('edicao')"
+            [attr.aria-describedby]="showFieldError('edicao') ? 'livro-edicao-error' : null" />
+
+          @if (showFieldError('edicao')) {
+            <p id="livro-edicao-error" class="book-form-error" role="alert">
+              {{ getFieldErrorMessage('edicao') }}
+            </p>
+          }
         </div>
 
         <div class="book-form-field">
           <label for="livro-ano">Ano publicacao</label>
-          <input id="livro-ano" class="book-input" type="text" maxlength="4" formControlName="anoPublicacao" />
+          <input
+            id="livro-ano"
+            class="book-input"
+            type="text"
+            maxlength="4"
+            inputmode="numeric"
+            formControlName="anoPublicacao"
+            [attr.aria-invalid]="showFieldError('anoPublicacao')"
+            [attr.aria-describedby]="showFieldError('anoPublicacao') ? 'livro-ano-error' : null" />
+
+          @if (showFieldError('anoPublicacao')) {
+            <p id="livro-ano-error" class="book-form-error" role="alert">
+              {{ getFieldErrorMessage('anoPublicacao') }}
+            </p>
+          }
         </div>
 
         <div class="book-form-field book-form-field-full">
           <label for="livro-valor">Valor</label>
-          <input id="livro-valor" class="book-input" type="number" step="0.01" min="0" formControlName="valor" />
+          <input
+            id="livro-valor"
+            class="book-input"
+            type="text"
+            inputmode="decimal"
+            placeholder="0,00"
+            formControlName="valor"
+            appCurrencyMask
+            [attr.aria-invalid]="showFieldError('valor')"
+            [attr.aria-describedby]="showFieldError('valor') ? 'livro-valor-hint livro-valor-error' : 'livro-valor-hint'" />
+          <p id="livro-valor-hint" class="book-form-hint">
+            Digite o valor em reais. Exemplo: 129,90.
+          </p>
+
+          @if (showFieldError('valor')) {
+            <p id="livro-valor-error" class="book-form-error" role="alert">
+              {{ getFieldErrorMessage('valor') }}
+            </p>
+          }
         </div>
       </div>
 
