@@ -23,3 +23,7 @@ Se algum SVG precisar ser fornecido externamente, a solicitacao deve informar:
 ## SVG atual do app
 
 - `book-app-favicon.svg`: favicon oficial do painel Angular.
+- `book-nav-dashboard.svg`: icone do menu de dashboard.
+- `book-nav-livros.svg`: icone do menu de livros.
+- `book-nav-autores.svg`: icone do menu de autores.
+- `book-nav-assuntos.svg`: icone do menu de assuntos.

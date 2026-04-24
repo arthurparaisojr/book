@@ -43,12 +43,14 @@ export class AdminLayoutComponent implements OnInit {
       label: 'Autores',
       route: '/autores',
       description: 'Controle de autores',
+      iconPath: 'icons/book-nav-autores.svg',
       shortLabel: 'AU'
     },
     {
       label: 'Assuntos',
       route: '/assuntos',
       description: 'Classificacao tematica',
+      iconPath: 'icons/book-nav-assuntos.svg',
       shortLabel: 'AS'
     }
   ];
