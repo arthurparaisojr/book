@@ -329,6 +329,29 @@ Padrão oficial do projeto:
 - proteção de endpoints sensíveis com `[Authorize]`;
 - uso futuro de `refresh token` apenas se o escopo crescer.
 
+Para desenvolvimento local, a API sobe com credenciais de teste em
+`src/backend/Book.Api/appsettings.Development.json`.
+
+Credenciais locais:
+
+- usuário `book-admin` com senha `Book@123`
+- usuário `book-reader` com senha `Book@123`
+
+Fluxo mínimo de teste da autenticação:
+
+```bash
+curl -X POST http://localhost:5268/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"book-admin","password":"Book@123"}'
+```
+
+Com o token retornado:
+
+- endpoints `GET` podem ser testados sem autenticação;
+- endpoints de `POST`, `PUT` e `DELETE` exigem token JWT;
+- perfil `Admin` pode gravar;
+- perfil `Reader` deve receber `403 Forbidden` em operações de escrita.
+
 ### 9.11 Estrutura Docker completa
 
 Estrutura prevista para conter toda a solução:

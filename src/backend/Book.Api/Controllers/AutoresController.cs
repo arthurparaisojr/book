@@ -1,5 +1,7 @@
 using Book.Application.Contracts.Autores;
 using Book.Application.Services.Autores;
+using Book.Api.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book.Api.Controllers;
@@ -41,8 +43,11 @@ public sealed class AutoresController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(AutorResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<AutorResponse>> Create(
         [FromBody] CreateAutorRequest request,
         CancellationToken cancellationToken)
@@ -52,9 +57,12 @@ public sealed class AutoresController : ControllerBase
     }
 
     [HttpPut("{codAu:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(AutorResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<AutorResponse>> Update(
         int codAu,
         [FromBody] UpdateAutorRequest request,
@@ -65,8 +73,11 @@ public sealed class AutoresController : ControllerBase
     }
 
     [HttpDelete("{codAu:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Delete(int codAu, CancellationToken cancellationToken)
     {
         await _autorAppService.DeleteAsync(codAu, cancellationToken);

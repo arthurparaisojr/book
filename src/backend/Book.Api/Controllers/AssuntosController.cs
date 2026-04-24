@@ -1,5 +1,7 @@
 using Book.Application.Contracts.Assuntos;
 using Book.Application.Services.Assuntos;
+using Book.Api.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book.Api.Controllers;
@@ -41,8 +43,11 @@ public sealed class AssuntosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(AssuntoResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<AssuntoResponse>> Create(
         [FromBody] CreateAssuntoRequest request,
         CancellationToken cancellationToken)
@@ -52,9 +57,12 @@ public sealed class AssuntosController : ControllerBase
     }
 
     [HttpPut("{codAs:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(AssuntoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<AssuntoResponse>> Update(
         int codAs,
         [FromBody] UpdateAssuntoRequest request,
@@ -65,8 +73,11 @@ public sealed class AssuntosController : ControllerBase
     }
 
     [HttpDelete("{codAs:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Delete(int codAs, CancellationToken cancellationToken)
     {
         await _assuntoAppService.DeleteAsync(codAs, cancellationToken);

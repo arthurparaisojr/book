@@ -2,9 +2,34 @@
 @LivroId = 1
 @AutorId = 1
 @AssuntoId = 1
+@AccessToken = cole-o-token-aqui
+
+### Login
+POST {{Book.Api_HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "book-admin",
+  "password": "Book@123"
+}
+
+###
 
 ### Health
 GET {{Book.Api_HostAddress}}/api/v1/health
+Accept: application/json
+
+###
+
+### Health live
+GET {{Book.Api_HostAddress}}/api/v1/health/live
+Accept: application/json
+
+###
+
+### Health ready
+GET {{Book.Api_HostAddress}}/api/v1/health/ready
 Accept: application/json
 
 ###
@@ -25,6 +50,7 @@ Accept: application/json
 POST {{Book.Api_HostAddress}}/api/v1/livros
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "titulo": "Domain-Driven Design",
@@ -40,6 +66,7 @@ Accept: application/json
 PUT {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "titulo": "DDD Tactical Patterns",
@@ -54,6 +81,7 @@ Accept: application/json
 ### Excluir livro
 DELETE {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 ###
 
@@ -88,6 +116,7 @@ Accept: application/json
 POST {{Book.Api_HostAddress}}/api/v1/autores
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "nome": "Vaughn Vernon"
@@ -99,6 +128,7 @@ Accept: application/json
 PUT {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "nome": "Vaughn Vernon Jr."
@@ -109,6 +139,7 @@ Accept: application/json
 ### Excluir autor
 DELETE {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 ###
 
@@ -139,6 +170,7 @@ Accept: application/json
 POST {{Book.Api_HostAddress}}/api/v1/assuntos
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "descricao": "Microservices"
@@ -150,6 +182,7 @@ Accept: application/json
 PUT {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 {
   "descricao": "Microsservicos"
@@ -160,6 +193,7 @@ Accept: application/json
 ### Excluir assunto
 DELETE {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
 Accept: application/json
+Authorization: Bearer {{AccessToken}}
 
 ###
 

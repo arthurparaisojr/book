@@ -1,5 +1,7 @@
 using Book.Application.Contracts.Livros;
 using Book.Application.Services.Livros;
+using Book.Api.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book.Api.Controllers;
@@ -45,8 +47,11 @@ public sealed class LivrosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(LivroResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<LivroResponse>> Create(
         [FromBody] CreateLivroRequest request,
         CancellationToken cancellationToken)
@@ -56,9 +61,12 @@ public sealed class LivrosController : ControllerBase
     }
 
     [HttpPut("{codl:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(typeof(LivroResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<LivroResponse>> Update(
         int codl,
         [FromBody] UpdateLivroRequest request,
@@ -69,8 +77,11 @@ public sealed class LivrosController : ControllerBase
     }
 
     [HttpDelete("{codl:int}")]
+    [Authorize(Policy = CatalogPolicies.CatalogWrite)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Delete(int codl, CancellationToken cancellationToken)
     {
         await _livroAppService.DeleteAsync(codl, cancellationToken);
