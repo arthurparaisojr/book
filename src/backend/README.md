@@ -20,11 +20,16 @@ Solucao `.NET 8` do projeto `Book`.
 ## Status atual
 
 - `3.A` concluida com solution, camadas e teste inicial.
-- `3.B` em andamento com CRUD de `Livro` ja implementado.
+- `3.B` em andamento com CRUDs de `Livro`, `Autor` e `Assunto` implementados.
 
 Endpoints atuais da API:
 
 - `GET /api/v1/health`
+- `GET /api/v1/assuntos`
+- `GET /api/v1/assuntos/{codAs}`
+- `POST /api/v1/assuntos`
+- `PUT /api/v1/assuntos/{codAs}`
+- `DELETE /api/v1/assuntos/{codAs}`
 - `GET /api/v1/autores`
 - `GET /api/v1/autores/{codAu}`
 - `POST /api/v1/autores`
@@ -125,6 +130,10 @@ curl http://localhost:5268/api/v1/livros
 Resultados esperados desta etapa:
 
 - `GET /api/v1/health` retorna `200 OK`;
+- `GET /api/v1/assuntos` retorna os assuntos seedados;
+- `POST /api/v1/assuntos` cria um assunto e retorna `201 Created`;
+- `PUT /api/v1/assuntos/{codAs}` atualiza e retorna `200 OK`;
+- `DELETE /api/v1/assuntos/{codAs}` retorna `204 No Content`;
 - `GET /api/v1/autores` retorna os autores seedados;
 - `POST /api/v1/autores` cria um autor e retorna `201 Created`;
 - `PUT /api/v1/autores/{codAu}` atualiza e retorna `200 OK`;

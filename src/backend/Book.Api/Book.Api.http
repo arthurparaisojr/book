@@ -1,6 +1,7 @@
 @Book.Api_HostAddress = http://localhost:5268
 @LivroId = 1
 @AutorId = 1
+@AssuntoId = 1
 
 ### Health
 GET {{Book.Api_HostAddress}}/api/v1/health
@@ -118,6 +119,57 @@ Accept: application/json
 
 {
   "nome": ""
+}
+
+###
+
+### Listar assuntos
+GET {{Book.Api_HostAddress}}/api/v1/assuntos
+Accept: application/json
+
+###
+
+### Obter assunto por id
+GET {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Accept: application/json
+
+###
+
+### Criar assunto
+POST {{Book.Api_HostAddress}}/api/v1/assuntos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "descricao": "Microservices"
+}
+
+###
+
+### Atualizar assunto
+PUT {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "descricao": "Microsservicos"
+}
+
+###
+
+### Excluir assunto
+DELETE {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Accept: application/json
+
+###
+
+### Validar erro de assunto
+POST {{Book.Api_HostAddress}}/api/v1/assuntos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "descricao": ""
 }
 
 ###
