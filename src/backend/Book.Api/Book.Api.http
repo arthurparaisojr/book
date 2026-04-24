@@ -1,6 +1,71 @@
 @Book.Api_HostAddress = http://localhost:5268
+@LivroId = 1
 
+### Health
 GET {{Book.Api_HostAddress}}/api/v1/health
 Accept: application/json
+
+###
+
+### Listar livros
+GET {{Book.Api_HostAddress}}/api/v1/livros
+Accept: application/json
+
+###
+
+### Obter livro por id
+GET {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Accept: application/json
+
+###
+
+### Criar livro
+POST {{Book.Api_HostAddress}}/api/v1/livros
+Content-Type: application/json
+Accept: application/json
+
+{
+  "titulo": "Domain-Driven Design",
+  "editora": "Alta Books",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "valor": 189.90
+}
+
+###
+
+### Atualizar livro
+PUT {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "titulo": "DDD Tactical Patterns",
+  "editora": "Alta Books",
+  "edicao": 2,
+  "anoPublicacao": "2025",
+  "valor": 199.90
+}
+
+###
+
+### Excluir livro
+DELETE {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Accept: application/json
+
+###
+
+### Validar erros de entrada
+POST {{Book.Api_HostAddress}}/api/v1/livros
+Content-Type: application/json
+Accept: application/json
+
+{
+  "titulo": "",
+  "editora": "",
+  "edicao": 0,
+  "anoPublicacao": "20",
+  "valor": -1
+}
 
 ###

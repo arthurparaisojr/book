@@ -1,4 +1,5 @@
 using Book.Application.Abstractions.Persistence;
+using Book.Application.Services.Livros;
 using Book.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,8 @@ public static class DependencyInjection
             new SqlServerBookDbConnectionFactory(
                 configuration.GetConnectionString("DefaultConnection")
                 ?? "Server=localhost,1433;Database=BookDb;User Id=sa;Password=Book@123456;TrustServerCertificate=True;"));
+        services.AddScoped<ILivroRepository, LivroRepository>();
+        services.AddScoped<ILivroAppService, LivroAppService>();
 
         return services;
     }

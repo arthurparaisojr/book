@@ -1,3 +1,6 @@
+using Microsoft.Data.SqlClient;
+using System.Data.Common;
+
 using Book.Application.Abstractions.Persistence;
 
 namespace Book.Infrastructure.Persistence;
@@ -10,4 +13,11 @@ internal sealed class SqlServerBookDbConnectionFactory : IBookDbConnectionFactor
     }
 
     public string ConnectionString { get; }
+
+    public async Task<DbConnection> CreateOpenConnectionAsync(CancellationToken cancellationToken = default)
+    {
+        var connection = new SqlConnection(ConnectionString);
+        await connection.OpenAsync(cancellationToken);
+        return connection;
+    }
 }

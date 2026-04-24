@@ -1,6 +1,6 @@
 # Backend
 
-Espaco reservado para a solucao `.NET 8`.
+Solucao `.NET 8` do projeto `Book`.
 
 ## Estrutura recomendada
 
@@ -16,6 +16,20 @@ Espaco reservado para a solucao `.NET 8`.
 - tratar excecoes;
 - documentar Swagger;
 - integrar com banco e logs.
+
+## Status atual
+
+- `3.A` concluida com solution, camadas e teste inicial.
+- `3.B` em andamento com CRUD de `Livro` ja implementado.
+
+Endpoints atuais da API:
+
+- `GET /api/v1/health`
+- `GET /api/v1/livros`
+- `GET /api/v1/livros/{codl}`
+- `POST /api/v1/livros`
+- `PUT /api/v1/livros/{codl}`
+- `DELETE /api/v1/livros/{codl}`
 
 ## Uso com Visual Studio 2022
 
@@ -58,6 +72,60 @@ entao voce podera testar por:
 
 - `https://localhost:7082/api/v1/health`
 - `https://localhost:7082/swagger`
+
+## Como testar a etapa 3.B
+
+### 1. Subir infraestrutura no Docker Desktop do Windows
+
+Na raiz do repositorio:
+
+```bash
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+./scripts/validate-database.sh
+```
+
+### 2. Validar compilacao e testes automatizados
+
+Na raiz do repositorio:
+
+```bash
+dotnet build Book.sln
+dotnet test Book.sln
+```
+
+### 3. Subir a API
+
+Para o fluxo mais simples em `http`:
+
+```bash
+cd src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+### 4. Testar manualmente
+
+Opcoes recomendadas:
+
+- usar `src/backend/Book.Api/Book.Api.http`;
+- usar o Swagger em `http://localhost:5268/swagger`;
+- ou chamar a API por `curl`.
+
+Exemplo rapido:
+
+```bash
+curl http://localhost:5268/api/v1/livros
+```
+
+Resultados esperados desta etapa:
+
+- `GET /api/v1/health` retorna `200 OK`;
+- `GET /api/v1/livros` retorna os livros seedados;
+- `POST /api/v1/livros` cria um livro e retorna `201 Created`;
+- `PUT /api/v1/livros/{codl}` atualiza e retorna `200 OK`;
+- `DELETE /api/v1/livros/{codl}` retorna `204 No Content`;
+- entradas invalidas retornam `400 Bad Request` com `ProblemDetails`;
+- ids inexistentes retornam `404 Not Found`.
 
 ## Arquivos importantes
 
