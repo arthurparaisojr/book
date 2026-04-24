@@ -1,4 +1,4 @@
-@Book.Api_HostAddress = https://localhost:7082
+@Book.Api_HostAddress = http://localhost:5268
 
 GET {{Book.Api_HostAddress}}/api/v1/health
 Accept: application/json
