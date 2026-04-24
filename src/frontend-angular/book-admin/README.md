@@ -1,59 +1,54 @@
-# BookAdmin
+# Book Admin
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Frontend Angular principal do projeto `Book`.
 
-## Development server
+## Papel no projeto
 
-To start a local development server, run:
+- autenticar com `JWT`;
+- operar o CRUD administrativo;
+- consultar `Livro`, `Autor` e `Assunto`;
+- servir como base do painel principal do cliente.
 
-```bash
-ng serve
-```
+## O que ja existe
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- tela de login;
+- shell administrativo;
+- dashboard inicial;
+- paginas de `Livro`, `Autor` e `Assunto`;
+- tema azul compartilhado;
+- integracao com a API em `http://localhost:5268/api/v1`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Como executar
 
 ```bash
-ng generate --help
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+cd src/backend/Book.Api
+dotnet run --launch-profile http
 ```
 
-## Building
-
-To build the project run:
+Em outro terminal:
 
 ```bash
-ng build
+cd /home/arthur/github/book/src/frontend-angular/book-admin
+npm install
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Abra no navegador do Windows:
 
-## Running unit tests
+- `http://localhost:4200`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Credenciais locais
 
-```bash
-ng test
-```
+- `book-admin` / `Book@123`
+- `book-reader` / `Book@123`
 
-## Running end-to-end tests
+## Validacao recomendada
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. entrar com `book-admin`;
+2. abrir dashboard;
+3. listar livros, autores e assuntos;
+4. criar ou editar um registro;
+5. testar o perfil `book-reader` e confirmar `403` em escrita.

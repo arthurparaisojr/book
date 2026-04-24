@@ -1,1 +1,145 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../../../shared/themes/book-default-blue.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.book-page {
+  display: grid;
+  gap: var(--book-space-lg);
+}
+
+.book-page-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--book-space-md);
+  align-items: flex-start;
+}
+
+.book-page-header h1,
+.book-page-header h2 {
+  margin: 0;
+}
+
+.book-page-subtitle {
+  color: var(--book-ui-text-muted);
+  margin-top: var(--book-space-sm);
+}
+
+.book-grid {
+  display: grid;
+  gap: var(--book-space-lg);
+}
+
+.book-grid-two {
+  grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.95fr);
+}
+
+.book-form-grid {
+  display: grid;
+  gap: var(--book-space-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.book-form-grid .book-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.book-form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.book-form-field label {
+  color: var(--book-color-primary-800);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.book-form-actions,
+.book-inline-actions {
+  display: flex;
+  gap: var(--book-space-sm);
+  flex-wrap: wrap;
+}
+
+.book-button-danger {
+  background: var(--book-ui-danger-bg);
+  border: 1px solid color-mix(in srgb, var(--book-color-danger) 28%, white);
+  border-radius: var(--book-radius-sm);
+  color: var(--book-color-danger);
+  cursor: pointer;
+  padding: 10px 16px;
+}
+
+.book-button-ghost {
+  background: transparent;
+  border: 1px dashed var(--book-ui-border-strong);
+  border-radius: var(--book-radius-sm);
+  color: var(--book-color-primary-700);
+  cursor: pointer;
+  padding: 10px 16px;
+}
+
+.book-feedback {
+  border-radius: var(--book-radius-sm);
+  padding: 12px 14px;
+}
+
+.book-feedback-info {
+  background: var(--book-color-primary-50);
+  color: var(--book-color-primary-800);
+}
+
+.book-feedback-error {
+  background: var(--book-ui-danger-bg);
+  color: var(--book-color-danger);
+}
+
+.book-feedback-success {
+  background: var(--book-ui-success-bg);
+  color: var(--book-color-success);
+}
+
+.book-empty-state {
+  color: var(--book-ui-text-muted);
+  padding: var(--book-space-lg);
+  text-align: center;
+}
+
+.book-loading {
+  color: var(--book-color-primary-700);
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .book-grid-two {
+    grid-template-columns: 1fr;
+  }
+
+  .book-page-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .book-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

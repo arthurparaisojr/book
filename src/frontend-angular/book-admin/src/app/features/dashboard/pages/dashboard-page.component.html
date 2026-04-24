@@ -1,0 +1,56 @@
+<section class="book-page">
+  <header class="book-page-header">
+    <div>
+      <h1>Painel operacional</h1>
+      <p class="book-page-subtitle">
+        Visao rapida do catalogo, da disponibilidade da API e do ponto de partida do
+        modulo administrativo Angular.
+      </p>
+    </div>
+
+    <button class="book-button-secondary" type="button" (click)="loadDashboard()">
+      Atualizar resumo
+    </button>
+  </header>
+
+  @if (errorMessage) {
+    <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="book-loading">Carregando indicadores...</div>
+  } @else {
+    <section class="dashboard-cards">
+      @for (card of cards; track card.label) {
+        <article class="book-card dashboard-card">
+          <span class="dashboard-card-label">{{ card.label }}</span>
+          <strong>{{ card.value }}</strong>
+          <p>{{ card.hint }}</p>
+        </article>
+      }
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="book-card dashboard-panel">
+        <h2 class="book-section-title">Saude do ambiente</h2>
+        <p>
+          O endpoint `ready` da API esta respondendo com status
+          <span class="book-badge-info">{{ readinessStatus }}</span>.
+        </p>
+        <p>
+          Isso indica se a aplicacao esta pronta para operacao com o banco do SQL
+          Server no Docker Desktop.
+        </p>
+      </article>
+
+      <article class="book-card dashboard-panel">
+        <h2 class="book-section-title">Proximos fluxos</h2>
+        <ul>
+          <li>consultar livros com filtro por autor e assunto;</li>
+          <li>editar autores e assuntos com token de `Admin`;</li>
+          <li>usar este painel como base do CRUD principal do projeto.</li>
+        </ul>
+      </article>
+    </section>
+  }
+</section>

@@ -1,0 +1,103 @@
+<section class="book-page">
+  <header class="book-page-header">
+    <div>
+      <h1>Assuntos</h1>
+      <p class="book-page-subtitle">
+        Taxonomia do catalogo com limite aderente ao banco e operacao autenticada.
+      </p>
+    </div>
+
+    <div class="book-inline-actions">
+      <button class="book-button-secondary" type="button" (click)="loadAssuntos()">
+        Atualizar lista
+      </button>
+      <button class="book-button-primary" type="button" (click)="startCreate()">
+        Novo assunto
+      </button>
+    </div>
+  </header>
+
+  @if (errorMessage) {
+    <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="book-feedback book-feedback-success">{{ successMessage }}</div>
+  }
+
+  <section class="book-grid book-grid-two">
+    <div class="book-page">
+      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadAssuntos()">
+        <h2 class="book-section-title">Filtro por descricao</h2>
+        <div class="book-form-field">
+          <label for="assunto-descricao-filtro">Descricao</label>
+          <input id="assunto-descricao-filtro" class="book-input" type="text" formControlName="descricao" />
+        </div>
+
+        <div class="book-form-actions">
+          <button class="book-button-primary" type="submit">Buscar</button>
+          <button class="book-button-ghost" type="button" (click)="clearFilters()">Limpar</button>
+        </div>
+      </form>
+
+      <div class="book-card">
+        <h2 class="book-section-title">Lista de assuntos</h2>
+
+        @if (loading) {
+          <div class="book-loading">Buscando assuntos...</div>
+        } @else if (!assuntos.length) {
+          <div class="book-empty-state">Nenhum assunto encontrado.</div>
+        } @else {
+          <div class="table-wrapper">
+            <table class="book-table">
+              <thead>
+                <tr>
+                  <th>Descricao</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (assunto of assuntos; track assunto.codAs) {
+                  <tr>
+                    <td>{{ assunto.descricao }}</td>
+                    <td>
+                      <div class="book-inline-actions">
+                        <button class="book-button-secondary" type="button" (click)="startEdit(assunto)">
+                          Editar
+                        </button>
+                        <button class="book-button-danger" type="button" (click)="remove(assunto)">
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+
+    <form class="book-card" [formGroup]="assuntoForm" (ngSubmit)="submit()">
+      <h2 class="book-section-title">
+        {{ editingAssuntoId ? 'Editar assunto' : 'Novo assunto' }}
+      </h2>
+
+      <div class="book-form-field">
+        <label for="assunto-descricao">Descricao</label>
+        <input id="assunto-descricao" class="book-input" type="text" formControlName="descricao" />
+      </div>
+
+      <div class="book-form-actions">
+        <button class="book-button-primary" type="submit" [disabled]="saving">
+          {{ saving ? 'Salvando...' : (editingAssuntoId ? 'Salvar alteracoes' : 'Criar assunto') }}
+        </button>
+
+        @if (editingAssuntoId) {
+          <button class="book-button-ghost" type="button" (click)="startCreate()">Cancelar</button>
+        }
+      </div>
+    </form>
+  </section>
+</section>

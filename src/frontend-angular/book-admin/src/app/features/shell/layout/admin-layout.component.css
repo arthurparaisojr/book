@@ -1,0 +1,123 @@
+.admin-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+}
+
+.admin-sidebar {
+  display: grid;
+  gap: var(--book-space-lg);
+  padding: var(--book-space-xl);
+  background:
+    linear-gradient(180deg, rgba(30, 64, 175, 0.95), rgba(3, 105, 161, 0.9)),
+    var(--book-ui-bg-primary);
+  color: var(--book-ui-text-inverse);
+}
+
+.admin-brand h1 {
+  margin: var(--book-space-sm) 0;
+  font-size: 2rem;
+}
+
+.admin-brand p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.admin-nav {
+  display: grid;
+  gap: var(--book-space-sm);
+}
+
+.admin-nav-link {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--book-radius-md);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.admin-nav-link span {
+  font-size: 0.92rem;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link-active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.admin-sidebar-footer {
+  align-self: end;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.admin-sidebar-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.admin-main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--book-space-md);
+  align-items: center;
+  padding: var(--book-space-lg) var(--book-space-xl);
+  border-bottom: 1px solid var(--book-ui-border-default);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.admin-topbar h2 {
+  margin: 0;
+  color: var(--book-color-primary-900);
+}
+
+.admin-topbar-label {
+  margin: 0 0 6px;
+  color: var(--book-ui-text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  gap: var(--book-space-sm);
+  align-items: center;
+}
+
+.admin-content {
+  padding: var(--book-space-xl);
+}
+
+@media (max-width: 1080px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    padding-bottom: var(--book-space-lg);
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-content {
+    padding: var(--book-space-lg);
+  }
+}

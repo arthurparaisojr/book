@@ -1,0 +1,103 @@
+<section class="book-page">
+  <header class="book-page-header">
+    <div>
+      <h1>Autores</h1>
+      <p class="book-page-subtitle">
+        Cadastro de autores com validacao simples e operacao protegida por JWT.
+      </p>
+    </div>
+
+    <div class="book-inline-actions">
+      <button class="book-button-secondary" type="button" (click)="loadAutores()">
+        Atualizar lista
+      </button>
+      <button class="book-button-primary" type="button" (click)="startCreate()">
+        Novo autor
+      </button>
+    </div>
+  </header>
+
+  @if (errorMessage) {
+    <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="book-feedback book-feedback-success">{{ successMessage }}</div>
+  }
+
+  <section class="book-grid book-grid-two">
+    <div class="book-page">
+      <form class="book-card" [formGroup]="filterForm" (ngSubmit)="loadAutores()">
+        <h2 class="book-section-title">Filtro por nome</h2>
+        <div class="book-form-field">
+          <label for="autor-nome-filtro">Nome</label>
+          <input id="autor-nome-filtro" class="book-input" type="text" formControlName="nome" />
+        </div>
+
+        <div class="book-form-actions">
+          <button class="book-button-primary" type="submit">Buscar</button>
+          <button class="book-button-ghost" type="button" (click)="clearFilters()">Limpar</button>
+        </div>
+      </form>
+
+      <div class="book-card">
+        <h2 class="book-section-title">Lista de autores</h2>
+
+        @if (loading) {
+          <div class="book-loading">Buscando autores...</div>
+        } @else if (!autores.length) {
+          <div class="book-empty-state">Nenhum autor encontrado.</div>
+        } @else {
+          <div class="table-wrapper">
+            <table class="book-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (autor of autores; track autor.codAu) {
+                  <tr>
+                    <td>{{ autor.nome }}</td>
+                    <td>
+                      <div class="book-inline-actions">
+                        <button class="book-button-secondary" type="button" (click)="startEdit(autor)">
+                          Editar
+                        </button>
+                        <button class="book-button-danger" type="button" (click)="remove(autor)">
+                          Excluir
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+
+    <form class="book-card" [formGroup]="autorForm" (ngSubmit)="submit()">
+      <h2 class="book-section-title">
+        {{ editingAutorId ? 'Editar autor' : 'Novo autor' }}
+      </h2>
+
+      <div class="book-form-field">
+        <label for="autor-nome">Nome</label>
+        <input id="autor-nome" class="book-input" type="text" formControlName="nome" />
+      </div>
+
+      <div class="book-form-actions">
+        <button class="book-button-primary" type="submit" [disabled]="saving">
+          {{ saving ? 'Salvando...' : (editingAutorId ? 'Salvar alteracoes' : 'Criar autor') }}
+        </button>
+
+        @if (editingAutorId) {
+          <button class="book-button-ghost" type="button" (click)="startCreate()">Cancelar</button>
+        }
+      </div>
+    </form>
+  </section>
+</section>

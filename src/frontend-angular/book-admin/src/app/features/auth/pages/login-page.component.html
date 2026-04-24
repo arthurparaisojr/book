@@ -1,0 +1,83 @@
+<section class="login-shell">
+  <div class="login-panel login-copy book-card">
+    <span class="book-badge-info">Book Admin</span>
+    <h1>Acesso administrativo do projeto Book</h1>
+    <p>
+      Este painel Angular concentra login, operacao de catalogo e validacao das
+      regras principais da API `.NET 8`.
+    </p>
+
+    <div class="login-copy-grid">
+      <article class="book-card login-mini-card">
+        <h2>Fluxo recomendado</h2>
+        <ul>
+          <li>entre com um usuario local de desenvolvimento;</li>
+          <li>consulte livros, autores e assuntos;</li>
+          <li>grave dados com token JWT e policy de `Admin`.</li>
+        </ul>
+      </article>
+
+      <article class="book-card login-mini-card">
+        <h2>Perfis locais</h2>
+        <div class="login-presets">
+          <button
+            class="book-button-secondary"
+            type="button"
+            (click)="useCredentialPreset('book-admin', 'Book@123')">
+            Usar book-admin
+          </button>
+          <button
+            class="book-button-secondary"
+            type="button"
+            (click)="useCredentialPreset('book-reader', 'Book@123')">
+            Usar book-reader
+          </button>
+        </div>
+        <p class="login-hint">
+          `book-admin` grava no catalogo. `book-reader` navega, mas recebe `403`
+          em operacoes de escrita.
+        </p>
+      </article>
+    </div>
+
+    <footer class="login-footer">
+      <span>Projeto Book</span>
+      <span>{{ currentYear }}</span>
+    </footer>
+  </div>
+
+  <form class="login-panel book-card" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div>
+      <h2 class="book-section-title">Entrar</h2>
+      <p class="book-page-subtitle">
+        Use as credenciais locais descritas no README para autenticar.
+      </p>
+    </div>
+
+    <div class="book-form-grid">
+      <div class="book-form-field book-form-field-full">
+        <label for="username">Usuario</label>
+        <input id="username" class="book-input" type="text" formControlName="username" />
+      </div>
+
+      <div class="book-form-field book-form-field-full">
+        <label for="password">Senha</label>
+        <input id="password" class="book-input" type="password" formControlName="password" />
+      </div>
+    </div>
+
+    @if (errorMessage) {
+      <div class="book-feedback book-feedback-error">{{ errorMessage }}</div>
+    }
+
+    <div class="login-inline-note">
+      <span class="book-badge-info">JWT Bearer</span>
+      <span class="book-badge-info">Tema azul compartilhado</span>
+      <span class="book-badge-info">Consumo da API real</span>
+    </div>
+
+    <button class="book-button-primary" type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Autenticando...' : 'Entrar no painel' }}
+    </button>
+  </form>
+</section>

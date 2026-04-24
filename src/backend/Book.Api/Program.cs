@@ -18,6 +18,21 @@ var secretKey = Encoding.UTF8.GetBytes(jwtOptions.Secret);
 
 builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "BookLocalFrontend",
+        policy =>
+        {
+            policy.WithOrigins(
+                    "http://localhost:4200",
+                    "http://127.0.0.1:4200",
+                    "http://localhost:5173",
+                    "http://127.0.0.1:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 builder.Services.Configure<JwtOptions>(jwtSection);
 builder.Services.Configure<DevelopmentAuthOptions>(builder.Configuration.GetSection("Auth"));
 builder.Services.AddScoped<IAuthCredentialValidator, ConfiguredCredentialValidator>();
@@ -98,6 +113,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
+app.UseCors("BookLocalFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -63,6 +63,7 @@ Configuracao atual:
   `localhost:1433`.
 - usuarios locais de desenvolvimento ficam em
   `src/backend/Book.Api/appsettings.Development.json`.
+- `CORS` local liberado para `http://localhost:4200` e `http://localhost:5173`.
 
 ## Teste rapido do endpoint de saude
 

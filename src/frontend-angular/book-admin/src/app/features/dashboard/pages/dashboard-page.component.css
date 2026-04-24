@@ -1,0 +1,46 @@
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--book-space-lg);
+}
+
+.dashboard-card {
+  display: grid;
+  gap: var(--book-space-sm);
+}
+
+.dashboard-card-label {
+  color: var(--book-ui-text-muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dashboard-card strong {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--book-color-primary-900);
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: var(--book-ui-text-muted);
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: var(--book-space-lg);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dashboard-panel ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--book-ui-text-muted);
+}
+
+@media (max-width: 960px) {
+  .dashboard-cards,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

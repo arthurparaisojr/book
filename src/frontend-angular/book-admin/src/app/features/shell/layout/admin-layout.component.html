@@ -1,0 +1,49 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <span class="book-badge-info">Angular Admin</span>
+      <h1>Book</h1>
+      <p>Painel administrativo com tema azul, login JWT e consumo da API real.</p>
+    </div>
+
+    <nav class="admin-nav">
+      @for (item of navigationItems; track item.route) {
+        <a
+          class="admin-nav-link"
+          [routerLink]="item.route"
+          routerLinkActive="admin-nav-link-active">
+          <strong>{{ item.label }}</strong>
+          <span>{{ item.description }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="admin-sidebar-footer book-card">
+      <span class="book-badge-info" [ngClass]="apiStatusClass">{{ apiStatus }}</span>
+      <p>Backend local em `http://localhost:5268`.</p>
+      <button class="book-button-secondary" type="button" (click)="refreshHealthStatus()">
+        Revalidar saude
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="admin-topbar-label">Sessao ativa</p>
+        <h2>{{ username }}</h2>
+      </div>
+
+      <div class="admin-topbar-actions">
+        <span class="book-badge-info">{{ role }}</span>
+        <button class="book-button-secondary" type="button" (click)="logout()">
+          Sair
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
