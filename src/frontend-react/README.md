@@ -20,3 +20,39 @@ O React complementa a solucao e nao substitui o frontend principal em Angular.
 - manter estados visuais suaves e leitura facil;
 - reutilizar icones SVG de `src/shared/icons/svg/`;
 - manter linguagem visual amigavel e consistente com o Angular.
+
+## Status atual da etapa 4.B
+
+O app `book-insights` agora possui:
+
+- dashboard de leitura;
+- resumo da saude da API;
+- indicadores de livros, autores e assuntos;
+- leitura de editoras e distribuicao por ano;
+- busca local sobre o catalogo carregado;
+- uso do tema azul compartilhado;
+- reaproveitamento de SVGs da biblioteca do projeto.
+
+## Como executar
+
+1. subir banco e backend:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+cd src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+2. em outro terminal, subir o React:
+
+```bash
+cd /home/arthur/github/book/src/frontend-react/book-insights
+npm install
+npm run dev
+```
+
+3. abrir no navegador do Windows:
+
+- `http://localhost:5173`
