@@ -9,7 +9,6 @@ versionados no repositorio.
 
 O banco oficial definido para a solucao e:
 
-- `PostgreSQL`
 - `SQL Server 2022 Developer`
 
 Justificativa:
@@ -59,3 +58,14 @@ O material esperado para apresentacao deve contemplar:
 - ordem de execucao dos scripts.
 
 Os scripts ficam em `database/` e as evidencias em `artifacts/database/`.
+
+## Artefatos da etapa 2.C
+
+Os artefatos consolidados desta etapa devem ser mantidos em:
+
+- `artifacts/database/relatorio-detalhado-banco.md`
+- `artifacts/database/checklist-validacao-banco.md`
+
+Para validacao tecnica local, use tambem:
+
+- `scripts/validate-database.sh`
