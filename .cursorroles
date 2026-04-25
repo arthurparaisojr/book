@@ -37,21 +37,27 @@ repositorio.
     - paleta base;
     - tokens semanticos;
     - componentes-base reutilizaveis.
+    - uso compartilhado entre `Angular` e `React`.
 12. Evitar cores hardcoded em telas quando existir token compartilhado.
 13. Se novos icones SVG forem necessarios, informar sempre:
     - nome do arquivo;
     - local oficial de gravacao;
     - finalidade do icone.
-14. Scripts de banco devem permanecer versionados em `database/`:
+    - lembrar que a biblioteca e compartilhada entre `Angular` e `React`.
+14. O tema oficial compartilhado deve sair de `src/shared/themes/` e os icones e
+    favicon oficiais devem sair de `src/shared/icons/` e `src/shared/icons/svg/`.
+15. Alteracoes visuais em tema, favicon ou SVG devem preservar consistencia entre os
+    dois frontends.
+16. Scripts de banco devem permanecer versionados em `database/`:
    - `schema/`
    - `views/`
    - `procedures/`
    - `triggers/`
    - `seeds/`
-15. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
-16. O modelo de dados em imagem deve ficar em
+17. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
+18. O modelo de dados em imagem deve ficar em
     `docs/assets/images/modelo-dados-book.png`.
-17. A estrutura Docker deve prever:
+19. A estrutura Docker deve prever:
     - compose de infraestrutura;
     - compose de stack completa;
     - documentacao para subir tudo do zero.

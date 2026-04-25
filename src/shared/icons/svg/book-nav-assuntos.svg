@@ -1,13 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-  <path
-    d="M7.5 5h11a1.5 1.5 0 0 1 1.5 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11L4 15.5v-9A1.5 1.5 0 0 1 5.5 5h2Z"
-    stroke="#1D4ED8"
-    stroke-width="1.8"
-    stroke-linecap="round"
-    stroke-linejoin="round" />
-  <path
-    d="M8.5 9h7M8.5 12h7M8.5 15h4"
-    stroke="#1D4ED8"
-    stroke-width="1.8"
-    stroke-linecap="round" />
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="#1D4ED8"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round">
+  <path d="M7.5 5h11a1.5 1.5 0 0 1 1.5 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11L4 15.5v-9A1.5 1.5 0 0 1 5.5 5h2Z" />
+  <path d="M8.5 9h7M8.5 12h7M8.5 15h4" />
 </svg>
