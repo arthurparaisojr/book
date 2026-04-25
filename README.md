@@ -178,6 +178,21 @@ Toda evolução do projeto deve seguir etapas numeradas e subetapas por letra:
 
 O backlog detalhado está em [`docs/backlog/README.md`](docs/backlog/README.md).
 
+## 7.1 Evolucoes futuras fora do escopo atual
+
+Sem alterar o plano oficial `1.A` a `6.C`, o projeto ja registra a seguinte
+evolucao arquitetural desejada para fase posterior:
+
+- autenticacao compartilhada entre `Angular` e `React`, evitando novo login ao
+  alternar entre os dois frontends;
+- manutencao do `React` como modulo existente e ativo, mesmo com experiencia mais
+  integrada ao restante da solucao;
+- preferencia futura por sessao compartilhada no backend, idealmente com cookie
+  seguro, em vez de duplicar fluxo de login em cada frontend.
+
+Essa evolucao deve ser tratada como proxima fase de arquitetura, e nao como mudanca
+do backlog atual.
+
 ## 8. Convenção obrigatória de commits
 
 Toda alteração deve ser registrada com mensagem padronizada:

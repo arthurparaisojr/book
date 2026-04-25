@@ -33,6 +33,8 @@ Diretriz de arquitetura:
 - `Angular` concentra a operacao;
 - `React` concentra leitura e analise;
 - os dois compartilham o mesmo tema, favicon e biblioteca de icones em `src/shared/`.
+- numa fase futura, os dois devem poder compartilhar autenticacao sem eliminar o
+  modulo `React`.
 
 ## Camadas
 
@@ -72,6 +74,8 @@ src/shared/
 - O Angular sera a interface principal do sistema.
 - O React sera usado para um modulo complementar, sem duplicar o CRUD principal.
 - O Angular e o React devem compartilhar tema, tokens visuais, favicon e icones.
+- A evolucao futura desejada e uma sessao compartilhada entre `Angular` e `React`,
+  preferencialmente conduzida pelo backend.
 - A API deve expor contratos claros, com versionamento e documentacao.
 - A autenticacao padrao sera `JWT Bearer`.
 - O banco deve continuar como fonte oficial de relatorio e integridade relacional.

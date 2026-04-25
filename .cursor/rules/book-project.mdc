@@ -19,6 +19,8 @@ alwaysApply: true
 - Use `src/shared/icons/svg/` como biblioteca oficial de icones SVG.
 - Use `src/shared/icons/` para favicon e outros assets visuais compartilhados.
 - Mantenha `Angular` e `React` alinhados quando houver alteracao em tema, favicon ou SVG.
+- Em evolucoes futuras, a autenticacao pode ser compartilhada entre `Angular` e
+  `React`, mas o modulo `React` deve continuar existindo.
 - Quando um novo SVG for necessario, informe nome e caminho de gravacao.
 - Siga as etapas `1.A` a `6.C` descritas no `README.md` e em `docs/backlog/README.md`.
 - Toda alteracao deve atualizar a documentacao correspondente.

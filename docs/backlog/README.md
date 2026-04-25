@@ -41,6 +41,16 @@ subetapas por letra.
 - `6.B` Consolidar scripts, artefatos e roteiro de apresentacao.
 - `6.C` Revisar backlog entregue, atualizar documentos e validar demonstracao final.
 
+## Evolucoes futuras
+
+Itens abaixo ficam registrados como proxima fase, sem alterar o cronograma oficial
+de `1.A` a `6.C`:
+
+- autenticar uma vez e reaproveitar a sessao entre `Angular` e `React`;
+- integrar mais a experiencia entre os dois frontends, sem remover o modulo `React`;
+- manter `Angular` como modulo operacional e `React` como modulo complementar de
+  leitura e analise.
+
 ## Criterios transversais
 
 - toda alteracao precisa citar a etapa no commit;

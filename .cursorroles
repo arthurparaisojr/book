@@ -48,16 +48,18 @@ repositorio.
     favicon oficiais devem sair de `src/shared/icons/` e `src/shared/icons/svg/`.
 15. Alteracoes visuais em tema, favicon ou SVG devem preservar consistencia entre os
     dois frontends.
-16. Scripts de banco devem permanecer versionados em `database/`:
+16. Evolucoes futuras podem integrar mais `Angular` e `React`, inclusive na
+    autenticacao, desde que o modulo `React` continue existindo como parte da solucao.
+17. Scripts de banco devem permanecer versionados em `database/`:
    - `schema/`
    - `views/`
    - `procedures/`
    - `triggers/`
    - `seeds/`
-17. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
-18. O modelo de dados em imagem deve ficar em
+18. Artefatos obrigatorios devem ficar atualizados em `artifacts/`.
+19. O modelo de dados em imagem deve ficar em
     `docs/assets/images/modelo-dados-book.png`.
-19. A estrutura Docker deve prever:
+20. A estrutura Docker deve prever:
     - compose de infraestrutura;
     - compose de stack completa;
     - documentacao para subir tudo do zero.
