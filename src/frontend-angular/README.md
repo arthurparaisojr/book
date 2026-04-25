@@ -10,6 +10,12 @@ Esta area sera usada pelo frontend principal do sistema.
 - mascara monetaria para `Valor`;
 - consumo da API `.NET`.
 
+## Justificativa de uso
+
+O `Angular` foi escolhido como frontend principal porque o projeto exige um painel
+operacional com CRUD, formularios, validacoes, autenticacao e navegacao
+administrativa bem estruturada.
+
 ## Diretrizes
 
 - idioma `pt-BR`;

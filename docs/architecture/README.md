@@ -16,6 +16,24 @@ negocio, infraestrutura, experiencia do usuario e artefatos de implantacao.
   visuais em azuis
 - Containers: `Docker`
 
+## Por que usar Angular e React
+
+Mesmo sendo uma exigencia do desafio, a coexistencia dos dois frontends precisa ser
+tecnicamente justificavel.
+
+- `Angular` foi escolhido para a operacao principal porque o projeto pede
+  autenticacao, CRUD, formularios, validacoes, navegacao administrativa e uma
+  estrutura de aplicacao forte para backoffice.
+- `React` foi escolhido para o modulo complementar porque oferece boa flexibilidade
+  para dashboards, leitura analitica, vitrine tecnica e composicao de interfaces
+  orientadas a visualizacao.
+
+Diretriz de arquitetura:
+
+- `Angular` concentra a operacao;
+- `React` concentra leitura e analise;
+- os dois compartilham o mesmo tema, favicon e biblioteca de icones em `src/shared/`.
+
 ## Camadas
 
 - `Domain`: entidades como `Livro`, `Autor` e `Assunto`, incluindo validacoes centrais.
@@ -53,6 +71,7 @@ src/shared/
 
 - O Angular sera a interface principal do sistema.
 - O React sera usado para um modulo complementar, sem duplicar o CRUD principal.
+- O Angular e o React devem compartilhar tema, tokens visuais, favicon e icones.
 - A API deve expor contratos claros, com versionamento e documentacao.
 - A autenticacao padrao sera `JWT Bearer`.
 - O banco deve continuar como fonte oficial de relatorio e integridade relacional.

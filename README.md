@@ -47,6 +47,29 @@ As tecnologias definidas para o projeto são:
 - Testes: `xUnit`, `FluentAssertions`, `Jest`, `Vitest` e `Playwright`;
 - Observabilidade: `Serilog` com logs estruturados.
 
+### 3.1 Justificativa para Angular e React no mesmo projeto
+
+Mesmo tendo sido uma exigencia do desafio, o uso conjunto de `Angular` e `React`
+precisa ter criterio arquitetural claro.
+
+Decisao adotada:
+
+- `Angular` foi definido como frontend principal porque o projeto exige CRUD
+  administrativo, formularios robustos, validacoes, autenticacao, roteamento e
+  manutencao de um painel operacional consistente.
+- `React` foi mantido como frontend complementar porque funciona muito bem para
+  dashboard, leitura analitica, apresentacao executiva e composicao de experiencias
+  mais livres, voltadas a visualizacao.
+
+Em resumo:
+
+- `Angular` = operacao do sistema;
+- `React` = leitura e analise complementar.
+
+Assim, a arquitetura demonstra dominio das duas tecnologias sem duplicar
+responsabilidades por modismo. Cada framework foi posicionado onde entrega mais
+clareza, produtividade e valor.
+
 ## 4. Arquitetura e camadas
 
 O projeto deverá ser organizado nas seguintes camadas:

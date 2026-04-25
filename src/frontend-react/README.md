@@ -9,9 +9,17 @@ Esta area sera usada pelo modulo complementar em `React`.
 - visualizacao analitica;
 - laboratorio de componentes ou experiencia adicional.
 
+## Justificativa de uso
+
+O `React` foi mantido como modulo complementar porque atende muito bem o contexto de
+dashboard, leitura analitica, apresentacao executiva e experimentacao de interfaces
+mais orientadas a visualizacao do que a operacao transacional.
+
 ## Observacao
 
 O React complementa a solucao e nao substitui o frontend principal em Angular.
+No menu, os rotulos do React devem deixar claro que se tratam de secoes de
+insight e leitura, e nao de operacao.
 
 ## Diretrizes visuais
 

@@ -48,6 +48,15 @@ npm run dev
 
 Este modulo e majoritariamente de leitura. A operacao administrativa principal continua no Angular em `http://localhost:4200`.
 
+## Menu do React
+
+Os itens do menu do React representam secoes analiticas, nao telas de CRUD:
+
+- `Visao Geral`
+- `Insights de Livros`
+- `Insights de Autores`
+- `Insights de Assuntos`
+
 ## Validacao recomendada
 
 1. abrir `http://localhost:5173`;

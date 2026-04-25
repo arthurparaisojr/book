@@ -186,28 +186,28 @@ function App() {
   const apiStatusTone = getStatusTone(health?.status ?? 'unhealthy')
   const navigationItems = [
     {
-      label: 'Dashboard',
+      label: 'Visao Geral',
       description: 'Resumo executivo do catalogo',
       href: '#insights-overview',
       iconPath: dashboardIcon,
       current: true,
     },
     {
-      label: 'Livros',
-      description: 'Catalogo exploravel e valor medio',
+      label: 'Insights de Livros',
+      description: 'Catalogo exploravel, valor medio e tendencias',
       href: '#insights-catalog',
       iconPath: livrosIcon,
       current: false,
     },
     {
-      label: 'Autores',
+      label: 'Insights de Autores',
       description: 'Visao de autoria e participacao',
       href: '#insights-authors',
       iconPath: autoresIcon,
       current: false,
     },
     {
-      label: 'Assuntos',
+      label: 'Insights de Assuntos',
       description: 'Taxonomia ativa do projeto',
       href: '#insights-subjects',
       iconPath: assuntosIcon,
@@ -286,9 +286,9 @@ function App() {
                 <div>
                   <h1>Painel analitico</h1>
                   <p className="book-page-subtitle">
-                    O React agora segue o mesmo shell e o mesmo vocabulário visual
+                    O React agora segue o mesmo shell e o mesmo vocabulario visual
                     do Angular, mantendo foco em leitura, indicadores e apoio de
-                    apresentação.
+                    apresentacao.
                   </p>
                 </div>
 
