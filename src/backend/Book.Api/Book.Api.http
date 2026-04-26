@@ -1,0 +1,221 @@
+@Book.Api_HostAddress = http://localhost:5268
+@LivroId = 1
+@AutorId = 1
+@AssuntoId = 1
+@AccessToken = cole-o-token-aqui
+
+### Login
+POST {{Book.Api_HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "book-admin",
+  "password": "Book@123"
+}
+
+###
+
+### Health
+GET {{Book.Api_HostAddress}}/api/v1/health
+Accept: application/json
+
+###
+
+### Health live
+GET {{Book.Api_HostAddress}}/api/v1/health/live
+Accept: application/json
+
+###
+
+### Health ready
+GET {{Book.Api_HostAddress}}/api/v1/health/ready
+Accept: application/json
+
+###
+
+### Relatorio de livros por autor
+GET {{Book.Api_HostAddress}}/api/v1/relatorios/livros-por-autor
+Accept: application/json
+
+###
+
+### Relatorio de livros por autor filtrado
+GET {{Book.Api_HostAddress}}/api/v1/relatorios/livros-por-autor?autorNome=Martin
+Accept: application/json
+
+###
+
+### Listar livros
+GET {{Book.Api_HostAddress}}/api/v1/livros
+Accept: application/json
+
+###
+
+### Obter livro por id
+GET {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Accept: application/json
+
+###
+
+### Criar livro
+POST {{Book.Api_HostAddress}}/api/v1/livros
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "titulo": "Domain-Driven Design",
+  "editora": "Alta Books",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "valor": 189.90
+}
+
+###
+
+### Atualizar livro
+PUT {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "titulo": "DDD Tactical Patterns",
+  "editora": "Alta Books",
+  "edicao": 2,
+  "anoPublicacao": "2025",
+  "valor": 199.90
+}
+
+###
+
+### Excluir livro
+DELETE {{Book.Api_HostAddress}}/api/v1/livros/{{LivroId}}
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+### Validar erros de entrada
+POST {{Book.Api_HostAddress}}/api/v1/livros
+Content-Type: application/json
+Accept: application/json
+
+{
+  "titulo": "",
+  "editora": "",
+  "edicao": 0,
+  "anoPublicacao": "20",
+  "valor": -1
+}
+
+###
+
+### Listar autores
+GET {{Book.Api_HostAddress}}/api/v1/autores
+Accept: application/json
+
+###
+
+### Obter autor por id
+GET {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Accept: application/json
+
+###
+
+### Criar autor
+POST {{Book.Api_HostAddress}}/api/v1/autores
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "nome": "Vaughn Vernon"
+}
+
+###
+
+### Atualizar autor
+PUT {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "nome": "Vaughn Vernon Jr."
+}
+
+###
+
+### Excluir autor
+DELETE {{Book.Api_HostAddress}}/api/v1/autores/{{AutorId}}
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+### Validar erro de autor
+POST {{Book.Api_HostAddress}}/api/v1/autores
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": ""
+}
+
+###
+
+### Listar assuntos
+GET {{Book.Api_HostAddress}}/api/v1/assuntos
+Accept: application/json
+
+###
+
+### Obter assunto por id
+GET {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Accept: application/json
+
+###
+
+### Criar assunto
+POST {{Book.Api_HostAddress}}/api/v1/assuntos
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "descricao": "Microservices"
+}
+
+###
+
+### Atualizar assunto
+PUT {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+{
+  "descricao": "Microsservicos"
+}
+
+###
+
+### Excluir assunto
+DELETE {{Book.Api_HostAddress}}/api/v1/assuntos/{{AssuntoId}}
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+### Validar erro de assunto
+POST {{Book.Api_HostAddress}}/api/v1/assuntos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "descricao": ""
+}
+
+###

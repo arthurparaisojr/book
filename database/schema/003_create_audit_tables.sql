@@ -1,0 +1,18 @@
+USE BookDb;
+GO
+
+IF OBJECT_ID('dbo.Livro_Audit', 'U') IS NOT NULL DROP TABLE dbo.Livro_Audit;
+GO
+
+CREATE TABLE dbo.Livro_Audit
+(
+  AuditId BIGINT IDENTITY(1,1) NOT NULL CONSTRAINT PK_Livro_Audit PRIMARY KEY,
+  Acao VARCHAR(10) NOT NULL,
+  Codl INT NOT NULL,
+  TituloAnterior VARCHAR(40) NULL,
+  TituloNovo VARCHAR(40) NULL,
+  ValorAnterior DECIMAL(10,2) NULL,
+  ValorNovo DECIMAL(10,2) NULL,
+  AlteradoEm DATETIME2(0) NOT NULL CONSTRAINT DF_Livro_Audit_AlteradoEm DEFAULT SYSUTCDATETIME()
+);
+GO

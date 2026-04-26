@@ -1,0 +1,43 @@
+# Validacao do Banco - 2026-04-26T21:09:35Z
+
+Aguardando container book-sqlserver ficar healthy...
+
+==> Contagem das tabelas principais
+Tabela        Quantidade 
+------------- -----------
+Autor                   3
+Assunto                 3
+Livro                   2
+Livro_Autor             2
+Livro_Assunto           2
+
+(5 rows affected)
+
+==> Amostra da view de relatorio
+CodAu       AutorNome                                Codl        Titulo                                   Editora                                  Edicao      AnoPublicacao Valor        Assuntos                                                                                                                
+----------- ---------------------------------------- ----------- ---------------------------------------- ---------------------------------------- ----------- ------------- ------------ ------------------------------------------------------------------------------------------------------------------------
+          1 Martin Fowler                                      1 Patterns of Enterprise App Architecture  Addison-Wesley                                     1 2002                199.90 Arquitetura                                                                                                             
+          2 Robert C. Martin                                   2 Clean Code                               Prentice Hall                                      1 2008                149.90 Clean Code                                                                                                              
+
+(2 rows affected)
+
+==> Procedure de filtro de livros
+Codl        Titulo                                   Editora                                  Edicao      AnoPublicacao Valor       
+----------- ---------------------------------------- ---------------------------------------- ----------- ------------- ------------
+          2 Clean Code                               Prentice Hall                                      1 2008                149.90
+
+==> Procedure de relatorio por autor
+CodAu       AutorNome                                Codl        Titulo                                   Editora                                  Edicao      AnoPublicacao Valor        Assuntos                                                                                                                
+----------- ---------------------------------------- ----------- ---------------------------------------- ---------------------------------------- ----------- ------------- ------------ ------------------------------------------------------------------------------------------------------------------------
+          1 Martin Fowler                                      1 Patterns of Enterprise App Architecture  Addison-Wesley                                     1 2002                199.90 Arquitetura                                                                                                             
+
+==> Validacao da trigger em transacao controlada
+
+(1 rows affected)
+AuditAntes  AuditDepois
+----------- -----------
+          2           3
+
+(1 rows affected)
+
+Validacao do banco concluida com sucesso.

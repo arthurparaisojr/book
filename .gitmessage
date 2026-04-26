@@ -1,0 +1,18 @@
+# Formato obrigatorio:
+# tipo(etapa): descricao curta
+#
+# Exemplos:
+# docs(1.A): organiza estrutura documental do projeto
+# feat(3.B): implementa endpoint de autores
+# fix(4.C): corrige mascara monetaria do livro
+
+<tipo>(<etapa>): <descricao curta>
+
+Contexto:
+- 
+
+Impacto:
+- 
+
+Validacao:
+- 
