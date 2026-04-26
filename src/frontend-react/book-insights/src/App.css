@@ -137,6 +137,17 @@
   overflow-wrap: anywhere;
 }
 
+.insights-kpi-card-money {
+  min-width: 0;
+}
+
+.insights-kpi-value-money {
+  font-size: clamp(1.5rem, 2.6vw, 2.9rem);
+  letter-spacing: -0.03em;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
 .insights-kpi-card p {
   margin: 0;
   color: var(--book-ui-text-muted);

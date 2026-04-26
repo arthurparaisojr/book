@@ -748,9 +748,11 @@ function App() {
                       <p>Taxonomia inicial para classificacao e leitura analitica.</p>
                     </article>
 
-                    <article className="book-card insights-kpi-card">
+                    <article className="book-card insights-kpi-card insights-kpi-card-money">
                       <span className="insights-kpi-label">Valor medio</span>
-                      <strong>{currencyFormatter.format(averageBookValue)}</strong>
+                      <strong className="insights-kpi-value-money">
+                        {currencyFormatter.format(averageBookValue)}
+                      </strong>
                       <p>Referencia rapida do patamar financeiro atual do catalogo.</p>
                     </article>
                   </section>
