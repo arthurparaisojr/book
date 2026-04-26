@@ -26,6 +26,8 @@ Solucao `.NET 8` do projeto `Book`.
 - `6.A` iniciada com compose fullstack, Dockerfiles reais e frontends consumindo a API por proxy.
 - `6.B` iniciada com exportacao de OpenAPI e consolidacao de artefatos tecnicos da entrega.
 - `6.C` validada com testes finais, builds de frontends e checklist de entrega.
+- `6.D` planejada para gerar o relatorio obrigatorio TJ-JUD em `HTML -> PDF`, com
+  consulta e geracao do documento em camadas separadas.
 
 Endpoints atuais da API:
 
@@ -49,6 +51,12 @@ Endpoints atuais da API:
 - `POST /api/v1/livros`
 - `PUT /api/v1/livros/{codl}`
 - `DELETE /api/v1/livros/{codl}`
+
+Diretriz adicional do relatorio:
+
+- a leitura da `view` deve ficar separada da geracao do PDF;
+- a geracao deve usar `Bootstrap` e abordagem `HTML -> PDF`;
+- o acesso ao banco nao deve usar `try-catch` generico.
 
 ## Uso com Visual Studio 2022
 

@@ -214,12 +214,13 @@ Toda evolução do projeto deve seguir etapas numeradas e subetapas por letra:
 - `6.A` Orquestrar ambiente com Docker.
 - `6.B` Consolidar scripts, apresentação técnica e artefatos.
 - `6.C` Validar entrega final, backlog executado e documentação.
+- `6.D` Implementar o relatorio obrigatorio TJ-JUD com geracao `HTML -> PDF`.
 
 O backlog detalhado está em [`docs/backlog/README.md`](docs/backlog/README.md).
 
 ## 7.1 Evolucoes futuras fora do escopo atual
 
-Sem alterar o plano oficial `1.A` a `6.C`, o projeto ja registra a seguinte
+Sem alterar o plano oficial agora estendido de `1.A` a `6.D`, o projeto ja registra a seguinte
 evolucao arquitetural desejada para fase posterior:
 
 - autenticacao compartilhada entre `Angular` e `React`, evitando novo login ao
@@ -500,6 +501,16 @@ Implementacao atual da etapa `6.C`:
 
 O relatório deve vir de uma `view` do banco e agrupar dados por autor. Os modelos e
 orientações estão em `database/views`, `docs/database` e `artifacts/reports`.
+
+Premissas obrigatorias desta entrega:
+
+- a `view` SQL deve unir `Livro`, `Autor` e `Assunto`, com agrupamento por autor;
+- a geracao do documento deve usar pipeline `HTML -> PDF`, sem `Crystal Reports` ou
+  `ReportViewer`, para manter compatibilidade com `Docker` e `WSL2`;
+- o layout do relatorio deve usar `Bootstrap`;
+- a busca da `view` e a geracao do documento devem ficar em camadas separadas;
+- o acesso ao banco deve evitar `try-catch` generico, priorizando tratamento
+  especifico por tipo de falha.
 
 ## 10. Diretrizes não negociáveis
 

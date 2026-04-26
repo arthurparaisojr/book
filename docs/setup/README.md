@@ -299,7 +299,20 @@ Resultado esperado:
 - separar evidencias do banco;
 - anexar prints, relatorios e diagrama em `artifacts/`.
 
-## 20. Limpeza opcional do WSL
+## 20. Implementar relatorio obrigatorio TJ-JUD
+
+- criar ou validar a `view` SQL unindo `Livro`, `Autor` e `Assunto`, com agrupamento
+  por autor;
+- separar a leitura da `view` em uma camada de consulta e a montagem do PDF em uma
+  camada de geracao de documento;
+- usar abordagem moderna de `HTML -> PDF`, sem `Crystal Reports` ou `ReportViewer`,
+  para manter compatibilidade com `Docker` e `WSL2`;
+- aplicar `Bootstrap` no layout do relatorio;
+- tratar falhas de banco com mapeamento especifico, sem `try-catch` generico na
+  chamada ao banco;
+- salvar o PDF final e evidencias em `artifacts/reports/`.
+
+## 21. Limpeza opcional do WSL
 
 Se em algum momento voce tiver instalado Docker dentro do Ubuntu/WSL, remova com:
 
