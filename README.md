@@ -155,6 +155,45 @@ Exemplos:
 - `book-action-salvar.svg`
 - `book-report-autor.svg`
 
+## 6.2 O que significa `seeds`
+
+O nome `seed` vem da ideia de "semente".
+
+Em banco de dados, `seeds` sao registros iniciais inseridos para que o ambiente nao
+comece vazio. Essas "sementes" permitem que o sistema suba com dados basicos de
+demonstracao, validacao e desenvolvimento.
+
+No projeto `Book`, os `seeds` ficam em:
+
+- `database/seeds/`
+
+Finalidade dos `seeds` neste repositorio:
+
+- criar autores, assuntos e livros iniciais;
+- permitir que o relatorio por autor funcione logo apos subir o ambiente;
+- evitar cadastro manual antes de testar API, Angular e React;
+- padronizar o estado inicial do banco em qualquer maquina.
+
+## 6.3 Onde ficam usuarios, perfis e senhas
+
+No estado atual de desenvolvimento, os usuarios locais da API ficam em:
+
+- `src/backend/Book.Api/appsettings.Development.json`
+
+Eles sao carregados pela secao `Auth:Users`, com:
+
+- `Username`
+- `Password`
+- `Role`
+
+Perfis locais atualmente configurados:
+
+- `book-admin` / `Book@123` / `Admin`
+- `book-reader` / `Book@123` / `Reader`
+
+Esses usuarios sao usados pelo endpoint `POST /api/v1/auth/login` e atendem os dois
+frontends no ambiente local.
+
 ## 7. Etapas oficiais do projeto
 
 Toda evolução do projeto deve seguir etapas numeradas e subetapas por letra:
@@ -490,3 +529,72 @@ orientações estão em `database/views`, `docs/database` e `artifacts/reports`.
 - [`database/README.md`](database/README.md)
 - [`docker/README.md`](docker/README.md)
 - [`artifacts/README.md`](artifacts/README.md)
+
+## 12. Execucao Sem Docker
+
+Mesmo com a stack oficial em Docker, voce tambem consegue executar os modulos "na mao"
+durante o desenvolvimento.
+
+Fluxo pratico recomendado fora da stack fullstack:
+
+1. subir apenas o banco no Docker:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+```
+
+2. subir a API localmente:
+
+```bash
+cd /home/arthur/github/book/src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+3. subir o Angular localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-angular/book-admin
+npm install
+npm start
+```
+
+4. subir o React localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-react/book-insights
+npm install
+npm run dev
+```
+
+URLs esperadas nesse modo:
+
+- API / Swagger: `http://localhost:5268`
+- Angular: `http://localhost:4200`
+- React: `http://localhost:5173`
+
+Observacao:
+
+- o modo mais comum fora do fullstack Docker e usar banco no Docker e apps locais;
+- isso preserva o banco padronizado e deixa o ciclo de desenvolvimento mais rapido.
+
+## 13. Por que usar WSL com Docker Desktop
+
+O projeto adota `Windows + WSL + Docker Desktop` porque esse fluxo costuma ser o mais
+estavel e previsivel para desenvolvimento local.
+
+Vantagens praticas:
+
+- comandos de shell, scripts `.sh` e ferramentas Linux rodam naturalmente no WSL;
+- o Docker continua centralizado no Windows, evitando instalar uma segunda engine no Ubuntu;
+- o banco `SQL Server` sobe em ambiente reproduzivel;
+- a mesma base atende API, Angular e React sem configuracoes paralelas diferentes;
+- o navegador continua sendo usado normalmente no Windows por `localhost`;
+- reduz conflito entre ambientes e facilita onboarding.
+
+Em resumo:
+
+- `WSL` oferece o terminal Linux e a experiencia de desenvolvimento;
+- `Docker Desktop` fornece a engine oficial dos containers;
+- o projeto usa os dois juntos para combinar produtividade e padronizacao.
