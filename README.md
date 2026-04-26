@@ -497,6 +497,14 @@ Implementacao atual da etapa `6.C`:
 - checklist final registrado em `artifacts/reports/checklist-entrega-final-6c.md`;
 - backlog, documentacao e demonstracao final revisados com riscos residuais documentados.
 
+Implementacao atual da etapa `6.D`:
+
+- endpoint `GET /api/v1/relatorios/livros-por-autor/pdf` gerando o documento por
+  pipeline `HTML -> PDF`;
+- layout do PDF com `Bootstrap` e agrupamento visual por autor;
+- geracao do PDF no backend com `Chromium` headless na stack Docker;
+- download do arquivo integrado ao modulo React na secao de relatorio.
+
 ### 9.12 Construir relatórios
 
 O relatório deve vir de uma `view` do banco e agrupar dados por autor. Os modelos e

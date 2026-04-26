@@ -180,6 +180,34 @@ async function authenticate(request: LoginRequest): Promise<AuthSession> {
   }
 }
 
+function buildReportPdfPath(authorFilter: string) {
+  const normalizedAuthorFilter = authorFilter.trim()
+
+  if (!normalizedAuthorFilter) {
+    return '/relatorios/livros-por-autor/pdf'
+  }
+
+  return `/relatorios/livros-por-autor/pdf?autorNome=${encodeURIComponent(normalizedAuthorFilter)}`
+}
+
+function resolveDownloadFileName(contentDisposition: string | null, fallbackName: string) {
+  if (!contentDisposition) {
+    return fallbackName
+  }
+
+  const utf8Match = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i)
+  if (utf8Match?.[1]) {
+    return decodeURIComponent(utf8Match[1])
+  }
+
+  const asciiMatch = contentDisposition.match(/filename="?([^";]+)"?/i)
+  if (asciiMatch?.[1]) {
+    return asciiMatch[1]
+  }
+
+  return fallbackName
+}
+
 function getStatusTone(status: string): StatusTone {
   if (status === 'healthy') {
     return 'book-state-success'
@@ -252,6 +280,8 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [reportSearchTerm, setReportSearchTerm] = useState('')
+  const [isDownloadingReport, setIsDownloadingReport] = useState(false)
+  const [reportDownloadMessage, setReportDownloadMessage] = useState('')
   const deferredSearchTerm = useDeferredValue(searchTerm)
   const deferredReportSearchTerm = useDeferredValue(reportSearchTerm)
 
@@ -342,6 +372,52 @@ function App() {
     setSnapshot(null)
     setErrorMessage('')
     setLoginErrorMessage('')
+  }
+
+  async function downloadReportPdf() {
+    setIsDownloadingReport(true)
+    setReportDownloadMessage('')
+
+    try {
+      const response = await fetch(`${API_BASE_URL}${buildReportPdfPath(reportSearchTerm)}`, {
+        headers: {
+          Accept: 'application/pdf',
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(await buildApiErrorMessage(response))
+      }
+
+      const fileName = resolveDownloadFileName(
+        response.headers.get('Content-Disposition'),
+        'relatorio-livros-por-autor.pdf',
+      )
+      const blob = await response.blob()
+      const objectUrl = window.URL.createObjectURL(blob)
+      const temporaryLink = document.createElement('a')
+
+      temporaryLink.href = objectUrl
+      temporaryLink.download = fileName
+      document.body.append(temporaryLink)
+      temporaryLink.click()
+      temporaryLink.remove()
+      window.URL.revokeObjectURL(objectUrl)
+
+      setReportDownloadMessage(
+        reportSearchTerm.trim()
+          ? 'PDF gerado com o filtro de autor informado.'
+          : 'PDF completo do relatorio gerado com sucesso.',
+      )
+    } catch (error) {
+      setReportDownloadMessage(
+        error instanceof Error
+          ? `Falha ao gerar o PDF: ${error.message}`
+          : 'Falha ao gerar o PDF do relatorio.',
+      )
+    } finally {
+      setIsDownloadingReport(false)
+    }
   }
 
   const livros = snapshot?.livros ?? []
@@ -815,6 +891,16 @@ function App() {
                       </div>
 
                       <div className="insights-search-group">
+                        <div className="book-inline-actions insights-report-actions">
+                          <button
+                            className="book-button-secondary"
+                            type="button"
+                            onClick={() => void downloadReportPdf()}
+                            disabled={isDownloadingReport}
+                          >
+                            {isDownloadingReport ? 'Gerando PDF...' : 'Baixar PDF do relatorio'}
+                          </button>
+                        </div>
                         <label className="book-sr-only" htmlFor="insights-report-search">
                           Filtrar relatorio por autor, titulo, editora ou assunto
                         </label>
@@ -830,6 +916,22 @@ function App() {
                         <p id="insights-report-search-hint" className="book-form-hint">
                           O filtro facilita a leitura do relatorio detalhado retornado pela API.
                         </p>
+                        <p className="book-form-hint">
+                          O download do PDF usa o termo atual como filtro de autor na API. Sem
+                          busca preenchida, o arquivo sai completo.
+                        </p>
+                        {reportDownloadMessage ? (
+                          <div
+                            className={`book-feedback ${
+                              reportDownloadMessage.startsWith('Falha')
+                                ? 'book-feedback-error'
+                                : 'book-feedback-success'
+                            }`}
+                            role="status"
+                          >
+                            {reportDownloadMessage}
+                          </div>
+                        ) : null}
                       </div>
                     </header>
 

@@ -26,8 +26,8 @@ Solucao `.NET 8` do projeto `Book`.
 - `6.A` iniciada com compose fullstack, Dockerfiles reais e frontends consumindo a API por proxy.
 - `6.B` iniciada com exportacao de OpenAPI e consolidacao de artefatos tecnicos da entrega.
 - `6.C` validada com testes finais, builds de frontends e checklist de entrega.
-- `6.D` planejada para gerar o relatorio obrigatorio TJ-JUD em `HTML -> PDF`, com
-  consulta e geracao do documento em camadas separadas.
+- `6.D` implementada com exportacao do relatorio obrigatorio TJ-JUD em `HTML -> PDF`,
+  com consulta e geracao do documento em camadas separadas.
 
 Endpoints atuais da API:
 
@@ -36,6 +36,7 @@ Endpoints atuais da API:
 - `GET /api/v1/health/live`
 - `GET /api/v1/health/ready`
 - `GET /api/v1/relatorios/livros-por-autor`
+- `GET /api/v1/relatorios/livros-por-autor/pdf`
 - `GET /api/v1/assuntos`
 - `GET /api/v1/assuntos/{codAs}`
 - `POST /api/v1/assuntos`
@@ -57,6 +58,8 @@ Diretriz adicional do relatorio:
 - a leitura da `view` deve ficar separada da geracao do PDF;
 - a geracao deve usar `Bootstrap` e abordagem `HTML -> PDF`;
 - o acesso ao banco nao deve usar `try-catch` generico.
+- falhas de banco sao tratadas no middleware por tipo de excecao, sem captura generica
+  dentro do repositorio.
 
 ## Uso com Visual Studio 2022
 
@@ -216,3 +219,36 @@ dotnet run --launch-profile http
 - arquivo `src/backend/Book.Api/Book.Api.http`;
 - endpoint `GET /api/v1/relatorios/livros-por-autor`;
 - endpoint `GET /api/v1/relatorios/livros-por-autor?autorNome=Martin`.
+
+## Como testar a etapa 6.D
+
+1. subir a stack completa:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-fullstack.sh
+```
+
+2. validar compilacao e testes:
+
+```bash
+dotnet build Book.sln
+dotnet test Book.sln
+cd src/frontend-react/book-insights
+npm run build
+```
+
+3. testar o PDF do relatorio:
+
+- Swagger em `http://localhost:8080/swagger`;
+- endpoint `GET /api/v1/relatorios/livros-por-autor/pdf`;
+- endpoint `GET /api/v1/relatorios/livros-por-autor/pdf?autorNome=Martin`;
+- tela React em `http://localhost:4173`, secao `Relatorio de livros por autor`,
+  botao `Baixar PDF do relatorio`.
+
+Resultados esperados desta etapa:
+
+- o endpoint PDF retorna `application/pdf`;
+- o arquivo e gerado a partir da `view` oficial do banco;
+- o layout usa `Bootstrap` com agrupamento visual por autor;
+- a stack Docker da API gera o PDF usando `Chromium` headless.

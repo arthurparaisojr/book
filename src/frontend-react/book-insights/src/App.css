@@ -265,6 +265,11 @@
   justify-items: end;
 }
 
+.insights-report-actions {
+  width: 100%;
+  justify-content: flex-end;
+}
+
 .insights-report-summary {
   display: grid;
   gap: var(--book-space-md);
