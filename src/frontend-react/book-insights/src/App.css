@@ -123,11 +123,18 @@
 .insights-kpi-card {
   display: grid;
   gap: var(--book-space-sm);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .insights-kpi-card strong {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
   font-size: clamp(2rem, 4vw, 3.1rem);
   color: var(--book-color-primary-900);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 .insights-kpi-card p {
