@@ -5,8 +5,11 @@ Esta pasta concentra a infraestrutura local do projeto.
 ## Arquivo principal
 
 - `docker-compose.infrastructure.yml`: sobe o `SQL Server 2022 Developer` em ambiente local.
-- `docker-compose.fullstack.template.yml`: template da stack completa com banco, API,
-  Angular e React.
+- `docker-compose.fullstack.yml`: stack completa com banco, API, Angular e React.
+- `docker-compose.fullstack.template.yml`: referencia historica da stack completa.
+- `Dockerfile.api`: imagem real da API `.NET 8`.
+- `Dockerfile.angular`: imagem real do frontend Angular com `nginx`.
+- `Dockerfile.react`: imagem real do frontend React com `nginx`.
 - `.env.example`: modelo de variavel de ambiente para senha do banco.
 
 ## Preparacao
@@ -36,6 +39,33 @@ Padrao adotado neste projeto:
 docker compose -f docker/docker-compose.infrastructure.yml up -d
 ```
 
+## Stack completa
+
+Para subir a stack completa com banco, API e os dois frontends:
+
+```bash
+./scripts/start-fullstack.sh
+```
+
+Para parar toda a stack, preservando o volume do banco:
+
+```bash
+./scripts/stop-fullstack.sh
+```
+
+Para apagar tudo da stack completa e iniciar novamente do zero:
+
+```bash
+./scripts/reset-fullstack.sh
+```
+
+Alternativa manual:
+
+```bash
+docker compose -f docker/docker-compose.fullstack.yml up -d --build
+./scripts/apply-database.sh
+```
+
 ## Objetivo
 
 - padronizar o ambiente de desenvolvimento;
@@ -43,7 +73,7 @@ docker compose -f docker/docker-compose.infrastructure.yml up -d
 - facilitar apresentacao e onboarding do cliente;
 - permitir execucao dos scripts de `database/` a partir do proprio container.
 
-## Estrutura Docker prevista
+## Estrutura Docker em uso
 
 - `sqlserver`: banco oficial do projeto;
 - `api`: backend `.NET 8`;
@@ -52,11 +82,19 @@ docker compose -f docker/docker-compose.infrastructure.yml up -d
 
 ## Observacao
 
-O arquivo de infraestrutura atual ja sobe o banco.
+O arquivo de infraestrutura continua sendo o caminho mais rapido para trabalhar apenas
+com o banco.
 
-O arquivo `docker-compose.fullstack.template.yml` foi incluido como estrutura de
-referencia para a stack completa e deve ser usado quando os Dockerfiles e aplicacoes
-estiverem prontos.
+O arquivo `docker-compose.fullstack.yml` ja sobe a stack real com os Dockerfiles do
+repositorio. Os frontends consomem a API por `/api/v1` usando proxy local no
+desenvolvimento e `nginx` na execucao containerizada.
+
+Fluxo pratico recomendado:
+
+- usar `start-fullstack.sh` para subir tudo;
+- usar `stop-fullstack.sh` para parar tudo mantendo o banco;
+- usar `reset-fullstack.sh` para recomecar do zero, incluindo limpeza do volume
+  do SQL Server.
 
 Nao e necessario instalar navegador dentro do WSL para trabalhar com a stack.
 

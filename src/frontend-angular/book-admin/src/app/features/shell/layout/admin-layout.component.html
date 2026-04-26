@@ -32,7 +32,7 @@
 
     <div class="book-app-sidebar-footer book-card" aria-live="polite">
       <span class="book-badge-info" [ngClass]="apiStatusClass">{{ apiStatus }}</span>
-      <p>Backend local em `http://localhost:5268`.</p>
+      <p>Consumo da API via `/api/v1` com proxy local e compatibilidade Docker.</p>
       <button class="book-button-secondary" type="button" (click)="refreshHealthStatus()">
         Revalidar saude
       </button>

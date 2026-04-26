@@ -172,7 +172,10 @@ Implementacoes obrigatorias:
 Arquivos previstos:
 
 - `docker/docker-compose.infrastructure.yml`
-- `docker/docker-compose.fullstack.template.yml`
+- `docker/docker-compose.fullstack.yml`
+- `docker/Dockerfile.api`
+- `docker/Dockerfile.angular`
+- `docker/Dockerfile.react`
 - `docker/.env.example`
 
 Servicos previstos na stack completa:
@@ -182,10 +185,29 @@ Servicos previstos na stack completa:
 - `frontend-angular`
 - `frontend-react`
 
-Quando os projetos reais estiverem criados, a stack completa podera ser ligada com:
+Com a stack atual, o fluxo recomendado e:
 
 ```bash
-docker compose -f docker/docker-compose.fullstack.template.yml up --build
+./scripts/start-fullstack.sh
+```
+
+Para parar tudo sem apagar os dados persistidos:
+
+```bash
+./scripts/stop-fullstack.sh
+```
+
+Para apagar tudo e recriar o ambiente do zero:
+
+```bash
+./scripts/reset-fullstack.sh
+```
+
+Alternativa manual:
+
+```bash
+docker compose -f docker/docker-compose.fullstack.yml up -d --build
+./scripts/apply-database.sh
 ```
 
 Portas esperadas para acesso pelo navegador do Windows:
@@ -193,6 +215,14 @@ Portas esperadas para acesso pelo navegador do Windows:
 - API / Swagger: `http://localhost:8080`
 - Angular: `http://localhost:4200`
 - React: `http://localhost:4173`
+
+Observacao importante:
+
+- o Angular e o React consomem a API por `/api/v1`;
+- no desenvolvimento local, `ng serve` e `vite` fazem proxy para `http://localhost:5268`;
+- na stack Docker, o `nginx` dos dois frontends faz proxy para o container `api`.
+- `stop-fullstack.sh` preserva o volume do banco;
+- `reset-fullstack.sh` remove o volume do banco e executa novamente a subida completa.
 
 ## 14. Construir relatorio
 

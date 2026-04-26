@@ -23,6 +23,7 @@ Solucao `.NET 8` do projeto `Book`.
 - `3.B` em andamento com CRUDs de `Livro`, `Autor` e `Assunto` implementados.
 - `3.C` em andamento com autenticacao `JWT`, policy de escrita, health checks e logging de requisicoes.
 - `5.A` iniciada com endpoint de relatorio baseado na `view` do banco.
+- `6.A` iniciada com compose fullstack, Dockerfiles reais e frontends consumindo a API por proxy.
 
 Endpoints atuais da API:
 

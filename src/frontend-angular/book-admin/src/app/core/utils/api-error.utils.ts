@@ -32,7 +32,7 @@ export function getApiErrorMessage(error: unknown): string {
     }
 
     if (error.status === 0) {
-      return 'Nao foi possivel acessar a API. Verifique se o backend esta ativo em http://localhost:5268.';
+      return 'Nao foi possivel acessar a API. Verifique se o backend esta ativo e se o proxy local esta configurado.';
     }
 
     return `A requisicao falhou com status ${error.status}.`;

@@ -48,6 +48,12 @@ O app `book-insights` agora possui:
 O `book-insights` passou a exibir o relatorio de livros por autor consumindo o
 endpoint `/api/v1/relatorios/livros-por-autor`, baseado na `view` oficial do banco.
 
+## Evolucao na etapa 6.A
+
+O `book-insights` agora tambem funciona na stack Docker completa consumindo a API por
+`/api/v1`, com proxy no `vite` para o desenvolvimento local e proxy no `nginx` para a
+execucao containerizada.
+
 ## Como executar
 
 1. subir banco e backend:
@@ -76,6 +82,17 @@ Observacao de toolchain:
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
+
+## Como executar via Docker
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-fullstack.sh
+```
+
+Acesso:
+
+- `http://localhost:4173`
 
 ## Validacao recomendada da 4.C
 

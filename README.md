@@ -401,12 +401,42 @@ Com o token retornado:
 Estrutura prevista para conter toda a solução:
 
 - `docker/docker-compose.infrastructure.yml`: banco local e dependências técnicas;
-- `docker/docker-compose.fullstack.template.yml`: template da stack completa com
-  `sqlserver`, `api`, `frontend-angular` e `frontend-react`;
+- `docker/docker-compose.fullstack.yml`: stack completa com `sqlserver`, `api`,
+  `frontend-angular` e `frontend-react`;
 - `docker/.env.example`: variáveis base do ambiente.
 
-O compose completo foi incluído como template para ser ativado quando os Dockerfiles e
-aplicações reais estiverem criados.
+Fluxo recomendado:
+
+```bash
+./scripts/start-fullstack.sh
+```
+
+Para parar tudo sem apagar o banco:
+
+```bash
+./scripts/stop-fullstack.sh
+```
+
+Para apagar toda a stack e iniciar novamente do zero:
+
+```bash
+./scripts/reset-fullstack.sh
+```
+
+Alternativa manual:
+
+```bash
+docker compose -f docker/docker-compose.fullstack.yml up -d --build
+./scripts/apply-database.sh
+```
+
+Implementacao atual da etapa `6.A`:
+
+- compose fullstack real versionado em `docker/docker-compose.fullstack.yml`;
+- Dockerfiles reais para API, Angular e React;
+- proxy de `/api/v1` no Angular e no React para funcionar no dev local e no Docker;
+- frontends publicados por `nginx` nas portas `4200` e `4173`;
+- API exposta em `http://localhost:8080`.
 
 ### 9.12 Construir relatórios
 

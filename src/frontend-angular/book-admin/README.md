@@ -19,7 +19,7 @@ Frontend Angular principal do projeto `Book`.
 - mascara monetaria em `pt-BR` no campo `Valor`;
 - validacoes com mensagens amigaveis e foco acessivel;
 - skip link, estados com `aria-live` e icones compartilhados nas acoes;
-- integracao com a API em `http://localhost:5268/api/v1`.
+- integracao com a API por `/api/v1`, com proxy local para `http://localhost:5268`.
 
 ## Como executar
 
@@ -42,6 +42,13 @@ npm start
 Abra no navegador do Windows:
 
 - `http://localhost:4200`
+
+## Como executar via Docker
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-fullstack.sh
+```
 
 ## Credenciais locais
 

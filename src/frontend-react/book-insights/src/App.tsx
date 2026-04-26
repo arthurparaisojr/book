@@ -6,7 +6,7 @@ import assuntosIcon from '../../../shared/icons/svg/book-nav-assuntos.svg'
 import './App.css'
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5268/api/v1'
+  import.meta.env.VITE_API_BASE_URL ?? '/api/v1'
 
 interface Livro {
   codl: number
@@ -315,7 +315,7 @@ function App() {
 
           <div className="book-app-sidebar-footer book-card" aria-live="polite">
             <span className={`book-badge-info ${apiStatusTone}`}>API {apiStatusLabel}</span>
-            <p>Backend local em `http://localhost:5268`.</p>
+            <p>Consumo da API via `/api/v1` com proxy local e compatibilidade Docker.</p>
             <button className="book-button-secondary" type="button" onClick={() => void loadSnapshot()}>
               Atualizar indicadores
             </button>

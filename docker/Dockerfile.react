@@ -1,0 +1,19 @@
+FROM node:20-alpine AS build
+WORKDIR /app
+
+COPY src/frontend-react/book-insights/package*.json ./src/frontend-react/book-insights/
+WORKDIR /app/src/frontend-react/book-insights
+RUN npm ci
+
+WORKDIR /app
+COPY src/frontend-react/book-insights ./src/frontend-react/book-insights
+COPY src/shared ./src/shared
+
+WORKDIR /app/src/frontend-react/book-insights
+RUN npm run build
+
+FROM nginx:1.27-alpine AS runtime
+COPY docker/nginx.react.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/src/frontend-react/book-insights/dist /usr/share/nginx/html
+
+EXPOSE 80

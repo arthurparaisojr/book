@@ -35,7 +35,7 @@ O app `book-admin` agora possui:
 - shell administrativo;
 - dashboard inicial;
 - telas para `Livro`, `Autor` e `Assunto`;
-- consumo da API `.NET 8` em `http://localhost:5268/api/v1`;
+- consumo da API `.NET 8` por `/api/v1`, com proxy local para `http://localhost:5268`;
 - tema azul compartilhado importado de `src/shared/themes/book-default-blue.css`;
 - mascara monetaria em `pt-BR` no cadastro de `Livro`;
 - validacoes com mensagens claras e estados acessiveis;
@@ -62,6 +62,17 @@ npm start
 ```
 
 3. acessar no navegador do Windows:
+
+- `http://localhost:4200`
+
+## Como executar via Docker
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-fullstack.sh
+```
+
+Acesso:
 
 - `http://localhost:4200`
 

@@ -19,7 +19,9 @@ Modulo complementar em React do projeto `Book`.
 - uso do tema azul compartilhado;
 - skip link, busca com ajuda textual e anuncios de carregamento;
 - favicon compartilhado do projeto;
-- reaproveitamento de SVGs da biblioteca do projeto.
+- reaproveitamento de SVGs da biblioteca do projeto;
+- integracao com a API por `/api/v1`, com proxy local no `vite` e proxy containerizado
+  no `nginx`.
 
 ## Como executar
 
@@ -49,6 +51,17 @@ Observacao de toolchain:
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
+
+## Como executar via Docker
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-fullstack.sh
+```
+
+Abra no navegador do Windows:
+
+- `http://localhost:4173`
 
 ## Observacao
 
