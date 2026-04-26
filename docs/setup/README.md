@@ -224,28 +224,43 @@ Observacao importante:
 - `stop-fullstack.sh` preserva o volume do banco;
 - `reset-fullstack.sh` remove o volume do banco e executa novamente a subida completa.
 
-## 14. Construir relatorio
+## 15. Consolidar artefatos tecnicos
+
+Para preparar a entrega da etapa `6.B`, execute:
+
+```bash
+./scripts/prepare-delivery-artifacts.sh
+```
+
+Resultado esperado:
+
+- `OpenAPI` exportado em `artifacts/api/book-api-openapi-v1.json`;
+- saida da validacao do banco em `artifacts/database/validacao-banco-output.txt`,
+  quando o container `book-sqlserver` estiver disponivel;
+- roteiro e checklist de apresentacao centralizados em `artifacts/reports/`.
+
+## 16. Construir relatorio
 
 - criar `view` com dados de livro, autor e assunto;
 - agrupar por autor;
 - expor endpoint ou exportacao para o frontend;
 - guardar modelos gerados em `artifacts/reports/`.
 
-## 15. Testar
+## 17. Testar
 
 - `xUnit` para backend;
 - `Jest` para Angular;
 - `Vitest` para React;
 - `Playwright` para fluxo de ponta a ponta.
 
-## 16. Preparar apresentacao
+## 18. Preparar apresentacao
 
 - atualizar documentos;
 - exportar Swagger/OpenAPI;
 - separar evidencias do banco;
 - anexar prints, relatorios e diagrama em `artifacts/`.
 
-## 17. Limpeza opcional do WSL
+## 19. Limpeza opcional do WSL
 
 Se em algum momento voce tiver instalado Docker dentro do Ubuntu/WSL, remova com:
 

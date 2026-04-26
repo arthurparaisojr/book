@@ -11,3 +11,7 @@ Armazene aqui os materiais de apresentacao do banco:
 
 - `relatorio-detalhado-banco.md`
 - `checklist-validacao-banco.md`
+
+## Arquivo adicional da etapa 6.B
+
+- `validacao-banco-output.txt`

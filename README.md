@@ -423,6 +423,12 @@ Para apagar toda a stack e iniciar novamente do zero:
 ./scripts/reset-fullstack.sh
 ```
 
+Para consolidar os artefatos tecnicos da entrega:
+
+```bash
+./scripts/prepare-delivery-artifacts.sh
+```
+
 Alternativa manual:
 
 ```bash
@@ -437,6 +443,13 @@ Implementacao atual da etapa `6.A`:
 - proxy de `/api/v1` no Angular e no React para funcionar no dev local e no Docker;
 - frontends publicados por `nginx` nas portas `4200` e `4173`;
 - API exposta em `http://localhost:8080`.
+
+Implementacao atual da etapa `6.B`:
+
+- scripts para exportar `OpenAPI` e consolidar artefatos da entrega;
+- roteiro tecnico de apresentacao em `artifacts/reports/roteiro-apresentacao-tecnica.md`;
+- checklist operacional da etapa em `artifacts/reports/checklist-entrega-6b.md`;
+- pasta `artifacts/api/` preparada para versionar o export oficial da API.
 
 ### 9.12 Construir relatórios
 

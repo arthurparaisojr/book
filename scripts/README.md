@@ -21,6 +21,10 @@ Esta pasta deve concentrar scripts operacionais reutilizaveis, por exemplo:
   aguardando o SQL Server ficar estavel e repetindo tentativas transitórias.
 - `validate-database.sh`: executa um smoke test do banco para a etapa `2.C`,
   tambem aguardando o container ficar `healthy`.
+- `export-openapi.sh`: exporta o `OpenAPI` da API para `artifacts/api/`, usando a
+  instancia ja ativa ou subindo a API localmente quando necessario.
+- `prepare-delivery-artifacts.sh`: consolida artefatos tecnicos da etapa `6.B`,
+  exportando o `OpenAPI` e capturando a validacao do banco quando o container existir.
 
 ## Quando usar cada script
 
@@ -32,6 +36,10 @@ Esta pasta deve concentrar scripts operacionais reutilizaveis, por exemplo:
   perder os dados atuais do banco no volume Docker.
 - `reset-fullstack.sh`: quando voce quer recomecar o ambiente do zero, apagando os
   dados persistidos do SQL Server e recriando toda a stack com os seeds oficiais.
+- `export-openapi.sh`: quando voce quer gerar ou atualizar o arquivo `OpenAPI`
+  versionado em `artifacts/api/`.
+- `prepare-delivery-artifacts.sh`: quando voce quer preparar os materiais tecnicos
+  da entrega e da apresentacao final da etapa `6.B`.
 
 ## Comportamento esperado
 

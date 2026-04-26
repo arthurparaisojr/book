@@ -95,6 +95,8 @@ Fluxo pratico recomendado:
 - usar `stop-fullstack.sh` para parar tudo mantendo o banco;
 - usar `reset-fullstack.sh` para recomecar do zero, incluindo limpeza do volume
   do SQL Server.
+- usar `prepare-delivery-artifacts.sh` para consolidar os artefatos tecnicos da
+  entrega apos validar a stack.
 
 Nao e necessario instalar navegador dentro do WSL para trabalhar com a stack.
 
