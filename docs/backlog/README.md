@@ -41,6 +41,12 @@ subetapas por letra.
 - `6.B` Consolidar scripts, artefatos e roteiro de apresentacao.
 - `6.C` Revisar backlog entregue, atualizar documentos e validar demonstracao final.
 
+## Estado atual observado no repositorio
+
+- `6.A` consolidada com compose fullstack, Dockerfiles e scripts de start, stop e reset.
+- `6.B` consolidada com export `OpenAPI`, validacao do banco e roteiro de apresentacao.
+- `6.C` validada com checklist final e evidencias atualizadas em `artifacts/reports/`.
+
 ## Evolucoes futuras
 
 Itens abaixo ficam registrados como proxima fase, sem alterar o cronograma oficial

@@ -25,6 +25,7 @@ Solucao `.NET 8` do projeto `Book`.
 - `5.A` iniciada com endpoint de relatorio baseado na `view` do banco.
 - `6.A` iniciada com compose fullstack, Dockerfiles reais e frontends consumindo a API por proxy.
 - `6.B` iniciada com exportacao de OpenAPI e consolidacao de artefatos tecnicos da entrega.
+- `6.C` validada com testes finais, builds de frontends e checklist de entrega.
 
 Endpoints atuais da API:
 

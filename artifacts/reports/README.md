@@ -10,5 +10,6 @@ Guarde aqui:
 
 - `roteiro-apresentacao-tecnica.md`
 - `checklist-entrega-6b.md`
+- `checklist-entrega-final-6c.md`
 
 O relatorio deve ser baseado em `view` do banco, conforme as premissas do projeto.

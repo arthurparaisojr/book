@@ -451,6 +451,12 @@ Implementacao atual da etapa `6.B`:
 - checklist operacional da etapa em `artifacts/reports/checklist-entrega-6b.md`;
 - pasta `artifacts/api/` preparada para versionar o export oficial da API.
 
+Implementacao atual da etapa `6.C`:
+
+- validacao final executada com `dotnet test`, builds dos dois frontends e preparo dos artefatos;
+- checklist final registrado em `artifacts/reports/checklist-entrega-final-6c.md`;
+- backlog, documentacao e demonstracao final revisados com riscos residuais documentados.
+
 ### 9.12 Construir relatórios
 
 O relatório deve vir de uma `view` do banco e agrupar dados por autor. Os modelos e
