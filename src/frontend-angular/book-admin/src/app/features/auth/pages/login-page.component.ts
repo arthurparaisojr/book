@@ -23,8 +23,8 @@ export class LoginPageComponent {
   private readonly router = inject(Router);
 
   readonly loginForm = this.formBuilder.nonNullable.group({
-    username: ['book-admin', [Validators.required]],
-    password: ['Book@123', [Validators.required]]
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]]
   });
 
   isSubmitting = false;

@@ -33,6 +33,7 @@ insight e leitura, e nao de operacao.
 
 O app `book-insights` agora possui:
 
+- login com usuario e senha consumindo o mesmo endpoint de autenticacao do Angular;
 - dashboard de leitura;
 - resumo da saude da API;
 - indicadores de livros, autores e assuntos;
@@ -82,6 +83,13 @@ Observacao de toolchain:
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
+
+## Credenciais locais
+
+- `book-admin` / `Book@123`
+- `book-reader` / `Book@123`
+
+As mesmas credenciais tambem funcionam no Angular em `http://localhost:4200`.
 
 ## Como executar via Docker
 

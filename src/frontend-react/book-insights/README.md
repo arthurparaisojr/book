@@ -12,6 +12,7 @@ Modulo complementar em React do projeto `Book`.
 ## O que ja existe
 
 - dashboard com dados reais da API;
+- login com usuario e senha usando o mesmo backend JWT do Angular;
 - resumo de saude do backend;
 - leitura de livros, autores e assuntos;
 - relatorio de livros por autor baseado na `view` do banco;
@@ -51,6 +52,11 @@ Observacao de toolchain:
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
+
+## Credenciais locais
+
+- `book-admin` / `Book@123`
+- `book-reader` / `Book@123`
 
 ## Como executar via Docker
 

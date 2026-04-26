@@ -12,6 +12,7 @@ Frontend Angular principal do projeto `Book`.
 ## O que ja existe
 
 - tela de login;
+- login digitado por usuario e senha com os mesmos perfis do React;
 - shell administrativo;
 - dashboard inicial;
 - paginas de `Livro`, `Autor` e `Assunto`;

@@ -32,6 +32,7 @@ administrativa bem estruturada.
 O app `book-admin` agora possui:
 
 - login com `JWT`;
+- login manual por usuario e senha, com os mesmos usuarios locais do modulo React;
 - shell administrativo;
 - dashboard inicial;
 - telas para `Livro`, `Autor` e `Assunto`;
@@ -80,6 +81,8 @@ Acesso:
 
 - `book-admin` / `Book@123`
 - `book-reader` / `Book@123`
+
+As mesmas credenciais tambem funcionam no modulo React em `http://localhost:5173`.
 
 ## Validacao recomendada da 4.C
 

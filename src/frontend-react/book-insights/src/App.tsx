@@ -7,6 +7,7 @@ import './App.css'
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? '/api/v1'
+const AUTH_STORAGE_KEY = 'book-insights-session'
 
 interface Livro {
   codl: number
@@ -61,6 +62,26 @@ interface InsightSnapshot {
   relatorioLivrosPorAutor: RelatorioLivroPorAutor[]
 }
 
+interface LoginRequest {
+  username: string
+  password: string
+}
+
+interface AuthTokenResponse {
+  accessToken: string
+  tokenType: string
+  expiresAtUtc: string
+  username: string
+  role: string
+}
+
+interface AuthSession {
+  accessToken: string
+  expiresAtUtc: string
+  username: string
+  role: string
+}
+
 type StatusTone = 'book-state-success' | 'book-state-warning' | 'book-state-danger'
 
 const currencyFormatter = new Intl.NumberFormat('pt-BR', {
@@ -68,14 +89,95 @@ const currencyFormatter = new Intl.NumberFormat('pt-BR', {
   currency: 'BRL',
 })
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`)
+function readStoredSession(): AuthSession | null {
+  const rawSession = localStorage.getItem(AUTH_STORAGE_KEY)
+
+  if (!rawSession) {
+    return null
+  }
+
+  try {
+    return JSON.parse(rawSession) as AuthSession
+  } catch {
+    localStorage.removeItem(AUTH_STORAGE_KEY)
+    return null
+  }
+}
+
+function persistSession(session: AuthSession | null) {
+  if (session) {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session))
+    return
+  }
+
+  localStorage.removeItem(AUTH_STORAGE_KEY)
+}
+
+async function buildApiErrorMessage(response: Response) {
+  try {
+    const body = (await response.json()) as {
+      detail?: string
+      title?: string
+      errors?: Record<string, string[]>
+    }
+
+    if (body.detail) {
+      return body.detail
+    }
+
+    const firstError = body.errors ? Object.values(body.errors).flat()[0] : ''
+    if (firstError) {
+      return firstError
+    }
+
+    if (body.title) {
+      return body.title
+    }
+  } catch {
+    // Ignora erros de parse e cai para a mensagem padrao abaixo.
+  }
+
+  return `Falha ao consultar a API. Status ${response.status}.`
+}
+
+async function fetchJson<T>(path: string, accessToken?: string | null): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    headers: accessToken
+      ? {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      : undefined,
+  })
 
   if (!response.ok) {
-    throw new Error(`Falha ao consultar ${path}. Status ${response.status}.`)
+    throw new Error(await buildApiErrorMessage(response))
   }
 
   return (await response.json()) as T
+}
+
+async function authenticate(request: LoginRequest): Promise<AuthSession> {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(request),
+  })
+
+  if (!response.ok) {
+    throw new Error(await buildApiErrorMessage(response))
+  }
+
+  const payload = (await response.json()) as AuthTokenResponse
+
+  return {
+    accessToken: payload.accessToken,
+    expiresAtUtc: payload.expiresAtUtc,
+    username: payload.username,
+    role: payload.role,
+  }
 }
 
 function getStatusTone(status: string): StatusTone {
@@ -141,6 +243,10 @@ function formatDate(utcDate: string) {
 }
 
 function App() {
+  const [session, setSession] = useState<AuthSession | null>(() => readStoredSession())
+  const [loginForm, setLoginForm] = useState<LoginRequest>({ username: '', password: '' })
+  const [loginErrorMessage, setLoginErrorMessage] = useState('')
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [snapshot, setSnapshot] = useState<InsightSnapshot | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
@@ -150,10 +256,16 @@ function App() {
   const deferredReportSearchTerm = useDeferredValue(reportSearchTerm)
 
   useEffect(() => {
-    void loadSnapshot()
-  }, [])
+    if (!session) {
+      setSnapshot(null)
+      setIsLoading(false)
+      return
+    }
 
-  async function loadSnapshot() {
+    void loadSnapshot(session.accessToken)
+  }, [session])
+
+  async function loadSnapshot(accessToken = session?.accessToken ?? null) {
     startTransition(() => {
       setIsLoading(true)
       setErrorMessage('')
@@ -161,11 +273,11 @@ function App() {
 
     try {
       const [health, livros, autores, assuntos, relatorioLivrosPorAutor] = await Promise.all([
-        fetchJson<HealthResponse>('/health'),
-        fetchJson<Livro[]>('/livros'),
-        fetchJson<Autor[]>('/autores'),
-        fetchJson<Assunto[]>('/assuntos'),
-        fetchJson<RelatorioLivroPorAutor[]>('/relatorios/livros-por-autor'),
+        fetchJson<HealthResponse>('/health', accessToken),
+        fetchJson<Livro[]>('/livros', accessToken),
+        fetchJson<Autor[]>('/autores', accessToken),
+        fetchJson<Assunto[]>('/assuntos', accessToken),
+        fetchJson<RelatorioLivroPorAutor[]>('/relatorios/livros-por-autor', accessToken),
       ])
 
       startTransition(() => {
@@ -182,6 +294,54 @@ function App() {
         setIsLoading(false)
       })
     }
+  }
+
+  function updateLoginForm<K extends keyof LoginRequest>(field: K, value: LoginRequest[K]) {
+    setLoginForm((current) => ({
+      ...current,
+      [field]: value,
+    }))
+  }
+
+  function useCredentialPreset(username: string, password: string) {
+    setLoginForm({ username, password })
+    setLoginErrorMessage('')
+  }
+
+  async function submitLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (!loginForm.username.trim() || !loginForm.password.trim()) {
+      setLoginErrorMessage('Informe usuario e senha para autenticar no modulo React.')
+      return
+    }
+
+    setIsAuthenticating(true)
+    setLoginErrorMessage('')
+
+    try {
+      const authenticatedSession = await authenticate({
+        username: loginForm.username.trim(),
+        password: loginForm.password,
+      })
+
+      persistSession(authenticatedSession)
+      setSession(authenticatedSession)
+    } catch (error) {
+      setLoginErrorMessage(
+        error instanceof Error ? error.message : 'Nao foi possivel autenticar no modulo React.',
+      )
+    } finally {
+      setIsAuthenticating(false)
+    }
+  }
+
+  function logout() {
+    persistSession(null)
+    setSession(null)
+    setSnapshot(null)
+    setErrorMessage('')
+    setLoginErrorMessage('')
   }
 
   const livros = snapshot?.livros ?? []
@@ -228,6 +388,8 @@ function App() {
   )
   const statusAnnouncement = isLoading
     ? 'Carregando dados do modulo React.'
+    : !session
+      ? 'Modulo React aguardando autenticacao.'
     : errorMessage
       ? `Falha ao carregar insights: ${errorMessage}`
       : snapshot
@@ -273,6 +435,113 @@ function App() {
     },
   ]
 
+  if (!session) {
+    return (
+      <>
+        <a className="book-skip-link" href="#book-insights-login">
+          Pular para o conteudo principal
+        </a>
+
+        <div className="book-sr-only" aria-live="polite">
+          {statusAnnouncement}
+        </div>
+
+        <main id="book-insights-login" className="insights-login-shell">
+          <section className="insights-login-panel book-card">
+            <span className="book-badge-info">React Insights</span>
+            <h1>Acesso analitico do projeto Book</h1>
+            <p>
+              Este modulo React agora tambem autentica com usuario e senha, usando o
+              mesmo endpoint de login do Angular e a mesma API `.NET 8`.
+            </p>
+
+            <div className="insights-login-grid">
+              <article className="book-card insights-role-card">
+                <strong>Fluxo recomendado</strong>
+                <p>Autentique para carregar os indicadores, o relatorio por autor e o painel de saude.</p>
+              </article>
+              <article className="book-card insights-role-card">
+                <strong>Mesmas credenciais do Angular</strong>
+                <p>`book-admin` e `book-reader` funcionam aqui tambem, com o mesmo backend JWT.</p>
+              </article>
+            </div>
+
+            <div className="insights-inline-note">
+              <button
+                className="book-button-secondary"
+                type="button"
+                onClick={() => useCredentialPreset('book-admin', 'Book@123')}
+              >
+                Usar book-admin
+              </button>
+              <button
+                className="book-button-secondary"
+                type="button"
+                onClick={() => useCredentialPreset('book-reader', 'Book@123')}
+              >
+                Usar book-reader
+              </button>
+              <a className="book-button-secondary insights-link-button" href="http://localhost:4200">
+                Abrir Angular
+              </a>
+            </div>
+          </section>
+
+          <form className="insights-login-panel book-card" onSubmit={(event) => void submitLogin(event)} noValidate>
+            <div>
+              <h2 className="book-section-title">Entrar</h2>
+              <p className="book-page-subtitle">
+                Use usuario e senha para acessar o modulo React com as mesmas credenciais do Angular.
+              </p>
+            </div>
+
+            <div className="book-form-grid">
+              <div className="book-form-field book-form-field-full">
+                <label htmlFor="react-username">Usuario</label>
+                <input
+                  id="react-username"
+                  className="book-input"
+                  type="text"
+                  autoComplete="username"
+                  value={loginForm.username}
+                  onChange={(event) => updateLoginForm('username', event.target.value)}
+                />
+              </div>
+
+              <div className="book-form-field book-form-field-full">
+                <label htmlFor="react-password">Senha</label>
+                <input
+                  id="react-password"
+                  className="book-input"
+                  type="password"
+                  autoComplete="current-password"
+                  value={loginForm.password}
+                  onChange={(event) => updateLoginForm('password', event.target.value)}
+                />
+              </div>
+            </div>
+
+            {loginErrorMessage ? (
+              <div className="book-feedback book-feedback-error" role="alert">
+                {loginErrorMessage}
+              </div>
+            ) : null}
+
+            <div className="insights-inline-note">
+              <span className="book-badge-info">JWT Bearer</span>
+              <span className="book-badge-info">Mesmo backend do Angular</span>
+              <span className="book-badge-info">Leitura analitica protegida</span>
+            </div>
+
+            <button className="book-button-primary" type="submit" disabled={isAuthenticating}>
+              {isAuthenticating ? 'Autenticando...' : 'Entrar no modulo'}
+            </button>
+          </form>
+        </main>
+      </>
+    )
+  }
+
   return (
     <>
       <a className="book-skip-link" href="#book-insights-content">
@@ -315,7 +584,9 @@ function App() {
 
           <div className="book-app-sidebar-footer book-card" aria-live="polite">
             <span className={`book-badge-info ${apiStatusTone}`}>API {apiStatusLabel}</span>
-            <p>Consumo da API via `/api/v1` com proxy local e compatibilidade Docker.</p>
+            <p>
+              Sessao de <strong>{session.username}</strong> com perfil <strong>{session.role}</strong>.
+            </p>
             <button className="book-button-secondary" type="button" onClick={() => void loadSnapshot()}>
               Atualizar indicadores
             </button>
@@ -325,16 +596,19 @@ function App() {
         <div className="book-app-main">
           <header className="book-app-topbar">
             <div>
-              <p className="book-app-topbar-label">Modulo ativo</p>
-              <h2>Book Insights</h2>
+              <p className="book-app-topbar-label">Sessao ativa</p>
+              <h2>{session.username}</h2>
             </div>
 
             <div className="book-app-topbar-actions">
-              <span className="book-badge-info">React</span>
+              <span className="book-badge-info">{session.role}</span>
               <span className={`book-badge-info ${apiStatusTone}`}>{apiStatusLabel}</span>
               <a className="book-button-secondary insights-link-button" href="http://localhost:4200">
                 Abrir painel Angular
               </a>
+              <button className="book-button-secondary" type="button" onClick={logout}>
+                Sair
+              </button>
             </div>
           </header>
 

@@ -4,6 +4,36 @@
   padding: clamp(20px, 3vw, 40px);
 }
 
+.insights-login-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: var(--book-space-xl);
+  padding: clamp(20px, 4vw, 48px);
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.2), transparent 26%),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(239, 246, 255, 0.94));
+}
+
+.insights-login-panel {
+  display: grid;
+  gap: var(--book-space-lg);
+  align-content: start;
+}
+
+.insights-login-panel h1 {
+  margin: 0;
+  color: var(--book-color-primary-900);
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 0.98;
+}
+
+.insights-login-grid {
+  display: grid;
+  gap: var(--book-space-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .insights-main {
   display: grid;
   gap: var(--book-space-xl);
@@ -287,6 +317,7 @@
 }
 
 @media (max-width: 1100px) {
+  .insights-login-shell,
   .insights-hero,
   .insights-kpis,
   .insights-grid,
@@ -301,6 +332,7 @@
 }
 
 @media (max-width: 720px) {
+  .insights-login-grid,
   .insights-panel-heading,
   .insights-health-item,
   .insights-book-card,
