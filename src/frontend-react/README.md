@@ -43,6 +43,11 @@ O app `book-insights` agora possui:
 - favicon compartilhado do projeto;
 - reaproveitamento de SVGs da biblioteca do projeto.
 
+## Evolucao na etapa 5.A
+
+O `book-insights` passou a exibir o relatorio de livros por autor consumindo o
+endpoint `/api/v1/relatorios/livros-por-autor`, baseado na `view` oficial do banco.
+
 ## Como executar
 
 1. subir banco e backend:
@@ -63,6 +68,11 @@ npm install
 npm run dev
 ```
 
+Observacao de toolchain:
+
+- o modulo esta alinhado para rodar sem aviso de engine em `Node.js 20 LTS`,
+  incluindo ambientes `20.18.x`.
+
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
@@ -73,3 +83,10 @@ npm run dev
 2. navegar por teclado e usar o skip link;
 3. testar a busca local do catalogo;
 4. confirmar o favicon e a consistencia visual com o Angular.
+
+## Validacao recomendada da 5.A
+
+1. abrir `http://localhost:5173`;
+2. localizar a secao `Relatorio por Autor`;
+3. validar a tabela com autor, titulo, editora, ano, valor e assuntos;
+4. testar o filtro textual do relatorio.

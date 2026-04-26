@@ -54,6 +54,10 @@ docker compose -f docker/docker-compose.infrastructure.yml up -d
 Se a integracao WSL estiver correta, esse comando funcionara no Ubuntu usando o
 Docker do Windows.
 
+Se aparecer a mensagem `The command 'docker' could not be found in this WSL 2 distro`,
+pare e corrija a integracao no `Docker Desktop` antes de continuar. Nessa situacao,
+nao adianta seguir para `apply-database.sh`, porque o banco ainda nao foi iniciado.
+
 ## 6. Banco escolhido
 
 Banco oficial do projeto:

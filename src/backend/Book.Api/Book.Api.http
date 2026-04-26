@@ -34,6 +34,18 @@ Accept: application/json
 
 ###
 
+### Relatorio de livros por autor
+GET {{Book.Api_HostAddress}}/api/v1/relatorios/livros-por-autor
+Accept: application/json
+
+###
+
+### Relatorio de livros por autor filtrado
+GET {{Book.Api_HostAddress}}/api/v1/relatorios/livros-por-autor?autorNome=Martin
+Accept: application/json
+
+###
+
 ### Listar livros
 GET {{Book.Api_HostAddress}}/api/v1/livros
 Accept: application/json

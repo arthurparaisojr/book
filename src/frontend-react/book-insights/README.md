@@ -14,6 +14,7 @@ Modulo complementar em React do projeto `Book`.
 - dashboard com dados reais da API;
 - resumo de saude do backend;
 - leitura de livros, autores e assuntos;
+- relatorio de livros por autor baseado na `view` do banco;
 - busca local sobre o catalogo carregado;
 - uso do tema azul compartilhado;
 - skip link, busca com ajuda textual e anuncios de carregamento;
@@ -40,6 +41,11 @@ npm install
 npm run dev
 ```
 
+Observacao de toolchain:
+
+- o projeto esta configurado para funcionar bem em `Node.js 20 LTS`, inclusive
+  quando o ambiente local ainda estiver em `20.18.x`.
+
 3. abrir no navegador do Windows:
 
 - `http://localhost:5173`
@@ -54,6 +60,7 @@ Os itens do menu do React representam secoes analiticas, nao telas de CRUD:
 
 - `Visao Geral`
 - `Insights de Livros`
+- `Relatorio por Autor`
 - `Insights de Autores`
 - `Insights de Assuntos`
 
@@ -62,5 +69,6 @@ Os itens do menu do React representam secoes analiticas, nao telas de CRUD:
 1. abrir `http://localhost:5173`;
 2. usar `Tab` e confirmar o link "Pular para o conteudo principal";
 3. validar os cards, o painel de saude e os graficos;
-4. usar a busca local e confirmar o filtro sobre os livros mais recentes;
-5. verificar se o favicon do navegador ja aparece com o icone do projeto.
+4. abrir a secao `Relatorio por Autor` e validar a tabela baseada na `view`;
+5. usar a busca local do relatorio e do catalogo;
+6. verificar se o favicon do navegador ja aparece com o icone do projeto.

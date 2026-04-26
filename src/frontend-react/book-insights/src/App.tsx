@@ -27,6 +27,18 @@ interface Assunto {
   descricao: string
 }
 
+interface RelatorioLivroPorAutor {
+  codAu: number
+  autorNome: string
+  codl: number
+  titulo: string
+  editora: string
+  edicao: number
+  anoPublicacao: string
+  valor: number
+  assuntos: string
+}
+
 interface HealthCheckEntry {
   name: string
   status: string
@@ -46,6 +58,7 @@ interface InsightSnapshot {
   livros: Livro[]
   autores: Autor[]
   assuntos: Assunto[]
+  relatorioLivrosPorAutor: RelatorioLivroPorAutor[]
 }
 
 type StatusTone = 'book-state-success' | 'book-state-warning' | 'book-state-danger'
@@ -99,6 +112,27 @@ function buildBooksByYear(livros: Livro[]) {
   return [...countByYear.entries()].sort((left, right) => left[0].localeCompare(right[0]))
 }
 
+function buildReportSummaryByAuthor(rows: RelatorioLivroPorAutor[]) {
+  const summaryByAuthor = new Map<string, { count: number; totalValue: number }>()
+
+  for (const row of rows) {
+    const current = summaryByAuthor.get(row.autorNome) ?? { count: 0, totalValue: 0 }
+    summaryByAuthor.set(row.autorNome, {
+      count: current.count + 1,
+      totalValue: current.totalValue + row.valor,
+    })
+  }
+
+  return [...summaryByAuthor.entries()]
+    .map(([autorNome, summary]) => ({
+      autorNome,
+      count: summary.count,
+      totalValue: summary.totalValue,
+    }))
+    .sort((left, right) => right.count - left.count || left.autorNome.localeCompare(right.autorNome))
+    .slice(0, 4)
+}
+
 function formatDate(utcDate: string) {
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'short',
@@ -111,7 +145,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [reportSearchTerm, setReportSearchTerm] = useState('')
   const deferredSearchTerm = useDeferredValue(searchTerm)
+  const deferredReportSearchTerm = useDeferredValue(reportSearchTerm)
 
   useEffect(() => {
     void loadSnapshot()
@@ -124,15 +160,16 @@ function App() {
     })
 
     try {
-      const [health, livros, autores, assuntos] = await Promise.all([
+      const [health, livros, autores, assuntos, relatorioLivrosPorAutor] = await Promise.all([
         fetchJson<HealthResponse>('/health'),
         fetchJson<Livro[]>('/livros'),
         fetchJson<Autor[]>('/autores'),
         fetchJson<Assunto[]>('/assuntos'),
+        fetchJson<RelatorioLivroPorAutor[]>('/relatorios/livros-por-autor'),
       ])
 
       startTransition(() => {
-        setSnapshot({ health, livros, autores, assuntos })
+        setSnapshot({ health, livros, autores, assuntos, relatorioLivrosPorAutor })
         setIsLoading(false)
       })
     } catch (error) {
@@ -150,6 +187,7 @@ function App() {
   const livros = snapshot?.livros ?? []
   const autores = snapshot?.autores ?? []
   const assuntos = snapshot?.assuntos ?? []
+  const reportRows = snapshot?.relatorioLivrosPorAutor ?? []
   const health = snapshot?.health ?? null
   const totalCatalogValue = livros.reduce((sum, livro) => sum + livro.valor, 0)
   const averageBookValue = livros.length ? totalCatalogValue / livros.length : 0
@@ -170,6 +208,19 @@ function App() {
   })
   const topPublishers = buildTopPublishers(livros)
   const booksByYear = buildBooksByYear(livros)
+  const filteredReportRows = reportRows.filter((row) => {
+    const normalizedSearch = deferredReportSearchTerm.trim().toLowerCase()
+
+    if (!normalizedSearch) {
+      return true
+    }
+
+    return [row.autorNome, row.titulo, row.editora, row.assuntos]
+      .join(' ')
+      .toLowerCase()
+      .includes(normalizedSearch)
+  })
+  const reportSummaryByAuthor = buildReportSummaryByAuthor(filteredReportRows)
   const highestPublisherCount = topPublishers[0]?.[1] ?? 1
   const highestYearCount = booksByYear.reduce(
     (currentMax, [, value]) => Math.max(currentMax, value),
@@ -196,6 +247,13 @@ function App() {
       label: 'Insights de Livros',
       description: 'Catalogo exploravel, valor medio e tendencias',
       href: '#insights-catalog',
+      iconPath: livrosIcon,
+      current: false,
+    },
+    {
+      label: 'Relatorio por Autor',
+      description: 'Leitura detalhada da view do banco',
+      href: '#insights-report',
       iconPath: livrosIcon,
       current: false,
     },
@@ -470,6 +528,97 @@ function App() {
                         ))}
                       </div>
                     </article>
+                  </section>
+
+                  <section id="insights-report" className="book-page">
+                    <header className="book-page-header">
+                      <div>
+                        <h2 className="book-section-title">Relatorio de livros por autor</h2>
+                        <p className="book-page-subtitle">
+                          Este bloco consome a `view` `vw_RelatorioLivrosPorAutor` pela API e
+                          mostra a leitura detalhada do acervo por autoria.
+                        </p>
+                      </div>
+
+                      <div className="insights-search-group">
+                        <label className="book-sr-only" htmlFor="insights-report-search">
+                          Filtrar relatorio por autor, titulo, editora ou assunto
+                        </label>
+                        <input
+                          id="insights-report-search"
+                          className="book-input insights-search"
+                          type="search"
+                          value={reportSearchTerm}
+                          onChange={(event) => setReportSearchTerm(event.target.value)}
+                          placeholder="Filtrar relatorio por autor, titulo ou assunto"
+                          aria-describedby="insights-report-search-hint"
+                        />
+                        <p id="insights-report-search-hint" className="book-form-hint">
+                          O filtro facilita a leitura do relatorio detalhado retornado pela API.
+                        </p>
+                      </div>
+                    </header>
+
+                    <section className="insights-kpis insights-kpis-compact">
+                      <article className="book-card insights-kpi-card">
+                        <span className="insights-kpi-label">Linhas do relatorio</span>
+                        <strong>{filteredReportRows.length}</strong>
+                        <p>Quantidade de combinacoes livro x autor retornadas pela view.</p>
+                      </article>
+
+                      <article className="book-card insights-kpi-card">
+                        <span className="insights-kpi-label">Autores no relatorio</span>
+                        <strong>{new Set(filteredReportRows.map((row) => row.autorNome)).size}</strong>
+                        <p>Autores representados na leitura atual do relatorio.</p>
+                      </article>
+                    </section>
+
+                    <section className="insights-report-summary">
+                      {reportSummaryByAuthor.map((item) => (
+                        <article key={item.autorNome} className="book-card insights-role-card">
+                          <strong>{item.autorNome}</strong>
+                          <p>{item.count} livro(s) no relatorio atual.</p>
+                          <span className="book-badge-info">
+                            {currencyFormatter.format(item.totalValue)}
+                          </span>
+                        </article>
+                      ))}
+                    </section>
+
+                    <div className="table-wrapper">
+                      <table className="book-table">
+                        <thead>
+                          <tr>
+                            <th>Autor</th>
+                            <th>Titulo</th>
+                            <th>Editora</th>
+                            <th>Ano</th>
+                            <th>Valor</th>
+                            <th>Assuntos</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredReportRows.length ? (
+                            filteredReportRows.map((row) => (
+                              <tr key={`${row.codAu}-${row.codl}`}>
+                                <td>{row.autorNome}</td>
+                                <td>{row.titulo}</td>
+                                <td>{row.editora}</td>
+                                <td>{row.anoPublicacao}</td>
+                                <td>{currencyFormatter.format(row.valor)}</td>
+                                <td>{row.assuntos || 'Sem assuntos vinculados'}</td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan={6} className="insights-report-empty">
+                                Nenhum item encontrado para o filtro atual do relatorio.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
                   </section>
 
                   <section className="insights-grid">

@@ -24,6 +24,7 @@ documentada e segura para manutencao.
 - Autorizacao por policy, perfil ou claim quando necessario.
 - Swagger sempre atualizado.
 - Uso de `CancellationToken` e async/await.
+- Relatorios podem usar `view` do banco como fonte oficial de leitura.
 
 ## Autenticacao
 

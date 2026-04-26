@@ -22,6 +22,7 @@ Solucao `.NET 8` do projeto `Book`.
 - `3.A` concluida com solution, camadas e teste inicial.
 - `3.B` em andamento com CRUDs de `Livro`, `Autor` e `Assunto` implementados.
 - `3.C` em andamento com autenticacao `JWT`, policy de escrita, health checks e logging de requisicoes.
+- `5.A` iniciada com endpoint de relatorio baseado na `view` do banco.
 
 Endpoints atuais da API:
 
@@ -29,6 +30,7 @@ Endpoints atuais da API:
 - `GET /api/v1/health`
 - `GET /api/v1/health/live`
 - `GET /api/v1/health/ready`
+- `GET /api/v1/relatorios/livros-por-autor`
 - `GET /api/v1/assuntos`
 - `GET /api/v1/assuntos/{codAs}`
 - `POST /api/v1/assuntos`
@@ -158,6 +160,7 @@ Resultados esperados desta etapa:
 - `PUT /api/v1/autores/{codAu}` com token de `Admin` atualiza e retorna `200 OK`;
 - `DELETE /api/v1/autores/{codAu}` com token de `Admin` retorna `204 No Content`;
 - `GET /api/v1/livros` retorna os livros seedados;
+- `GET /api/v1/relatorios/livros-por-autor` retorna o relatorio consolidado pela `view`;
 - `POST /api/v1/livros` com token de `Admin` cria um livro e retorna `201 Created`;
 - `PUT /api/v1/livros/{codl}` com token de `Admin` atualiza e retorna `200 OK`;
 - `DELETE /api/v1/livros/{codl}` com token de `Admin` retorna `204 No Content`;
@@ -171,3 +174,34 @@ Resultados esperados desta etapa:
 - `src/backend/Book.Api/appsettings.json`
 - `src/backend/Book.Api/appsettings.Development.json`
 - `src/backend/Book.Api/Book.Api.http`
+
+## Como testar a etapa 5.A
+
+1. subir a infraestrutura e aplicar o banco:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+```
+
+2. validar backend:
+
+```bash
+dotnet build Book.sln
+dotnet test Book.sln
+```
+
+3. subir a API:
+
+```bash
+cd src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+4. testar o relatorio:
+
+- Swagger em `http://localhost:5268/swagger`;
+- arquivo `src/backend/Book.Api/Book.Api.http`;
+- endpoint `GET /api/v1/relatorios/livros-por-autor`;
+- endpoint `GET /api/v1/relatorios/livros-por-autor?autorNome=Martin`.

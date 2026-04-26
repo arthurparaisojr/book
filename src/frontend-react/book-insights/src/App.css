@@ -86,6 +86,10 @@
   gap: var(--book-space-lg);
 }
 
+.insights-kpis-compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .insights-kpi-card {
   display: grid;
   gap: var(--book-space-sm);
@@ -231,6 +235,21 @@
   justify-items: end;
 }
 
+.insights-report-summary {
+  display: grid;
+  gap: var(--book-space-md);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.table-wrapper {
+  overflow: auto;
+}
+
+.insights-report-empty {
+  color: var(--book-ui-text-muted);
+  text-align: center;
+}
+
 .insights-book-list {
   display: grid;
   gap: var(--book-space-sm);
@@ -270,7 +289,9 @@
 @media (max-width: 1100px) {
   .insights-hero,
   .insights-kpis,
-  .insights-grid {
+  .insights-grid,
+  .insights-report-summary,
+  .insights-kpis-compact {
     grid-template-columns: 1fr;
   }
 

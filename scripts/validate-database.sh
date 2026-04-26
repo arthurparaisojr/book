@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "$(dirname "$0")/lib/docker-desktop-check.sh"
+
 if [ ! -f "docker/.env" ]; then
   cp docker/.env.example docker/.env
 fi
@@ -12,6 +14,18 @@ set +a
 
 container_name="${1:-book-sqlserver}"
 password="${BOOK_SQL_SA_PASSWORD}"
+
+ensure_container_exists() {
+  if ! docker container inspect "${container_name}" >/dev/null 2>&1; then
+    echo "Container ${container_name} nao encontrado. Execute ./scripts/start-infra.sh antes de validar o banco." >&2
+    exit 1
+  fi
+}
+
+wait_for_container_health() {
+  echo "Aguardando container ${container_name} ficar healthy..."
+  wait_for_container_healthy "${container_name}"
+}
 
 wait_for_sqlserver() {
   for attempt in $(seq 1 60); do
@@ -40,6 +54,9 @@ run_query() {
     -Q "${query}"
 }
 
+ensure_docker_desktop_wsl_integration
+ensure_container_exists
+wait_for_container_health
 wait_for_sqlserver
 
 run_query \

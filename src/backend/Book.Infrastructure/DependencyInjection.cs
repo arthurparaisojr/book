@@ -2,6 +2,7 @@ using Book.Application.Abstractions.Persistence;
 using Book.Application.Services.Assuntos;
 using Book.Application.Services.Autores;
 using Book.Application.Services.Livros;
+using Book.Application.Services.Relatorios;
 using Book.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,9 +22,11 @@ public static class DependencyInjection
         services.AddScoped<IAssuntoRepository, AssuntoRepository>();
         services.AddScoped<IAutorRepository, AutorRepository>();
         services.AddScoped<ILivroRepository, LivroRepository>();
+        services.AddScoped<IRelatorioRepository, RelatorioRepository>();
         services.AddScoped<IAssuntoAppService, AssuntoAppService>();
         services.AddScoped<IAutorAppService, AutorAppService>();
         services.AddScoped<ILivroAppService, LivroAppService>();
+        services.AddScoped<IRelatorioAppService, RelatorioAppService>();
 
         return services;
     }
