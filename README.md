@@ -1,5 +1,69 @@
 # Book
 
+## Desafio Oficial
+
+Este e o texto-base principal que orienta toda a implementacao deste projeto e deve ser
+considerado como referencia central da entrega:
+
+> **DESAFIO**
+>
+> **Objetivo:**
+> Criar um projeto utilizando as boas praticas de mercado e apresentar o mesmo
+> demonstrando o passo a passo de sua criacao (base de dados, tecnologias, aplicacao,
+> metodologias, frameworks, etc).
+>
+> **Projeto:**
+> O projeto consiste em um cadastro de livros.
+> No final deste documento foi disponibilizado um modelo dos dados.
+>
+> **Tecnologia:**
+> A tecnologia a ser utilizada e sempre Web e referente a vaga em que esta
+> concorrendo.
+> A implementacao do projeto ficara por sua total responsabilidade assim como os
+> componentes a serem utilizados (relatorios, camada de persistencia, etc) com algumas
+> premissas.
+> O banco de dados e o de sua preferencia. A utilizacao de camada de persistencia
+> tambem e escolha sua.
+>
+> **Instrucoes:**
+> Deve ser feito CRUD para `Livro`, `Autor` e `Assunto` conforme o modelo de dados.
+> A tela inicial pode ter um menu simples ou mesmo links direto para as telas
+> construidas.
+> O modelo do banco deve ser seguido integralmente, salvo para ajustes de melhoria de
+> performance.
+> A interface pode ser simples, mas precisa utilizar algum CSS que comande no minimo a
+> cor e tamanho dos componentes em tela (utilizacao do `Bootstrap` sera um diferencial).
+> Os campos que pedem formatacao devem possuir o mesmo (data, moeda, etc).
+> Deve ser feito obrigatoriamente um relatorio e a consulta desse relatorio deve ser
+> proveniente de uma `view` criada no banco de dados. Este relatorio pode ser simples,
+> mas permita o entendimento dos dados. O relatorio deve trazer as informacoes das 3
+> tabelas principais agrupando os dados por autor (atencao pois um livro pode ter mais
+> de um autor).
+> `TDD` (`Test Driven Development`) sera considerado um diferencial.
+> Tratamento de erros e essencial, evite `try/catch` genericos em situacoes que
+> permitam utilizacao de tratamentos especificos, como os possiveis erros de banco de
+> dados.
+> As mensagens emitidas pelo sistema, labels e etc ficam a seu criterio.
+> O modelo inicial nao preve, mas e necessario incluir um campo de valor (`R$`) para o
+> livro.
+> Guarde todos os scripts e instrucoes para implantacao de seu projeto, eles devem ser
+> demonstrados na apresentacao.
+>
+> **Apresentacao:**
+> O teste deve ser apresentado na entrevista tecnica que sera agendada. A ideia e
+> discutir seu projeto, avaliar o mesmo funcionalmente e tecnicamente.
+
+## Modelo de Dados Oficial
+
+O modelo de dados que acompanha o desafio faz parte do enunciado principal e deve ser
+seguido integralmente, salvo ajustes controlados de performance:
+
+![Modelo de Dados Oficial](modeloDados.png)
+
+Arquivo de referencia: [modeloDados.png](/home/arthur/github/book/modeloDados.png)
+
+## Contexto do Projeto
+
 Projeto base para um sistema web de cadastro de livros, autores e assuntos, organizado
 para demonstrar arquitetura moderna, boa documentação, banco de dados relacional bem
 desenhado, API bem escrita, uso de Docker, tratamento de exceções e processo de
