@@ -13,3 +13,5 @@ Guarde aqui:
 - `checklist-entrega-final-6c.md`
 
 O relatorio deve ser baseado em `view` do banco, conforme as premissas do projeto.
+Para a entrega TJ-JUD, o PDF deve ser gerado a partir de `HTML` com `Bootstrap`, sem
+`Crystal Reports` ou `ReportViewer`.

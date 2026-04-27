@@ -40,17 +40,21 @@ subetapas por letra.
 - `6.A` Orquestrar infraestrutura com Docker e preparar stack completa com banco, API e frontends.
 - `6.B` Consolidar scripts, artefatos e roteiro de apresentacao.
 - `6.C` Revisar backlog entregue, atualizar documentos e validar demonstracao final.
+- `6.D` Implementar o relatorio obrigatorio TJ-JUD com geracao `HTML -> PDF`,
+  `Bootstrap`, separacao de camadas e tratamento especifico de falhas no acesso ao banco.
 
 ## Estado atual observado no repositorio
 
 - `6.A` consolidada com compose fullstack, Dockerfiles e scripts de start, stop e reset.
 - `6.B` consolidada com export `OpenAPI`, validacao do banco e roteiro de apresentacao.
 - `6.C` validada com checklist final e evidencias atualizadas em `artifacts/reports/`.
+- `6.D` implementada com exportacao em PDF a partir de HTML, endpoint dedicado e
+  download integrado ao frontend React.
 
 ## Evolucoes futuras
 
 Itens abaixo ficam registrados como proxima fase, sem alterar o cronograma oficial
-de `1.A` a `6.C`:
+de `1.A` a `6.D`:
 
 - autenticar uma vez e reaproveitar a sessao entre `Angular` e `React`;
 - integrar mais a experiencia entre os dois frontends, sem remover o modulo `React`;

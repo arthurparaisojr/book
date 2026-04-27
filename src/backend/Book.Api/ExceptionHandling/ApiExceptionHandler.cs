@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Data.Common;
 using Book.Application.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -85,6 +86,50 @@ public sealed class ApiExceptionHandler : IExceptionHandler
                         Status = StatusCodes.Status401Unauthorized,
                         Title = "Unauthorized",
                         Detail = unauthorizedException.Message,
+                        Extensions =
+                        {
+                            ["traceId"] = traceId
+                        }
+                    }
+                });
+        }
+
+        if (exception is DbException)
+        {
+            _logger.LogError(exception, "Database access error. TraceId {TraceId}", traceId);
+            httpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+
+            return await _problemDetailsService.TryWriteAsync(
+                new ProblemDetailsContext
+                {
+                    HttpContext = httpContext,
+                    ProblemDetails = new ProblemDetails
+                    {
+                        Status = StatusCodes.Status503ServiceUnavailable,
+                        Title = "Database unavailable",
+                        Detail = "The database is unavailable or failed while processing the request.",
+                        Extensions =
+                        {
+                            ["traceId"] = traceId
+                        }
+                    }
+                });
+        }
+
+        if (exception is RelatorioPdfGenerationException relatorioPdfGenerationException)
+        {
+            _logger.LogError(exception, "Report generation failed. TraceId {TraceId}", traceId);
+            httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            return await _problemDetailsService.TryWriteAsync(
+                new ProblemDetailsContext
+                {
+                    HttpContext = httpContext,
+                    ProblemDetails = new ProblemDetails
+                    {
+                        Status = StatusCodes.Status500InternalServerError,
+                        Title = "Report generation failed",
+                        Detail = relatorioPdfGenerationException.Message,
                         Extensions =
                         {
                             ["traceId"] = traceId

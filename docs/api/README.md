@@ -25,6 +25,7 @@ documentada e segura para manutencao.
 - Swagger sempre atualizado.
 - Uso de `CancellationToken` e async/await.
 - Relatorios podem usar `view` do banco como fonte oficial de leitura.
+- A consulta da `view` do relatorio deve ficar separada da geracao do documento PDF.
 
 ## Autenticacao
 
@@ -42,6 +43,8 @@ Padrao minimo esperado:
 
 - middleware global de excecao;
 - retorno no formato `ProblemDetails`;
+- nada de `try-catch` generico em chamada ao banco para mascarar erro de
+  infraestrutura;
 - mapeamento especifico para:
   - violacao de chave unica;
   - violacao de FK;

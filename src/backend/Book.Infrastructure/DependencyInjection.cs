@@ -4,6 +4,7 @@ using Book.Application.Services.Autores;
 using Book.Application.Services.Livros;
 using Book.Application.Services.Relatorios;
 using Book.Infrastructure.Persistence;
+using Book.Infrastructure.Reports;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddSingleton<TimeProvider>(TimeProvider.System);
         services.AddSingleton<IBookDbConnectionFactory>(_ =>
             new SqlServerBookDbConnectionFactory(
                 configuration.GetConnectionString("DefaultConnection")
@@ -23,10 +25,12 @@ public static class DependencyInjection
         services.AddScoped<IAutorRepository, AutorRepository>();
         services.AddScoped<ILivroRepository, LivroRepository>();
         services.AddScoped<IRelatorioRepository, RelatorioRepository>();
+        services.AddScoped<IRelatorioPdfService, ChromiumRelatorioPdfService>();
         services.AddScoped<IAssuntoAppService, AssuntoAppService>();
         services.AddScoped<IAutorAppService, AutorAppService>();
         services.AddScoped<ILivroAppService, LivroAppService>();
         services.AddScoped<IRelatorioAppService, RelatorioAppService>();
+        services.AddScoped<IRelatorioExportAppService, RelatorioExportAppService>();
 
         return services;
     }

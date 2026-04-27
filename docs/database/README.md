@@ -35,6 +35,8 @@ livre, a estrategia deve ser revisitada.
 - `triggers` para auditoria ou rastreabilidade quando necessario;
 - `indices` para leitura e relacionamentos;
 - `seeds` para ambiente local e demonstracao.
+- a `view` principal do relatorio deve unir `Livro`, `Autor` e `Assunto`, agrupando
+  os dados por autor.
 
 ## Modelagem recomendada
 
@@ -52,6 +54,7 @@ O material esperado para apresentacao deve contemplar:
 - relacao de tabelas e seus campos;
 - PKs, FKs, indices e constraints;
 - descricao da `view` do relatorio;
+- confirmacao de que a `view` consolida `Livro`, `Autor` e `Assunto` por autor;
 - descricao das `procedures`;
 - descricao das `triggers`;
 - estrategia de auditoria;

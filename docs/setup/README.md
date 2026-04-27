@@ -224,7 +224,46 @@ Observacao importante:
 - `stop-fullstack.sh` preserva o volume do banco;
 - `reset-fullstack.sh` remove o volume do banco e executa novamente a subida completa.
 
-## 15. Consolidar artefatos tecnicos
+## 15. Rodar sem Docker fullstack
+
+Se voce quiser executar os modulos manualmente, sem subir Angular, React e API em
+containers, use este fluxo:
+
+1. subir apenas o banco:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+```
+
+2. subir a API localmente:
+
+```bash
+cd /home/arthur/github/book/src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+3. subir o Angular localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-angular/book-admin
+npm install
+npm start
+```
+
+4. subir o React localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-react/book-insights
+npm install
+npm run dev
+```
+
+Esse modo continua dependendo do banco em Docker, que e a forma padronizada de manter
+o SQL Server reproduzivel no projeto.
+
+## 16. Consolidar artefatos tecnicos
 
 Para preparar a entrega da etapa `6.B`, execute:
 
@@ -239,28 +278,41 @@ Resultado esperado:
   quando o container `book-sqlserver` estiver disponivel;
 - roteiro e checklist de apresentacao centralizados em `artifacts/reports/`.
 
-## 16. Construir relatorio
+## 17. Construir relatorio
 
 - criar `view` com dados de livro, autor e assunto;
 - agrupar por autor;
 - expor endpoint ou exportacao para o frontend;
 - guardar modelos gerados em `artifacts/reports/`.
 
-## 17. Testar
+## 18. Testar
 
 - `xUnit` para backend;
 - `Jest` para Angular;
 - `Vitest` para React;
 - `Playwright` para fluxo de ponta a ponta.
 
-## 18. Preparar apresentacao
+## 19. Preparar apresentacao
 
 - atualizar documentos;
 - exportar Swagger/OpenAPI;
 - separar evidencias do banco;
 - anexar prints, relatorios e diagrama em `artifacts/`.
 
-## 19. Limpeza opcional do WSL
+## 20. Implementar relatorio obrigatorio TJ-JUD
+
+- criar ou validar a `view` SQL unindo `Livro`, `Autor` e `Assunto`, com agrupamento
+  por autor;
+- separar a leitura da `view` em uma camada de consulta e a montagem do PDF em uma
+  camada de geracao de documento;
+- usar abordagem moderna de `HTML -> PDF`, sem `Crystal Reports` ou `ReportViewer`,
+  para manter compatibilidade com `Docker` e `WSL2`;
+- aplicar `Bootstrap` no layout do relatorio;
+- tratar falhas de banco com mapeamento especifico, sem `try-catch` generico na
+  chamada ao banco;
+- salvar o PDF final e evidencias em `artifacts/reports/`.
+
+## 21. Limpeza opcional do WSL
 
 Se em algum momento voce tiver instalado Docker dentro do Ubuntu/WSL, remova com:
 
