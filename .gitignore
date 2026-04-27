@@ -28,8 +28,6 @@ logs/
 .idea/
 .vs/
 .vscode/
-.cursor/
-.cursorroles
 *.suo
 *.user
 *.userosscache
