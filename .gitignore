@@ -26,6 +26,7 @@ logs/
 
 # IDE
 .idea/
+.vs/
 .vscode/
 *.suo
 *.user
