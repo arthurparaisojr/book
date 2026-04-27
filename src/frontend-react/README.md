@@ -55,6 +55,12 @@ O `book-insights` agora tambem funciona na stack Docker completa consumindo a AP
 `/api/v1`, com proxy no `vite` para o desenvolvimento local e proxy no `nginx` para a
 execucao containerizada.
 
+## Evolucao na etapa 6.D
+
+O `book-insights` agora tambem oferece download do relatorio obrigatorio em PDF pela
+propria secao `Relatorio de livros por autor`, consumindo o endpoint
+`/api/v1/relatorios/livros-por-autor/pdf`.
+
 ## Como executar
 
 1. subir banco e backend:
@@ -115,3 +121,13 @@ Acesso:
 2. localizar a secao `Relatorio por Autor`;
 3. validar a tabela com autor, titulo, editora, ano, valor e assuntos;
 4. testar o filtro textual do relatorio.
+
+## Validacao recomendada da 6.D
+
+1. subir `./scripts/start-fullstack.sh`;
+2. abrir `http://localhost:4173`;
+3. localizar a secao `Relatorio de livros por autor`;
+4. clicar em `Baixar PDF do relatorio`;
+5. validar que o arquivo PDF foi baixado com agrupamento por autor;
+6. opcionalmente informar um nome de autor na busca antes do download para testar o
+   filtro da API no PDF.

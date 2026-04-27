@@ -15,8 +15,13 @@ RUN dotnet publish src/backend/Book.Api/Book.Api.csproj -c Release -o /app/publi
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium ca-certificates fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV ASPNETCORE_ENVIRONMENT=Development
 ENV ASPNETCORE_HTTP_PORTS=8080
+ENV BOOK_REPORT_BROWSER_PATH=/usr/bin/chromium
 
 COPY --from=build /app/publish ./
 

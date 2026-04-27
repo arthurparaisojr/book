@@ -1,5 +1,69 @@
 # Book
 
+## Desafio Oficial
+
+Este e o texto-base principal que orienta toda a implementacao deste projeto e deve ser
+considerado como referencia central da entrega:
+
+> **DESAFIO**
+>
+> **Objetivo:**
+> Criar um projeto utilizando as boas praticas de mercado e apresentar o mesmo
+> demonstrando o passo a passo de sua criacao (base de dados, tecnologias, aplicacao,
+> metodologias, frameworks, etc).
+>
+> **Projeto:**
+> O projeto consiste em um cadastro de livros.
+> No final deste documento foi disponibilizado um modelo dos dados.
+>
+> **Tecnologia:**
+> A tecnologia a ser utilizada e sempre Web e referente a vaga em que esta
+> concorrendo.
+> A implementacao do projeto ficara por sua total responsabilidade assim como os
+> componentes a serem utilizados (relatorios, camada de persistencia, etc) com algumas
+> premissas.
+> O banco de dados e o de sua preferencia. A utilizacao de camada de persistencia
+> tambem e escolha sua.
+>
+> **Instrucoes:**
+> Deve ser feito CRUD para `Livro`, `Autor` e `Assunto` conforme o modelo de dados.
+> A tela inicial pode ter um menu simples ou mesmo links direto para as telas
+> construidas.
+> O modelo do banco deve ser seguido integralmente, salvo para ajustes de melhoria de
+> performance.
+> A interface pode ser simples, mas precisa utilizar algum CSS que comande no minimo a
+> cor e tamanho dos componentes em tela (utilizacao do `Bootstrap` sera um diferencial).
+> Os campos que pedem formatacao devem possuir o mesmo (data, moeda, etc).
+> Deve ser feito obrigatoriamente um relatorio e a consulta desse relatorio deve ser
+> proveniente de uma `view` criada no banco de dados. Este relatorio pode ser simples,
+> mas permita o entendimento dos dados. O relatorio deve trazer as informacoes das 3
+> tabelas principais agrupando os dados por autor (atencao pois um livro pode ter mais
+> de um autor).
+> `TDD` (`Test Driven Development`) sera considerado um diferencial.
+> Tratamento de erros e essencial, evite `try/catch` genericos em situacoes que
+> permitam utilizacao de tratamentos especificos, como os possiveis erros de banco de
+> dados.
+> As mensagens emitidas pelo sistema, labels e etc ficam a seu criterio.
+> O modelo inicial nao preve, mas e necessario incluir um campo de valor (`R$`) para o
+> livro.
+> Guarde todos os scripts e instrucoes para implantacao de seu projeto, eles devem ser
+> demonstrados na apresentacao.
+>
+> **Apresentacao:**
+> O teste deve ser apresentado na entrevista tecnica que sera agendada. A ideia e
+> discutir seu projeto, avaliar o mesmo funcionalmente e tecnicamente.
+
+## Modelo de Dados Oficial
+
+O modelo de dados que acompanha o desafio faz parte do enunciado principal e deve ser
+seguido integralmente, salvo ajustes controlados de performance:
+
+![Modelo de Dados Oficial](modeloDados.png)
+
+Arquivo de referencia: [modeloDados.png](/home/arthur/github/book/modeloDados.png)
+
+## Contexto do Projeto
+
 Projeto base para um sistema web de cadastro de livros, autores e assuntos, organizado
 para demonstrar arquitetura moderna, boa documentação, banco de dados relacional bem
 desenhado, API bem escrita, uso de Docker, tratamento de exceções e processo de
@@ -155,6 +219,45 @@ Exemplos:
 - `book-action-salvar.svg`
 - `book-report-autor.svg`
 
+## 6.2 O que significa `seeds`
+
+O nome `seed` vem da ideia de "semente".
+
+Em banco de dados, `seeds` sao registros iniciais inseridos para que o ambiente nao
+comece vazio. Essas "sementes" permitem que o sistema suba com dados basicos de
+demonstracao, validacao e desenvolvimento.
+
+No projeto `Book`, os `seeds` ficam em:
+
+- `database/seeds/`
+
+Finalidade dos `seeds` neste repositorio:
+
+- criar autores, assuntos e livros iniciais;
+- permitir que o relatorio por autor funcione logo apos subir o ambiente;
+- evitar cadastro manual antes de testar API, Angular e React;
+- padronizar o estado inicial do banco em qualquer maquina.
+
+## 6.3 Onde ficam usuarios, perfis e senhas
+
+No estado atual de desenvolvimento, os usuarios locais da API ficam em:
+
+- `src/backend/Book.Api/appsettings.Development.json`
+
+Eles sao carregados pela secao `Auth:Users`, com:
+
+- `Username`
+- `Password`
+- `Role`
+
+Perfis locais atualmente configurados:
+
+- `book-admin` / `Book@123` / `Admin`
+- `book-reader` / `Book@123` / `Reader`
+
+Esses usuarios sao usados pelo endpoint `POST /api/v1/auth/login` e atendem os dois
+frontends no ambiente local.
+
 ## 7. Etapas oficiais do projeto
 
 Toda evolução do projeto deve seguir etapas numeradas e subetapas por letra:
@@ -175,12 +278,13 @@ Toda evolução do projeto deve seguir etapas numeradas e subetapas por letra:
 - `6.A` Orquestrar ambiente com Docker.
 - `6.B` Consolidar scripts, apresentação técnica e artefatos.
 - `6.C` Validar entrega final, backlog executado e documentação.
+- `6.D` Implementar o relatorio obrigatorio TJ-JUD com geracao `HTML -> PDF`.
 
 O backlog detalhado está em [`docs/backlog/README.md`](docs/backlog/README.md).
 
 ## 7.1 Evolucoes futuras fora do escopo atual
 
-Sem alterar o plano oficial `1.A` a `6.C`, o projeto ja registra a seguinte
+Sem alterar o plano oficial agora estendido de `1.A` a `6.D`, o projeto ja registra a seguinte
 evolucao arquitetural desejada para fase posterior:
 
 - autenticacao compartilhada entre `Angular` e `React`, evitando novo login ao
@@ -457,10 +561,28 @@ Implementacao atual da etapa `6.C`:
 - checklist final registrado em `artifacts/reports/checklist-entrega-final-6c.md`;
 - backlog, documentacao e demonstracao final revisados com riscos residuais documentados.
 
+Implementacao atual da etapa `6.D`:
+
+- endpoint `GET /api/v1/relatorios/livros-por-autor/pdf` gerando o documento por
+  pipeline `HTML -> PDF`;
+- layout do PDF com `Bootstrap` e agrupamento visual por autor;
+- geracao do PDF no backend com `Chromium` headless na stack Docker;
+- download do arquivo integrado ao modulo React na secao de relatorio.
+
 ### 9.12 Construir relatórios
 
 O relatório deve vir de uma `view` do banco e agrupar dados por autor. Os modelos e
 orientações estão em `database/views`, `docs/database` e `artifacts/reports`.
+
+Premissas obrigatorias desta entrega:
+
+- a `view` SQL deve unir `Livro`, `Autor` e `Assunto`, com agrupamento por autor;
+- a geracao do documento deve usar pipeline `HTML -> PDF`, sem `Crystal Reports` ou
+  `ReportViewer`, para manter compatibilidade com `Docker` e `WSL2`;
+- o layout do relatorio deve usar `Bootstrap`;
+- a busca da `view` e a geracao do documento devem ficar em camadas separadas;
+- o acesso ao banco deve evitar `try-catch` generico, priorizando tratamento
+  especifico por tipo de falha.
 
 ## 10. Diretrizes não negociáveis
 
@@ -490,3 +612,72 @@ orientações estão em `database/views`, `docs/database` e `artifacts/reports`.
 - [`database/README.md`](database/README.md)
 - [`docker/README.md`](docker/README.md)
 - [`artifacts/README.md`](artifacts/README.md)
+
+## 12. Execucao Sem Docker
+
+Mesmo com a stack oficial em Docker, voce tambem consegue executar os modulos "na mao"
+durante o desenvolvimento.
+
+Fluxo pratico recomendado fora da stack fullstack:
+
+1. subir apenas o banco no Docker:
+
+```bash
+cd /home/arthur/github/book
+./scripts/start-infra.sh
+./scripts/apply-database.sh
+```
+
+2. subir a API localmente:
+
+```bash
+cd /home/arthur/github/book/src/backend/Book.Api
+dotnet run --launch-profile http
+```
+
+3. subir o Angular localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-angular/book-admin
+npm install
+npm start
+```
+
+4. subir o React localmente:
+
+```bash
+cd /home/arthur/github/book/src/frontend-react/book-insights
+npm install
+npm run dev
+```
+
+URLs esperadas nesse modo:
+
+- API / Swagger: `http://localhost:5268`
+- Angular: `http://localhost:4200`
+- React: `http://localhost:5173`
+
+Observacao:
+
+- o modo mais comum fora do fullstack Docker e usar banco no Docker e apps locais;
+- isso preserva o banco padronizado e deixa o ciclo de desenvolvimento mais rapido.
+
+## 13. Por que usar WSL com Docker Desktop
+
+O projeto adota `Windows + WSL + Docker Desktop` porque esse fluxo costuma ser o mais
+estavel e previsivel para desenvolvimento local.
+
+Vantagens praticas:
+
+- comandos de shell, scripts `.sh` e ferramentas Linux rodam naturalmente no WSL;
+- o Docker continua centralizado no Windows, evitando instalar uma segunda engine no Ubuntu;
+- o banco `SQL Server` sobe em ambiente reproduzivel;
+- a mesma base atende API, Angular e React sem configuracoes paralelas diferentes;
+- o navegador continua sendo usado normalmente no Windows por `localhost`;
+- reduz conflito entre ambientes e facilita onboarding.
+
+Em resumo:
+
+- `WSL` oferece o terminal Linux e a experiencia de desenvolvimento;
+- `Docker Desktop` fornece a engine oficial dos containers;
+- o projeto usa os dois juntos para combinar produtividade e padronizacao.

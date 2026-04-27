@@ -50,12 +50,17 @@ run_sql() {
   local file="$1"
   local attempt
 
+  if [ ! -f "${file}" ]; then
+    echo "Arquivo SQL ${file} nao encontrado no host." >&2
+    return 1
+  fi
+
   for attempt in $(seq 1 3); do
     echo "Executando ${file} (tentativa ${attempt}/3)"
 
     if docker exec -i "${container_name}" /opt/mssql-tools18/bin/sqlcmd \
       -S localhost -U sa -P "${password}" -C -b \
-      -i "/workspace/${file}"; then
+      -i /dev/stdin < "${file}"; then
       return 0
     fi
 

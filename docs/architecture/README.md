@@ -79,7 +79,10 @@ src/shared/
 - A API deve expor contratos claros, com versionamento e documentacao.
 - A autenticacao padrao sera `JWT Bearer`.
 - O banco deve continuar como fonte oficial de relatorio e integridade relacional.
+- O relatorio obrigatorio deve consultar a `view` oficial em uma camada dedicada e
+  gerar o documento em outra camada, usando pipeline `HTML -> PDF`.
 - Excecoes devem ser centralizadas em middleware, nao espalhadas pelos controllers.
+- `Crystal Reports` e `ReportViewer` nao fazem parte da arquitetura alvo deste projeto.
 - O idioma padrao sera `pt-BR` em telas, mensagens e mascaras.
 - O frontend deve manter uma experiencia amigavel e visual consistente.
 - O tema padrao do projeto deve usar azuis como base visual.

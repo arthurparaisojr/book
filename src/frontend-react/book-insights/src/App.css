@@ -121,13 +121,32 @@
 }
 
 .insights-kpi-card {
+  container-type: inline-size;
   display: grid;
   gap: var(--book-space-sm);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .insights-kpi-card strong {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
   font-size: clamp(2rem, 4vw, 3.1rem);
   color: var(--book-color-primary-900);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.insights-kpi-card-money {
+  min-width: 0;
+}
+
+.insights-kpi-value-money {
+  font-size: clamp(1.2rem, 18cqw, 2.9rem);
+  letter-spacing: -0.03em;
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 
 .insights-kpi-card p {
@@ -263,6 +282,11 @@
   display: grid;
   gap: 8px;
   justify-items: end;
+}
+
+.insights-report-actions {
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .insights-report-summary {
